@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-function Login() {
+function Login({ history }) {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
@@ -18,10 +19,16 @@ function Login() {
     } return true;
   };
 
+  const saveOnLocalStorage = () => {
+    localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+  };
+
   return (
     <form>
       <input
-        type="email"
+        type="text"
         name="email"
         value={ email }
         placeholder="Digite o email"
@@ -29,7 +36,7 @@ function Login() {
         onChange={ (event) => handleChange(event) }
       />
       <input
-        type="text"
+        type="password"
         name="password"
         value={ password }
         placeholder="Digite senha"
@@ -38,14 +45,25 @@ function Login() {
       />
       <button
         type="button"
-        onClick={ (e) => console.log(e.target) }
         data-testid="login-submit-btn"
         disabled={ isDisabledButton() }
+        onClick={
+          (() => {
+            saveOnLocalStorage();
+            history.push('/comidas');
+          })
+        }
       >
         Entrar
       </button>
     </form>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Login;
