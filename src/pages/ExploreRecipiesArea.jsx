@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function ExploreRecipiesArea() {
@@ -6,6 +7,7 @@ function ExploreRecipiesArea() {
     <div>
       <Header />
       Explorar Comidas Area
+      <Footer />
     </div>
   );
 }

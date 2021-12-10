@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { fetchMealsFirstLetter,
   fetchMealsIngredients,
   fetchMealsName } from '../services/fetchMeals';
-import MealsContext from '../context/MealsContext';
+// import MealsContext from '../context/MealsContext';
 
 function HeaderSearchBar() {
-  const { searchInput, setSearchInput } = useContext(MealsContext);
+  // const { searchInput, setSearchInput } = useContext(MealsContext);
 
   const handleClick = ({ target }) => {
     if (target.checked && target.name === 'ingredients') {
@@ -24,7 +24,7 @@ function HeaderSearchBar() {
       <input
         type="text"
         data-testid="search-input"
-        onChange={ handleChange }
+        // onChange={ handleChange }
       />
       <label htmlFor="ingredient">
         Ingrediente:
