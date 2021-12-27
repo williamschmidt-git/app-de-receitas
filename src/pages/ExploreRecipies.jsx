@@ -2,14 +2,14 @@ import React from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function RecipesMainScreen() {
+function ExploreRecipies() {
   return (
     <div>
       <Header />
-      Comidas
+      Explorar Comidas
       <Footer />
     </div>
   );
 }
 
-export default RecipesMainScreen;
+export default ExploreRecipies;

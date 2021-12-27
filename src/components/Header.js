@@ -18,7 +18,7 @@ function Header() {
         data-testid="profile-top-btn"
         to="/perfil"
       >
-        <img src={ userImage } alt="USer" />
+        <img src={ userImage } alt="User" />
       </Link>
       <div data-testid="page-title">Comidas</div>
       <button
