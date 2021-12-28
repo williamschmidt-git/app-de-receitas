@@ -4,7 +4,7 @@ import Header from '../components/Header';
 function RecipiesDone() {
   return (
     <div>
-      <Header />
+      <Header pageName="Receitas Feitas" />
       Receitas Feitas
     </div>
   );

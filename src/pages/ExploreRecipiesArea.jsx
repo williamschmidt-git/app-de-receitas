@@ -5,7 +5,7 @@ import Header from '../components/Header';
 function ExploreRecipiesArea() {
   return (
     <div>
-      <Header />
+      <Header pageName="Explorar Origem" />
       Explorar Comidas Area
       <Footer />
     </div>

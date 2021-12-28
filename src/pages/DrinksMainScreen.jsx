@@ -5,7 +5,7 @@ import Header from '../components/Header';
 function DrinksMainScreen() {
   return (
     <div>
-      <Header />
+      <Header pageName="Bebidas" />
       Bebidas
       <Footer />
     </div>
