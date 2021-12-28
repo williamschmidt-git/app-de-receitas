@@ -9,29 +9,36 @@ import {
   fetchDrinksFirstLetter,
 } from '../services/helpers';
 
-function HeaderSearchBar() {
+function HeaderSearchBar({ history }) {
   const [typedText, setTypedText] = useState('');
   const [selectedRadio, setSelectedRadio] = useState('');
   const { location: { pathname } } = useHistory();
 
-  const mealsRequest = () => {
+  const mealsRequest = async () => {
     if (selectedRadio === 'ingredient') {
-      return fetchMealsIngredients(typedText);
+      const responseAPI = await fetchMealsIngredients(typedText);
+      console.log(responseAPI);
     }
     if (selectedRadio === 'name') {
-      return fetchMealsName(typedText);
+      const responseAPI = await fetchMealsName(typedText);
+      console.log(responseAPI);
     }
     if (selectedRadio === 'first-letter') {
       if (typedText.length > 1) {
         return global.alert('Sua busca deve conter somente 1 (um) caracter');
       }
-      return fetchMealsFirstLetter(typedText);
+      const responseAPI = await fetchMealsFirstLetter(typedText);
     }
   };
 
-  const drinksRequest = () => {
+  const drinksRequest = async () => {
     if (selectedRadio === 'ingredient') {
-      return fetchDrinksIngredients(typedText);
+      const responseAPI = await fetchDrinksIngredients(typedText);
+      if (Object.values(responseAPI).length === 1) {
+        const drinkId = responseAPI.drinks[0].idDrink;
+        console.log(responseAPI);
+        // return history.push('/');
+      }
     }
     if (selectedRadio === 'name') {
       return fetchDrinksName(typedText);
