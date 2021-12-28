@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import Footer from '../components/Footer';
 
 function Profile({ history }) {
-  const user = localStorage.getItem('user');
+  const { user } = localStorage;
+  const parseUser = JSON.parse(user);
+
   return (
     <div data-testid="page-title">
       <h2 data-testid="profile-email">
-        { user }
+        { parseUser.email }
       </h2>
       <button
         type="button"
