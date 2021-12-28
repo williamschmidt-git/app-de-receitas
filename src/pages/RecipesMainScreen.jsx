@@ -5,8 +5,8 @@ import Header from '../components/Header';
 function RecipesMainScreen() {
   return (
     <div>
-      <Header />
-      Comidas
+      <Header pageName="Comidas" />
+      Comidas PAGE CONTENT
       <Footer />
     </div>
   );

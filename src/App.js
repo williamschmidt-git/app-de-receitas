@@ -14,20 +14,21 @@ import RecipiesDone from './pages/RecipiesDone';
 import RecipiesFavorites from './pages/RecipiesFavorites';
 import ExploreRecipiesArea from './pages/ExploreRecipiesArea';
 import Explore from './pages/Explore';
-import MealsProvider from './context/provider/MealsProvider';
+import ApplicationProvider from './context/provider/ApplicationProvider';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
     <div className="meals">
-      <MealsProvider>
+      <ApplicationProvider>
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={ Login } />
             <Route path="/comidas" component={ RecipesMainScreen } />
             <Route path="/bebidas" component={ DrinksMainScreen } />
-            <Route path="/explorar" component={ Explore } />
-            <Route path="/explorar/comidas" component={ ExploreRecipies } />
-            <Route path="/explorar/bebidas" component={ ExploreDrinks } />
+            <Route exact path="/explorar" component={ Explore } />
+            <Route exact path="/explorar/comidas" component={ ExploreRecipies } />
+            <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
             <Route
               path="/explorar/comidas/ingredientes"
               component={ ExploreRecipiesIngredients }
@@ -40,9 +41,10 @@ function App() {
             <Route path="/perfil" component={ Profile } />
             <Route path="/receitas-feitas" component={ RecipiesDone } />
             <Route path="/receitas-favoritas" component={ RecipiesFavorites } />
+            <Route path="*" component={ NotFound } />
           </Switch>
         </BrowserRouter>
-      </MealsProvider>
+      </ApplicationProvider>
     </div>
   );
 }

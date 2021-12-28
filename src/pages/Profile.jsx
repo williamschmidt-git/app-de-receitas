@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 function Profile({ history }) {
   const { user } = localStorage;
@@ -8,6 +9,7 @@ function Profile({ history }) {
 
   return (
     <div data-testid="page-title">
+      <Header pageName="Perfil" />
       <h2 data-testid="profile-email">
         { parseUser.email }
       </h2>

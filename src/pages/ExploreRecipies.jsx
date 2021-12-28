@@ -5,7 +5,7 @@ import Header from '../components/Header';
 function ExploreRecipies() {
   return (
     <div>
-      <Header />
+      <Header pageName="Explorar Comidas" />
       Explorar Comidas
       <Footer />
     </div>

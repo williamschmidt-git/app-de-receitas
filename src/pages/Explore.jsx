@@ -6,7 +6,7 @@ import Header from '../components/Header';
 function Explore({ history }) {
   return (
     <div>
-      <Header />
+      <Header pageName="Explorar" />
       <button
         type="button"
         data-testid="explore-food"

@@ -1,21 +1,68 @@
-import React from 'react';
-import { fetchMealsFirstLetter,
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import {
   fetchMealsIngredients,
-  fetchMealsName } from '../services/fetchMeals';
-// import MealsContext from '../context/MealsContext';
+  fetchMealsName,
+  fetchMealsFirstLetter,
+  fetchDrinksIngredients,
+  fetchDrinksName,
+  fetchDrinksFirstLetter,
+} from '../services/helpers';
 
-function HeaderSearchBar() {
-  // const { searchInput, setSearchInput } = useContext(MealsContext);
+function HeaderSearchBar({ history }) {
+  const [typedText, setTypedText] = useState('');
+  const [selectedRadio, setSelectedRadio] = useState('');
+  const { location: { pathname } } = useHistory();
 
-  const handleClick = ({ target }) => {
-    if (target.checked && target.name === 'ingredients') {
-      return fetchMealsIngredients();
+  const mealsRequest = async () => {
+    if (selectedRadio === 'ingredient') {
+      const responseAPI = await fetchMealsIngredients(typedText);
+      console.log(responseAPI);
     }
-    if (target.checked && target.name === 'name') {
-      return fetchMealsName();
+    if (selectedRadio === 'name') {
+      const responseAPI = await fetchMealsName(typedText);
+      console.log(responseAPI);
     }
-    if (target.checked && target.name === 'first-letter') {
-      return fetchMealsFirstLetter();
+    if (selectedRadio === 'first-letter') {
+      if (typedText.length > 1) {
+        return global.alert('Sua busca deve conter somente 1 (um) caracter');
+      }
+      const responseAPI = await fetchMealsFirstLetter(typedText);
+    }
+  };
+
+  const drinksRequest = async () => {
+    if (selectedRadio === 'ingredient') {
+      const responseAPI = await fetchDrinksIngredients(typedText);
+      if (Object.values(responseAPI).length === 1) {
+        const drinkId = responseAPI.drinks[0].idDrink;
+        console.log(responseAPI);
+        // return history.push('/');
+      }
+    }
+    if (selectedRadio === 'name') {
+      return fetchDrinksName(typedText);
+    }
+    if (selectedRadio === 'first-letter') {
+      if (typedText.length > 1) {
+        return global.alert('Sua busca deve conter somente 1 (um) caracter');
+      }
+      return fetchDrinksFirstLetter(typedText);
+    }
+  };
+
+  const handleClick = () => {
+    if (pathname === '/comidas') return mealsRequest();
+    if (pathname === '/bebidas') return drinksRequest();
+  };
+
+  const handleChange = ({ target }) => {
+    const { value, type, id } = target;
+    if (type === 'text') {
+      setTypedText(value);
+    }
+    if (type === 'radio') {
+      setSelectedRadio(id);
     }
   };
 
@@ -24,15 +71,18 @@ function HeaderSearchBar() {
       <input
         type="text"
         data-testid="search-input"
-        // onChange={ handleChange }
+        value={ typedText }
+        onChange={ (event) => handleChange(event) }
       />
       <label htmlFor="ingredient">
         Ingrediente:
         <input
           type="radio"
           id="ingredient"
-          name="ingredient"
+          name="search-radio"
           data-testid="ingredient-search-radio"
+          value={ selectedRadio }
+          onClick={ (event) => handleChange(event) }
         />
       </label>
       <label htmlFor="name">
@@ -40,8 +90,10 @@ function HeaderSearchBar() {
         <input
           type="radio"
           id="name"
-          name="name"
+          name="search-radio"
           data-testid="name-search-radio"
+          value={ selectedRadio }
+          onClick={ (event) => handleChange(event) }
         />
       </label>
       <label htmlFor="first-letter">
@@ -49,8 +101,10 @@ function HeaderSearchBar() {
         <input
           type="radio"
           id="first-letter"
-          name="first-letter"
+          name="search-radio"
           data-testid="first-letter-search-radio"
+          value={ selectedRadio }
+          onClick={ (event) => handleChange(event) }
         />
       </label>
       <button
@@ -58,7 +112,7 @@ function HeaderSearchBar() {
         data-testid="exec-search-btn"
         onClick={ () => handleClick() }
       >
-        Pesquisar
+        Buscar
       </button>
     </div>
   );
