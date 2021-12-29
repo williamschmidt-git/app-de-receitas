@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import ApplicationContext from '../context/ApplicationContext';
 import {
   fetchMealsIngredients,
   fetchMealsName,
@@ -9,46 +10,104 @@ import {
   fetchDrinksFirstLetter,
 } from '../services/helpers';
 
-function HeaderSearchBar({ history }) {
+const NULL_RESPONSE = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
+
+function HeaderSearchBar() {
+  const { setMealsArray, setDrinksArray } = useContext(ApplicationContext);
   const [typedText, setTypedText] = useState('');
   const [selectedRadio, setSelectedRadio] = useState('');
-  const { location: { pathname } } = useHistory();
+  const history = useHistory();
+
+  const { location: { pathname } } = history;
+
+  const meals = {
+    ingredient: fetchMealsIngredients,
+    name: fetchMealsName,
+    firstLetter: fetchMealsFirstLetter,
+  };
+
+  const drinks = {
+    ingredient: fetchDrinksIngredients,
+    name: fetchDrinksName,
+    firstLetter: fetchDrinksFirstLetter,
+  };
 
   const mealsRequest = async () => {
-    if (selectedRadio === 'ingredient') {
-      const responseAPI = await fetchMealsIngredients(typedText);
-      console.log(responseAPI);
+    const isFirstLetter = selectedRadio === 'firstLetter';
+    const invalidLength = typedText.length > 1;
+    if (isFirstLetter && invalidLength) {
+      return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
-    if (selectedRadio === 'name') {
-      const responseAPI = await fetchMealsName(typedText);
-      console.log(responseAPI);
+    const responseAPI = await meals[selectedRadio](typedText);
+    if (responseAPI.meals === null) {
+      return global.alert(NULL_RESPONSE);
     }
-    if (selectedRadio === 'first-letter') {
-      if (typedText.length > 1) {
-        return global.alert('Sua busca deve conter somente 1 (um) caracter');
-      }
-      const responseAPI = await fetchMealsFirstLetter(typedText);
+    if (responseAPI.meals.length === 1) {
+      const mealID = responseAPI.meals[0].idMeal;
+      return history.push(`/comidas/${mealID}`);
     }
+    setMealsArray(responseAPI.meals);
+    // console.log(meals[selectedRadio]);
+    // if (selectedRadio === 'ingredient') {
+    //   const responseAPI = await fetchMealsIngredients(typedText);
+    //   if (responseAPI.meals.length === 1) {
+    //     const mealID = responseAPI.meals[0].idMeal;
+    //     return history.push(`/comidas/${mealID}`);
+    //   }
+    // }
+    // if (selectedRadio === 'name') {
+    //   const responseAPI = await fetchMealsName(typedText);
+    // }
+    // if (selectedRadio === 'first-letter') {
+    //   if (typedText.length > 1) {
+    //     return global.alert('Sua busca deve conter somente 1 (um) caracter');
+    //   }
+    //   const responseAPI = await fetchMealsFirstLetter(typedText);
+    // }
   };
 
   const drinksRequest = async () => {
-    if (selectedRadio === 'ingredient') {
-      const responseAPI = await fetchDrinksIngredients(typedText);
-      if (Object.values(responseAPI).length === 1) {
-        const drinkId = responseAPI.drinks[0].idDrink;
-        console.log(responseAPI);
-        // return history.push('/');
-      }
+    const isFirstLetter = selectedRadio === 'firstLetter';
+    const invalidLength = typedText.length > 1;
+    if (isFirstLetter && invalidLength) {
+      return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
-    if (selectedRadio === 'name') {
-      return fetchDrinksName(typedText);
+    const responseAPI = await drinks[selectedRadio](typedText);
+    if (responseAPI.drinks === null) {
+      return global.alert(NULL_RESPONSE);
     }
-    if (selectedRadio === 'first-letter') {
-      if (typedText.length > 1) {
-        return global.alert('Sua busca deve conter somente 1 (um) caracter');
-      }
-      return fetchDrinksFirstLetter(typedText);
+    if (responseAPI.drinks.length === 1) {
+      const drinkID = responseAPI.drinks[0].idDrink;
+      return history.push(`/bebidas/${drinkID}`);
     }
+    setDrinksArray(responseAPI.drinks);
+    // const responseAPI = await drinks[selectedRadio](typedText);
+    // console.log(responseAPI);
+    // if (selectedRadio === 'ingredient') {
+    //   const responseAPI = await fetchDrinksIngredients(typedText);
+    //   if (responseAPI.drinks === null) {
+    //     return global.alert(NULL_RESPONSE);
+    //   }
+    //   if (responseAPI.drinks.length === 1) {
+    //     const drinkID = responseAPI.drinks[0].idDrink;
+    //     return history.push(`/bebidas/${drinkID}`);
+    //   }
+    // }
+    // if (selectedRadio === 'name') {
+    //   const responseAPI = await fetchDrinksName(typedText);
+    //   if (responseAPI.drinks === null) {
+    //     return global.alert(NULL_RESPONSE);
+    //   }
+    // }
+    // if (selectedRadio === 'first-letter') {
+    //   if (typedText.length > 1) {
+    //     return global.alert('Sua busca deve conter somente 1 (um) caracter');
+    //   }
+    //   const responseAPI = await fetchDrinksFirstLetter(typedText);
+    //   if (responseAPI.drinks === null) {
+    //     return global.alert(NULL_RESPONSE);
+    //   }
+    // }
   };
 
   const handleClick = () => {
@@ -96,11 +155,11 @@ function HeaderSearchBar({ history }) {
           onClick={ (event) => handleChange(event) }
         />
       </label>
-      <label htmlFor="first-letter">
+      <label htmlFor="firstLetter">
         Primeira Letra:
         <input
           type="radio"
-          id="first-letter"
+          id="firstLetter"
           name="search-radio"
           data-testid="first-letter-search-radio"
           value={ selectedRadio }

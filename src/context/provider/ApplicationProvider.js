@@ -1,9 +1,17 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import MealsContext from '../ApplicationContext';
 
 function ApplicationProvider({ children }) {
-  const contextValue = {};
+  const [mealsArray, setMealsArray] = useState([]);
+  const [drinksArray, setDrinksArray] = useState([]);
+
+  const contextValue = {
+    mealsArray,
+    setMealsArray,
+    drinksArray,
+    setDrinksArray,
+  };
 
   return (
     <MealsContext.Provider
