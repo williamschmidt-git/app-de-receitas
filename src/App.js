@@ -16,6 +16,10 @@ import ExploreRecipiesArea from './pages/ExploreRecipiesArea';
 import Explore from './pages/Explore';
 import ApplicationProvider from './context/provider/ApplicationProvider';
 import NotFound from './pages/NotFound';
+import MealsInProgress from './pages/MealsInProgress';
+import DrinksInProgress from './pages/DrinksInProgress';
+import ScreenMealDetails from './pages/ScreenMealDetails';
+import ScreenDrinkDetails from './pages/ScreenDrinkDetails';
 
 function App() {
   return (
@@ -24,8 +28,12 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={ Login } />
-            <Route path="/comidas" component={ RecipesMainScreen } />
-            <Route path="/bebidas" component={ DrinksMainScreen } />
+            <Route exact path="/comidas" component={ RecipesMainScreen } />
+            <Route exact path="/bebidas" component={ DrinksMainScreen } />
+            <Route exact path="/comidas/:id" component={ ScreenMealDetails } />
+            <Route exact path="/bebidas/:id" component={ ScreenDrinkDetails } />
+            <Route path="/comidas/:id/in-progress" component={ MealsInProgress } />
+            <Route path="/bebidas/:id/in-progress" component={ DrinksInProgress } />
             <Route exact path="/explorar" component={ Explore } />
             <Route exact path="/explorar/comidas" component={ ExploreRecipies } />
             <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />

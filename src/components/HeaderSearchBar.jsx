@@ -47,23 +47,6 @@ function HeaderSearchBar() {
       return history.push(`/comidas/${mealID}`);
     }
     setMealsArray(responseAPI.meals);
-    // console.log(meals[selectedRadio]);
-    // if (selectedRadio === 'ingredient') {
-    //   const responseAPI = await fetchMealsIngredients(typedText);
-    //   if (responseAPI.meals.length === 1) {
-    //     const mealID = responseAPI.meals[0].idMeal;
-    //     return history.push(`/comidas/${mealID}`);
-    //   }
-    // }
-    // if (selectedRadio === 'name') {
-    //   const responseAPI = await fetchMealsName(typedText);
-    // }
-    // if (selectedRadio === 'first-letter') {
-    //   if (typedText.length > 1) {
-    //     return global.alert('Sua busca deve conter somente 1 (um) caracter');
-    //   }
-    //   const responseAPI = await fetchMealsFirstLetter(typedText);
-    // }
   };
 
   const drinksRequest = async () => {
@@ -81,33 +64,6 @@ function HeaderSearchBar() {
       return history.push(`/bebidas/${drinkID}`);
     }
     setDrinksArray(responseAPI.drinks);
-    // const responseAPI = await drinks[selectedRadio](typedText);
-    // console.log(responseAPI);
-    // if (selectedRadio === 'ingredient') {
-    //   const responseAPI = await fetchDrinksIngredients(typedText);
-    //   if (responseAPI.drinks === null) {
-    //     return global.alert(NULL_RESPONSE);
-    //   }
-    //   if (responseAPI.drinks.length === 1) {
-    //     const drinkID = responseAPI.drinks[0].idDrink;
-    //     return history.push(`/bebidas/${drinkID}`);
-    //   }
-    // }
-    // if (selectedRadio === 'name') {
-    //   const responseAPI = await fetchDrinksName(typedText);
-    //   if (responseAPI.drinks === null) {
-    //     return global.alert(NULL_RESPONSE);
-    //   }
-    // }
-    // if (selectedRadio === 'first-letter') {
-    //   if (typedText.length > 1) {
-    //     return global.alert('Sua busca deve conter somente 1 (um) caracter');
-    //   }
-    //   const responseAPI = await fetchDrinksFirstLetter(typedText);
-    //   if (responseAPI.drinks === null) {
-    //     return global.alert(NULL_RESPONSE);
-    //   }
-    // }
   };
 
   const handleClick = () => {
