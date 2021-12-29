@@ -5,7 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchImage from '../images/searchIcon.svg';
 import HeaderSearchBar from './HeaderSearchBar';
 
-function Header({ pageName, history }) {
+function Header({ pageName }) {
   const [isHiddenSearchBar, setSearchBar] = useState(false);
   const { location: { pathname } } = useHistory();
   let toRenderSearchIcon = false;
@@ -44,7 +44,7 @@ function Header({ pageName, history }) {
       ) : (
         null
       )}
-      {isHiddenSearchBar && <HeaderSearchBar history={ history } />}
+      {isHiddenSearchBar && <HeaderSearchBar />}
     </header>
   );
 }
