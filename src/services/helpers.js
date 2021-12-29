@@ -33,3 +33,15 @@ export const fetchDrinksFirstLetter = (primeiraLetra) => {
     .then((response) => response.json());
   return responseAPI;
 };
+
+export const fetchMeals = () => {
+  const responseAPI = fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+    .then((response) => response.json());
+  return responseAPI;
+};
+
+export const fetchDrinks = () => {
+  const responseAPI = fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+    .then((response) => response.json());
+  return responseAPI;
+};
