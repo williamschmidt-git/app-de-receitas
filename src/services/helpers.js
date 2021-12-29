@@ -57,3 +57,15 @@ export const fetchCategoriesDrinks = async () => {
     .then((response) => response.json());
   return responseAPI;
 };
+
+export const fetchByMealCategory = (categoryName) => {
+  const responseAPI = fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`)
+    .then((response) => response.json());
+  return responseAPI;
+};
+
+export const fetchByDrinkCategory = (categoryName) => {
+  const responseAPI = fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryName}`)
+    .then((response) => response.json());
+  return responseAPI;
+};
