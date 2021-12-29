@@ -14,11 +14,12 @@ function RecipesMainScreen() {
   const recipesToRender = mealsArray
     .filter((meal, index) => index <= MAX_RECIPES && meal);
 
+  const requestAPI = async () => {
+    const responseAPI = await fetchMeals();
+    setMealsArray(responseAPI.meals);
+  };
+
   useEffect(() => {
-    const requestAPI = async () => {
-      const responseAPI = await fetchMeals();
-      setMealsArray(responseAPI.meals);
-    };
     requestAPI();
   }, []);
 

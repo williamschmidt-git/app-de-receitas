@@ -14,13 +14,15 @@ function DrinksMainScreen() {
   const recipesToRender = drinksArray
     .filter((drink, index) => index <= MAX_RECIPES && drink);
 
+  const requestAPI = async () => {
+    const responseAPI = await fetchDrinks();
+    setDrinksArray(responseAPI.drinks);
+  };
+
   useEffect(() => {
-    const requestAPI = async () => {
-      const responseAPI = await fetchDrinks();
-      setDrinksArray(responseAPI.drinks);
-    };
     requestAPI();
   }, []);
+
   return (
     <div>
       <Header pageName="Bebidas" />

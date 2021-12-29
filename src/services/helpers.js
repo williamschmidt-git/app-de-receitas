@@ -45,3 +45,15 @@ export const fetchDrinks = () => {
     .then((response) => response.json());
   return responseAPI;
 };
+
+export const fetchCategoriesMeals = async () => {
+  const responseAPI = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
+    .then((response) => response.json());
+  return responseAPI;
+};
+
+export const fetchCategoriesDrinks = async () => {
+  const responseAPI = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
+    .then((response) => response.json());
+  return responseAPI;
+};

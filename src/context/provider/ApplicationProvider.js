@@ -5,12 +5,18 @@ import MealsContext from '../ApplicationContext';
 function ApplicationProvider({ children }) {
   const [mealsArray, setMealsArray] = useState([]);
   const [drinksArray, setDrinksArray] = useState([]);
+  const [mealsCategory, setMealsCategory] = useState([]);
+  const [drinksCategory, setDrinksCategory] = useState([]);
 
   const contextValue = {
     mealsArray,
     setMealsArray,
     drinksArray,
     setDrinksArray,
+    mealsCategory,
+    setMealsCategory,
+    drinksCategory,
+    setDrinksCategory,
   };
 
   return (
