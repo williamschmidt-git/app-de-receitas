@@ -1,19 +1,43 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import ApplicationContext from '../context/ApplicationContext';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import ButtonsMealsSearch from '../components/ButtonsMealsSearch';
+import { fetchMeals } from '../services/helpers';
 
 const MAX_RECIPES = 11;
 
 function RecipesMainScreen() {
   const history = useHistory();
-  const { mealsArray } = useContext(ApplicationContext);
-  const recipesToRender = mealsArray
-    .filter((meal, index) => index <= MAX_RECIPES && meal);
+  const { mealsArray, setMealsArray,
+    recipesByMealsCategory, setArrayToRender,
+    changeArrayToRender } = useContext(ApplicationContext);
+  const recipesToRender = changeArrayToRender
+    ? recipesByMealsCategory.filter((meal, index) => index <= MAX_RECIPES && meal)
+    : mealsArray.filter((meal, index) => index <= MAX_RECIPES && meal);
+
+  const requestAPI = async () => {
+    const responseAPI = await fetchMeals();
+    setMealsArray(responseAPI.meals);
+  };
+
+  useEffect(() => {
+    requestAPI();
+  }, []);
+
+  useEffect(() => {
+    if (recipesByMealsCategory.length === 0) {
+      setArrayToRender(false);
+    } else {
+      setArrayToRender(true);
+    }
+  }, [recipesByMealsCategory]);
+
   return (
     <div>
       <Header pageName="Comidas" />
+      <ButtonsMealsSearch />
       {recipesToRender.map((recipe, index) => (
         <button
           type="button"
