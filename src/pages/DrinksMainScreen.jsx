@@ -47,15 +47,22 @@ function DrinksMainScreen() {
           type="button"
           key={ recipe.idDrink }
           data-testid={ `${index}-recipe-card` }
+          name={ recipe.idDrink }
           onClick={ ({ target }) => history.push(`/bebidas/${target.name}`) }
         >
           <img
             style={ { height: '50px', width: '50px' } }
             src={ recipe.strDrinkThumb }
+            name={ recipe.idDrink }
             alt="Drink"
             data-testid={ `${index}-card-img` }
           />
-          <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
+          <p
+            data-testid={ `${index}-card-name` }
+            name={ recipe.idDrink }
+          >
+            {recipe.strDrink}
+          </p>
         </button>
       ))}
       <Footer />
