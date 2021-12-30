@@ -69,3 +69,15 @@ export const fetchByDrinkCategory = (categoryName) => {
     .then((response) => response.json());
   return responseAPI;
 };
+
+export const fetchMealsRandom = () => {
+  const responseAPI = fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+    .then((response) => response.json());
+  return responseAPI;
+};
+
+export const fetchDrinksRandom = () => {
+  const responseAPI = fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+    .then((response) => response.json());
+  return responseAPI;
+};

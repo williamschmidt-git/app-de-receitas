@@ -5,8 +5,10 @@ import { fetchCategoriesMeals, fetchByMealCategory } from '../services/helpers';
 const MAX_CATEGORIES = 4;
 
 function ButtonsMealsSearch() {
-  const { mealsCategory,
-    setMealsCategory, setMealsArray } = useContext(ApplicationContext);
+  const { mealsCategory, setMealsCategory,
+    setMealsRecipes,
+    setArrayToRender, changeArrayToRender,
+    mealSelected, setMealSelected } = useContext(ApplicationContext);
 
   const requestAPI = async () => {
     const responseAPI = await fetchCategoriesMeals();
@@ -19,12 +21,16 @@ function ButtonsMealsSearch() {
 
   const requestByMealCategory = async (categoryName) => {
     const responseByCategoryName = await fetchByMealCategory(categoryName);
-    console.log(responseByCategoryName);
-    setMealsArray(responseByCategoryName.meals);
+    setMealsRecipes(responseByCategoryName.meals);
+    setMealSelected(categoryName);
   };
 
   const categoriesToRender = mealsCategory
     .filter(({ strCategory }, index) => index <= MAX_CATEGORIES && strCategory);
+
+  // useEffect(() => {
+  //   requestByMealCategory('Beef');
+  // }, []);
 
   return (
     <div>
@@ -34,7 +40,13 @@ function ButtonsMealsSearch() {
           key={ strCategory }
           name={ strCategory }
           data-testid={ `${strCategory}-category-filter` }
-          onClick={ ({ target }) => requestByMealCategory(target.name) }
+          onClick={ ({ target }) => {
+            if (target.name === mealSelected) {
+              setArrayToRender(!changeArrayToRender);
+            } else {
+              requestByMealCategory(target.name);
+            }
+          } }
         >
           {strCategory}
         </button>

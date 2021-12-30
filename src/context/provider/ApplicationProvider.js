@@ -7,6 +7,9 @@ function ApplicationProvider({ children }) {
   const [drinksArray, setDrinksArray] = useState([]);
   const [mealsCategory, setMealsCategory] = useState([]);
   const [drinksCategory, setDrinksCategory] = useState([]);
+  const [recipesByMealsCategory, setMealsRecipes] = useState([]);
+  const [changeArrayToRender, setArrayToRender] = useState(false);
+  const [mealSelected, setMealSelected] = useState('');
 
   const contextValue = {
     mealsArray,
@@ -17,6 +20,12 @@ function ApplicationProvider({ children }) {
     setMealsCategory,
     drinksCategory,
     setDrinksCategory,
+    recipesByMealsCategory,
+    setMealsRecipes,
+    changeArrayToRender,
+    setArrayToRender,
+    mealSelected,
+    setMealSelected,
   };
 
   return (

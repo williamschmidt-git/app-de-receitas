@@ -10,9 +10,12 @@ const MAX_RECIPES = 11;
 
 function RecipesMainScreen() {
   const history = useHistory();
-  const { mealsArray, setMealsArray } = useContext(ApplicationContext);
-  const recipesToRender = mealsArray
-    .filter((meal, index) => index <= MAX_RECIPES && meal);
+  const { mealsArray, setMealsArray,
+    recipesByMealsCategory, setArrayToRender,
+    changeArrayToRender } = useContext(ApplicationContext);
+  const recipesToRender = changeArrayToRender
+    ? recipesByMealsCategory.filter((meal, index) => index <= MAX_RECIPES && meal)
+    : mealsArray.filter((meal, index) => index <= MAX_RECIPES && meal);
 
   const requestAPI = async () => {
     const responseAPI = await fetchMeals();
@@ -22,6 +25,10 @@ function RecipesMainScreen() {
   useEffect(() => {
     requestAPI();
   }, []);
+
+  useEffect(() => {
+    setArrayToRender(true);
+  }, [recipesByMealsCategory]);
 
   return (
     <div>
