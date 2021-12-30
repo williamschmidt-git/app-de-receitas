@@ -8,8 +8,10 @@ function ApplicationProvider({ children }) {
   const [mealsCategory, setMealsCategory] = useState([]);
   const [drinksCategory, setDrinksCategory] = useState([]);
   const [recipesByMealsCategory, setMealsRecipes] = useState([]);
+  const [recipesByDrinkCategory, setDrinksRecipes] = useState([]);
   const [changeArrayToRender, setArrayToRender] = useState(false);
   const [mealSelected, setMealSelected] = useState('');
+  const [drinkSelected, setDrinkSelected] = useState('');
 
   const contextValue = {
     mealsArray,
@@ -22,10 +24,14 @@ function ApplicationProvider({ children }) {
     setDrinksCategory,
     recipesByMealsCategory,
     setMealsRecipes,
+    recipesByDrinkCategory,
+    setDrinksRecipes,
     changeArrayToRender,
     setArrayToRender,
     mealSelected,
     setMealSelected,
+    drinkSelected,
+    setDrinkSelected,
   };
 
   return (

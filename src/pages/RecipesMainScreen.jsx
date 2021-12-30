@@ -27,7 +27,11 @@ function RecipesMainScreen() {
   }, []);
 
   useEffect(() => {
-    setArrayToRender(true);
+    if (recipesByMealsCategory.length === 0) {
+      setArrayToRender(false);
+    } else {
+      setArrayToRender(true);
+    }
   }, [recipesByMealsCategory]);
 
   return (

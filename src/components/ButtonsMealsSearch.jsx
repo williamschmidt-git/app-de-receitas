@@ -28,10 +28,6 @@ function ButtonsMealsSearch() {
   const categoriesToRender = mealsCategory
     .filter(({ strCategory }, index) => index <= MAX_CATEGORIES && strCategory);
 
-  // useEffect(() => {
-  //   requestByMealCategory('Beef');
-  // }, []);
-
   return (
     <div>
       {categoriesToRender.map(({ strCategory }) => (

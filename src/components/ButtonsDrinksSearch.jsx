@@ -5,7 +5,15 @@ import { fetchCategoriesDrinks, fetchByDrinkCategory } from '../services/helpers
 const MAX_CATEGORIES = 4;
 
 function ButtonsDrinksSearch() {
-  const { drinksCategory, setDrinksArray, setDrinksCategory } = useContext(ApplicationContext);
+  const {
+    drinksCategory,
+    setDrinksRecipes,
+    setDrinksCategory,
+    drinkSelected,
+    setDrinkSelected,
+    setArrayToRender,
+    changeArrayToRender,
+  } = useContext(ApplicationContext);
 
   const requestAPI = async () => {
     const responseAPI = await fetchCategoriesDrinks();
@@ -21,8 +29,8 @@ function ButtonsDrinksSearch() {
 
   const requestByDrinkCategory = async (categoryName) => {
     const responseByCategoryName = await fetchByDrinkCategory(categoryName);
-    console.log(responseByCategoryName);
-    setDrinksArray(responseByCategoryName.drinks);
+    setDrinksRecipes(responseByCategoryName.drinks);
+    setDrinkSelected(categoryName);
   };
 
   return (
@@ -33,7 +41,13 @@ function ButtonsDrinksSearch() {
           key={ strCategory }
           name={ strCategory }
           data-testid={ `${strCategory}-category-filter` }
-          onClick={ ({ target }) => requestByDrinkCategory(target.name) }
+          onClick={ ({ target }) => {
+            if (target.name === drinkSelected) {
+              setArrayToRender(!changeArrayToRender);
+            } else {
+              requestByDrinkCategory(target.name);
+            }
+          } }
         >
           { strCategory }
         </button>

@@ -10,9 +10,16 @@ const MAX_RECIPES = 11;
 
 function DrinksMainScreen() {
   const history = useHistory();
-  const { drinksArray, setDrinksArray } = useContext(ApplicationContext);
-  const recipesToRender = drinksArray
-    .filter((drink, index) => index <= MAX_RECIPES && drink);
+  const {
+    drinksArray,
+    setDrinksArray,
+    setArrayToRender,
+    changeArrayToRender,
+    recipesByDrinkCategory,
+  } = useContext(ApplicationContext);
+  const recipesToRender = changeArrayToRender
+    ? recipesByDrinkCategory.filter((drink, index) => index <= MAX_RECIPES && drink)
+    : drinksArray.filter((drink, index) => index <= MAX_RECIPES && drink);
 
   const requestAPI = async () => {
     const responseAPI = await fetchDrinks();
@@ -22,6 +29,14 @@ function DrinksMainScreen() {
   useEffect(() => {
     requestAPI();
   }, []);
+
+  useEffect(() => {
+    if (recipesByDrinkCategory.length === 0) {
+      setArrayToRender(false);
+    } else {
+      setArrayToRender(true);
+    }
+  }, [recipesByDrinkCategory]);
 
   return (
     <div>
