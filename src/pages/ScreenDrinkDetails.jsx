@@ -31,14 +31,12 @@ function ScreenDrinkDetails() {
         data-testid="share-btn"
       >
         SHARE
-
       </button>
       <button
         type="button"
         data-testid="favorite-btn"
       >
         FAVORITE
-
       </button>
       <h4 data-testid="recipe-category">{ selectedDrink.strCategory }</h4>
       {/* {console.log(Object.entries(selectedDrink))} */}

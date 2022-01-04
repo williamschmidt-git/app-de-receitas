@@ -23,7 +23,7 @@ import ScreenDrinkDetails from './pages/ScreenDrinkDetails';
 
 function App() {
   return (
-    <div className="meals">
+    <div className="app-container">
       <ApplicationProvider>
         <BrowserRouter>
           <Switch>

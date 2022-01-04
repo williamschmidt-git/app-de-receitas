@@ -6,7 +6,6 @@ function ScreenMealDetails() {
   const { id } = useParams();
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
-    console.log(responseAPI.meals);
     return responseAPI;
   };
 
