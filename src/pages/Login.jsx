@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 function Login({ history }) {
   const [password, setPassword] = useState('');
@@ -16,7 +17,8 @@ function Login({ history }) {
     && email.includes('@')
     && password.length > passwordLength) {
       return false;
-    } return true;
+    }
+    return true;
   };
 
   const saveOnLocalStorage = () => {
