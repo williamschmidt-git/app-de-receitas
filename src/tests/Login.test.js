@@ -19,7 +19,7 @@ describe('Verifica comportamento da página de Login', () => {
   });
 
   it('Verifica se o email e a senha são validados corretamente', () => {
-    renderWithRouter(<Login />);
+    const { history } = renderWithRouter(<Login />);
 
     const inputEmail = screen.getByPlaceholderText(/digite o email/i);
     const inputPassword = screen.getByPlaceholderText(/digite senha/i);
@@ -31,7 +31,11 @@ describe('Verifica comportamento da página de Login', () => {
     expect(buttonSend).toHaveAttribute('disabled');
 
     userEvent.type(inputEmail, 'estudante@estudante.com');
-    userEvent.type(inputPassword, '123456');
-    expect(buttonSend).not.toHaveAttribute('disabled', false);
+    userEvent.type(inputPassword, '1234567');
+    expect(buttonSend).not.toHaveAttribute('disabled');
+
+    userEvent.click(buttonSend);
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/comidas');
   });
 });
