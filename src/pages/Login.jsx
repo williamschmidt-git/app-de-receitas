@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
-function Login({ history }) {
+function Login() {
+  const history = useHistory();
+
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
@@ -16,7 +18,8 @@ function Login({ history }) {
     && email.includes('@')
     && password.length > passwordLength) {
       return false;
-    } return true;
+    }
+    return true;
   };
 
   const saveOnLocalStorage = () => {
@@ -59,11 +62,5 @@ function Login({ history }) {
     </form>
   );
 }
-
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};
 
 export default Login;
