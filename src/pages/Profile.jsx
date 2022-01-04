@@ -1,17 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function Profile({ history }) {
-  const { user } = localStorage;
-  const parseUser = JSON.parse(user);
+function Profile() {
+  const history = useHistory();
+  let isValidUser = false;
+  let parseUser;
+
+  if (localStorage.length !== 0) {
+    const { user } = localStorage;
+    parseUser = JSON.parse(user);
+    isValidUser = true;
+  }
 
   return (
     <div data-testid="page-title">
       <Header pageName="Perfil" />
       <h2 data-testid="profile-email">
-        { parseUser.email }
+        {isValidUser ? (
+          parseUser.email
+        ) : null}
       </h2>
       <button
         type="button"
@@ -51,11 +60,5 @@ function Profile({ history }) {
     </div>
   );
 }
-
-Profile.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};
 
 export default Profile;
