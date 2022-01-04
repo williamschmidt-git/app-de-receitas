@@ -18,20 +18,20 @@ describe('Verifica comportamento da página de Login', () => {
     expect(buttonSend).toHaveAttribute('disabled');
   });
 
-  // it('Verifica se o email e a senha são validados corretamente', () => {
-  //   renderWithRouter(Login);
+  it('Verifica se o email e a senha são validados corretamente', () => {
+    renderWithRouter(<Login />);
 
-  //   const inputEmail = screen.findByText(/email/i);
-  //   const inputPassword = screen.findByText(/password/i);
-  //   const buttonSend = screen.findByText(/send/i);
+    const inputEmail = screen.getByPlaceholderText(/digite o email/i);
+    const inputPassword = screen.getByPlaceholderText(/digite senha/i);
+    const buttonSend = screen.getByRole('button', { name: /entrar/i });
 
-  //   userEvent.type(inputEmail, 'estudante.com');
-  //   expect(buttonSend).toHaveAttribute('disabled', true);
-  //   userEvent.type(inputPassword, '12345');
-  //   expect(buttonSend).toHaveAttribute('disabled', true);
+    userEvent.type(inputEmail, 'estudante.com');
+    expect(buttonSend).toHaveAttribute('disabled');
+    userEvent.type(inputPassword, '12345');
+    expect(buttonSend).toHaveAttribute('disabled');
 
-  //   userEvent.type(inputEmail, 'estudante@estudante.com');
-  //   userEvent.type(inputPassword, '123456');
-  //   expect(buttonSend).not.toHaveAttribute('disabled', false);
-  // });
+    userEvent.type(inputEmail, 'estudante@estudante.com');
+    userEvent.type(inputPassword, '123456');
+    expect(buttonSend).not.toHaveAttribute('disabled', false);
+  });
 });
