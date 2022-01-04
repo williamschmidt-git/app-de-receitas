@@ -81,3 +81,15 @@ export const fetchDrinksRandom = () => {
     .then((response) => response.json());
   return responseAPI;
 };
+
+export const fetchMealId = (idMeal) => {
+  const responseAPI = fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`)
+    .then((response) => response.json());
+  return responseAPI;
+};
+
+export const fetchDrinkId = (idDrink) => {
+  const responseAPI = fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`)
+    .then((response) => response.json());
+  return responseAPI;
+};
