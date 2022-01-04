@@ -15,7 +15,7 @@ describe('Verifica comportamento da página de Login', () => {
     expect(inputEmail).toBeInTheDocument();
     expect(inputPassword).toBeInTheDocument();
     expect(buttonSend).toBeInTheDocument();
-    expect(buttonSend).toBeDisabled();
+    expect(buttonSend).toHaveAttribute('disabled');
   });
 
   // it('Verifica se o email e a senha são validados corretamente', () => {
@@ -32,6 +32,6 @@ describe('Verifica comportamento da página de Login', () => {
 
   //   userEvent.type(inputEmail, 'estudante@estudante.com');
   //   userEvent.type(inputPassword, '123456');
-  //   expect(buttonSend).toHaveAttribute('disabled', false);
+  //   expect(buttonSend).not.toHaveAttribute('disabled', false);
   // });
 });

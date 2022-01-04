@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function Explore({ history }) {
+function Explore() {
+  const history = useHistory();
+
   return (
     <div>
       <Header pageName="Explorar" />
@@ -25,11 +28,5 @@ function Explore({ history }) {
     </div>
   );
 }
-
-Explore.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};
 
 export default Explore;
