@@ -15,7 +15,7 @@ function ScreenDrinkDetails() {
     searchId();
   }, []);
 
-  console.log(Object.entries(selectedDrink).filter((keyName) => keyName[0].includes('strIngredient')));
+  // console.log(Object.entries(selectedDrink).filter((keyName) => keyName[0].includes('strIngredient')));
 
   return (
     <div>
