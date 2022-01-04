@@ -1,10 +1,12 @@
-import render, { screen } from '@testing-library/react';
+import React from 'react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import renderWithRouter from './renderWithRouter';
 import Login from '../pages/Login';
 
 describe('Verifica comportamento da página de Login', () => {
   it('Verifica se os inputs e o botão são renderizados na ṕágina', () => {
-    render(Login);
+    renderWithRouter(Login);
 
     const inputEmail = screen.findByText(/email/i);
     const inputPassword = screen.findByText(/password/i);
@@ -17,7 +19,7 @@ describe('Verifica comportamento da página de Login', () => {
   });
 
   it('Verifica se o email e a senha são validados corretamente', () => {
-    render(Login);
+    renderWithRouter(Login);
 
     const inputEmail = screen.findByText(/email/i);
     const inputPassword = screen.findByText(/password/i);
