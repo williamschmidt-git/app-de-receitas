@@ -15,7 +15,33 @@ function ScreenDrinkDetails() {
     searchId();
   }, []);
 
+<<<<<<< HEAD
+  const ingredientsArray = Object.entries(selectedDrink)
+    .filter((keyName) => keyName[0].includes('strIngredient'))
+    .filter((i) => !i.includes(null));
+
+  const measureArray = Object.entries(selectedDrink)
+    .filter((keyName) => keyName[0].includes('strMeasure'))
+    .filter((i) => !i.includes(null));
+
+  console.log(ingredientsArray, measureArray);
+
+  // const newArray = ingredientsArray.map((e, index) => e.concat(measureArray[index]));
+  // console.log(newArray);
+
+  const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
+
+  const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
+  // console.log(splicedArrayMeasurements);
+
+  const arrayOfIngredientsAndMeasurements = splicedArrayIngredients.reduce((acc, curr, index) => {
+    acc.push(curr.concat(splicedArrayMeasurements[index]));
+    return acc;
+  }, []);
+  console.log(arrayOfIngredientsAndMeasurements);
+=======
   // console.log(Object.entries(selectedDrink).filter((keyName) => keyName[0].includes('strIngredient')));
+>>>>>>> 7cb2928e44dd94e908fc4cc51e42481c0f42bdbe
 
   return (
     <div>
@@ -38,8 +64,26 @@ function ScreenDrinkDetails() {
       >
         FAVORITE
       </button>
+      <h3>Recipe:</h3>
+      <div>
+        {
+          arrayOfIngredientsAndMeasurements.map((e, index) => (
+            <div key={ index }>
+              <p data-testid={ `${index}-ingredient-name-and-measure` }>{`${e[0]} - ${e[1]}`}</p>
+            </div>
+          ))
+        }
+      </div>
+
       <h4 data-testid="recipe-category">{ selectedDrink.strCategory }</h4>
+      <div>
+        <h3>Instructions: </h3>
+        <p data-testid="instructions">{selectedDrink.strInstructions}</p>
+      </div>
       {/* {console.log(Object.entries(selectedDrink))} */}
+      {/* <button data-testid="start-recipe-btn" type="button">
+        Start Recipe
+      </button> */}
     </div>
   );
 }

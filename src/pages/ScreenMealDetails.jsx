@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import ApplicationContext from '../context/ApplicationContext';
 import { fetchMealId } from '../services/helpers';
 
 function ScreenMealDetails() {
   const { id } = useParams();
+
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
     return responseAPI;
