@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useContext } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { fetchDrinkId } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MealCarousel from '../components/MealCarousel';
+import ApplicationContext from '../context/ApplicationContext';
+import '../App.css';
 
 function ScreenDrinkDetails() {
-  const [selectedDrink, setSelectedDrink] = useState([]);
+  const history = useHistory();
+  const { selectedDrink, setSelectedDrink } = useContext(ApplicationContext);
   const { id } = useParams();
   const searchId = async () => {
     const responseAPI = await fetchDrinkId(id);
@@ -26,7 +29,7 @@ function ScreenDrinkDetails() {
     .filter((keyName) => keyName[0].includes('strMeasure'))
     .filter((i) => !i.includes(null));
 
-  console.log(ingredientsArray, measureArray);
+  // console.log(ingredientsArray, measureArray);
 
   // const newArray = ingredientsArray.map((e, index) => e.concat(measureArray[index]));
   // console.log(newArray);
@@ -41,7 +44,7 @@ function ScreenDrinkDetails() {
       acc.push(curr.concat(splicedArrayMeasurements[index]));
       return acc;
     }, []);
-  console.log(arrayOfIngredientsAndMeasurements);
+  // console.log(arrayOfIngredientsAndMeasurements);
 
   return (
     <div>
@@ -51,7 +54,7 @@ function ScreenDrinkDetails() {
         data-testid="recipe-photo"
         style={ { width: '40px', height: '40px' } }
       />
-      <h1 data-testid="recipe-title">{ selectedDrink.srtDrink }</h1>
+      <h1 data-testid="recipe-title">{ selectedDrink.strDrink }</h1>
       <button
         type="button"
         data-testid="share-btn"
@@ -82,15 +85,23 @@ function ScreenDrinkDetails() {
         }
       </div>
 
-      <h4 data-testid="recipe-category">{ selectedDrink.strCategory }</h4>
+      <h4 data-testid="recipe-category">{ `${selectedDrink.strCategory} - ${selectedDrink.strAlcoholic}` }</h4>
       <div>
         <h3>Instructions: </h3>
         <p data-testid="instructions">{selectedDrink.strInstructions}</p>
       </div>
       {/* {console.log(Object.entries(selectedDrink))} */}
-      {/* <button data-testid="start-recipe-btn" type="button">
-        Start Recipe
-      </button> */}
+      <MealCarousel />
+      <footer>
+        <button
+          data-testid="start-recipe-btn"
+          type="button"
+          onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+          className="button-start-recipe"
+        >
+          Iniciar Receita
+        </button>
+      </footer>
     </div>
   );
 }
