@@ -15,7 +15,6 @@ function ScreenDrinkDetails() {
     searchId();
   }, []);
 
-<<<<<<< HEAD
   const ingredientsArray = Object.entries(selectedDrink)
     .filter((keyName) => keyName[0].includes('strIngredient'))
     .filter((i) => !i.includes(null));
@@ -39,9 +38,6 @@ function ScreenDrinkDetails() {
     return acc;
   }, []);
   console.log(arrayOfIngredientsAndMeasurements);
-=======
-  // console.log(Object.entries(selectedDrink).filter((keyName) => keyName[0].includes('strIngredient')));
->>>>>>> 7cb2928e44dd94e908fc4cc51e42481c0f42bdbe
 
   return (
     <div>
