@@ -85,7 +85,11 @@ function ScreenDrinkDetails() {
         }
       </div>
 
-      <h4 data-testid="recipe-category">{ `${selectedDrink.strCategory} - ${selectedDrink.strAlcoholic}` }</h4>
+      <h4
+        data-testid="recipe-category"
+      >
+        { `${selectedDrink.strCategory} - ${selectedDrink.strAlcoholic}` }
+      </h4>
       <div>
         <h3>Instructions: </h3>
         <p data-testid="instructions">{selectedDrink.strInstructions}</p>

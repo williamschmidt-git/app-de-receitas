@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import ReactPlayer from 'react-player';
 import ApplicationContext from '../context/ApplicationContext';
 import { fetchMealId } from '../services/helpers';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -88,7 +89,7 @@ function ScreenMealDetails() {
         <h3>Instructions: </h3>
         <p data-testid="instructions">{selectedMeal.strInstructions}</p>
       </div>
-      <a data-testid="video" href={ selectedMeal.strYoutube }>lorem ipsum</a>
+      <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } />
       <DrinkCarousel />
       <footer>
         <button
