@@ -10,11 +10,6 @@
   width: 100%;
 }
 
-.rocksGlass {
-  animation: shake 1s infinite ease;
-  max-height: 80vh;
-}
-
 .footer {
   bottom: 0;
   position: fixed;
