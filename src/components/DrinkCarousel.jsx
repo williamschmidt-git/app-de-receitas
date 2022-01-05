@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from 'react';
 import { fetchDrinks } from '../services/helpers';
 import '../App.css';
@@ -23,15 +22,19 @@ function DrinkCarousel() {
   return (
     <div className="container">
       { renderDrinks.map((drink, index) => (
-        <div className="carousel">
-          <div className="image">
+        <div
+          className="carousel"
+          key={ drink.idDrink }
+        >
+          <div
+            className="image"
+          >
             <img
               style={ { height: '50px', width: '50px' } }
               src={ drink.strDrinkThumb }
               name={ drink.idDrink }
               alt="Drink"
               data-testid={ `${index}-recomendation-card` }
-              key={ drink.idDrink }
             />
           </div>
           <div className="info">
