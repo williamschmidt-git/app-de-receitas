@@ -24,14 +24,16 @@ function DrinkCarousel() {
     <div className="container">
       { renderDrinks.map((drink, index) => (
         <div className="carousel">
-          <div className="image">
+          <div
+            className="image"
+            key={ drink.idDrink }
+          >
             <img
               style={ { height: '50px', width: '50px' } }
               src={ drink.strDrinkThumb }
               name={ drink.idDrink }
               alt="Drink"
               data-testid={ `${index}-recomendation-card` }
-              key={ drink.idDrink }
             />
           </div>
           <div className="info">
