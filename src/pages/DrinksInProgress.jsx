@@ -19,11 +19,15 @@ function DrinksInProgress() {
 
   const ingredientsArray = Object.entries(selectedDrink)
     .filter((keyName) => keyName[0].includes('strIngredient'))
-    .filter((i) => !i.includes(null));
+    .filter((ingredient) => !ingredient.includes(null))
+    .filter((ingredient) => !ingredient.includes(''))
+    .filter((ingredient) => !ingredient.includes(' '));
 
   const measureArray = Object.entries(selectedDrink)
     .filter((keyName) => keyName[0].includes('strMeasure'))
-    .filter((i) => !i.includes(null));
+    .filter((ingredient) => !ingredient.includes(null))
+    .filter((ingredient) => !ingredient.includes(''))
+    .filter((ingredient) => !ingredient.includes(' '));
 
   const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
 
@@ -35,13 +39,11 @@ function DrinksInProgress() {
       return acc;
     }, []);
 
-  console.log(arrayOfIngredientsAndMeasurements);
-
   return (
     <div>
       <img
         src={ selectedDrink.strDrinkThumb }
-        alt={ selectedDrink.srtDrink }
+        alt={ selectedDrink.strDrink }
         data-testid="recipe-photo"
         style={ { width: '40px', height: '40px' } }
       />
@@ -62,7 +64,6 @@ function DrinksInProgress() {
       <div>
         {
           arrayOfIngredientsAndMeasurements.map((ingredient, index) => {
-            if (ingredient[0] === '' || ingredient[1] === '') return null;
             return (
               <div
                 key={ index }
