@@ -39,8 +39,6 @@ function MealsInProgress() {
       return acc;
     }, []);
 
-  console.log(selectedMeal);
-
   return (
     <div>
       <img
@@ -69,11 +67,14 @@ function MealsInProgress() {
             <div
               key={ index }
             >
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                data-testid={ `${index}-ingredient-step` }
+                name={ ingredient[0] }
+                onClick={ ({ target }) => console.log(target.name) }
+              />
             &nbsp;
-              <span
-                data-testid={ `data-testid=${index}-ingredient-step` }
-              >
+              <span>
                 {`${ingredient[0]} - ${ingredient[1]}`}
               </span>
             </div>

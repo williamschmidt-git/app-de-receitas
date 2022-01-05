@@ -13,29 +13,45 @@ function ScreenDrinkDetails() {
   const searchId = async () => {
     const responseAPI = await fetchDrinkId(id);
     setSelectedDrink(responseAPI.drinks[0]);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(responseAPI.drinks[0]));
   };
 
   useEffect(() => {
-    searchId();
+    const drinkRecipe = localStorage.getItem('inProgressRecipes');
+    const parseRecipe = JSON.parse(drinkRecipe);
+    if (!parseRecipe || !parseRecipe.idDrink !== id) {
+      searchId();
+    } else {
+      setSelectedDrink(parseRecipe);
+    }
   }, []);
 
   const ingredientsArray = Object.entries(selectedDrink)
     .filter((keyName) => keyName[0].includes('strIngredient'))
-    .filter((i) => !i.includes(null));
+    .filter((ingredient) => !ingredient.includes(null))
+    .filter((ingredient) => !ingredient.includes(''))
+    .filter((ingredient) => !ingredient.includes(' '));
 
   const measureArray = Object.entries(selectedDrink)
     .filter((keyName) => keyName[0].includes('strMeasure'))
-    .filter((i) => !i.includes(null));
+    .filter((ingredient) => !ingredient.includes(null))
+    .filter((ingredient) => !ingredient.includes(''))
+    .filter((ingredient) => !ingredient.includes(' '));
 
   const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
 
   const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
 
-  const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
-    .reduce((acc, curr, index) => {
-      acc.push(curr.concat(splicedArrayMeasurements[index]));
-      return acc;
-    }, []);
+  const arrayOfIngredientsAndMeasurements = () => {
+    const arrayToRender = splicedArrayIngredients
+      .reduce((acc, curr, index) => {
+        acc.push(curr.concat(splicedArrayMeasurements[index]));
+        return acc;
+      }, []);
+    localStorage.setItem('arrayOfIngredientsAndMeasurements',
+      JSON.stringify(arrayToRender));
+    return arrayToRender;
+  };
 
   return (
     <div>
@@ -61,7 +77,7 @@ function ScreenDrinkDetails() {
       <h3>Ingredientes:</h3>
       <div>
         {
-          arrayOfIngredientsAndMeasurements.map((e, index) => (
+          arrayOfIngredientsAndMeasurements().map((e, index) => (
             <div key={ index }>
               <p
                 data-testid={ `${index}-ingredient-name-and-measure` }
