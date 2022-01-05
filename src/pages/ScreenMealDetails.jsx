@@ -94,7 +94,7 @@ function ScreenMealDetails() {
         <button
           data-testid="start-recipe-btn"
           type="button"
-          onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+          onClick={ () => history.push(`/comidas/${id}/in-progress`) }
           className="button-start-recipe"
         >
           Iniciar Receita
