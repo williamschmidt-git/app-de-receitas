@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchDrinkId } from '../services/helpers';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import MealCarousel from '../components/MealCarousel';
 
 function ScreenDrinkDetails() {
   const [selectedDrink, setSelectedDrink] = useState([]);
@@ -15,7 +18,6 @@ function ScreenDrinkDetails() {
     searchId();
   }, []);
 
-<<<<<<< HEAD
   const ingredientsArray = Object.entries(selectedDrink)
     .filter((keyName) => keyName[0].includes('strIngredient'))
     .filter((i) => !i.includes(null));
@@ -34,14 +36,12 @@ function ScreenDrinkDetails() {
   const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
   // console.log(splicedArrayMeasurements);
 
-  const arrayOfIngredientsAndMeasurements = splicedArrayIngredients.reduce((acc, curr, index) => {
-    acc.push(curr.concat(splicedArrayMeasurements[index]));
-    return acc;
-  }, []);
+  const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
+    .reduce((acc, curr, index) => {
+      acc.push(curr.concat(splicedArrayMeasurements[index]));
+      return acc;
+    }, []);
   console.log(arrayOfIngredientsAndMeasurements);
-=======
-  // console.log(Object.entries(selectedDrink).filter((keyName) => keyName[0].includes('strIngredient')));
->>>>>>> 7cb2928e44dd94e908fc4cc51e42481c0f42bdbe
 
   return (
     <div>
@@ -56,14 +56,14 @@ function ScreenDrinkDetails() {
         type="button"
         data-testid="share-btn"
       >
-        SHARE
+        <img src={ shareIcon } alt="share" />
 
       </button>
       <button
         type="button"
         data-testid="favorite-btn"
       >
-        FAVORITE
+        <img src={ whiteHeartIcon } alt="favorite" />
 
       </button>
       <h3>Recipe:</h3>
@@ -71,7 +71,12 @@ function ScreenDrinkDetails() {
         {
           arrayOfIngredientsAndMeasurements.map((e, index) => (
             <div key={ index }>
-              <p data-testid={ `${index}-ingredient-name-and-measure` }>{`${e[0]} - ${e[1]}`}</p>
+              <p
+                data-testid={ `${index}-ingredient-name-and-measure` }
+              >
+                {`${e[0]} - ${e[1]}`}
+
+              </p>
             </div>
           ))
         }
