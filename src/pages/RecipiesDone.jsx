@@ -1,13 +1,20 @@
-import React from 'react';
-import Header from '../components/Header';
+// import React from 'react';
+// import Header from '../components/Header';
 
-function RecipiesDone() {
-  return (
-    <div>
-      <Header pageName="Receitas Feitas" />
-      Receitas Feitas
-    </div>
-  );
-}
+// const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+// const { type } = doneRecipes[0];
 
-export default RecipiesDone;
+// function RecipiesDone() {
+//   return (
+//     <div>
+//       <Header pageName="Receitas Feitas" />
+//       { type === 'comida' ?
+//         <img src={ doneRecipes[0].image }/>
+
+//       }
+
+//     </div>
+//   );
+// }
+
+// export default RecipiesDone;

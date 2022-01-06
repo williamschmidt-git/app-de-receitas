@@ -1,7 +1,7 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 .app-container {
@@ -19,4 +19,10 @@
   bottom: 0;
   position: fixed;
   width: 10%;
+}
+
+.footer {
+  bottom: 0;
+  position: fixed;
+  width: 90%;
 }
