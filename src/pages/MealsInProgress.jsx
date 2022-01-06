@@ -66,10 +66,10 @@ function MealsInProgress() {
           arrayOfIngredientsAndMeasurements.map((ingredient, index) => (
             <div
               key={ index }
+              data-testid={ `${index}-ingredient-step` }
             >
               <input
                 type="checkbox"
-                data-testid={ `${index}-ingredient-step` }
                 name={ ingredient[0] }
                 onClick={ ({ target }) => console.log(target.name) }
               />

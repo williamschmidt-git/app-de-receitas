@@ -1,33 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchDrinkId } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import ApplicationContext from '../context/ApplicationContext';
 
 function DrinksInProgress() {
-  const drinkInProgress = localStorage.getItem('inProgressRecipes');
-  const parseDrink = JSON.parse(drinkInProgress);
-  console.log(parseDrink);
-  const arrayOfIngredientsAndMeasurements = localStorage
-    .getItem('arrayOfIngredientsAndMeasurements');
-  const arrayToRender = JSON.parse(arrayOfIngredientsAndMeasurements);
-  console.log(arrayToRender);
+  const { selectedDrink, setSelectedDrink } = useContext(ApplicationContext);
+  const { id } = useParams();
 
-  let teste = false;
+  const searchId = async () => {
+    const responseAPI = await fetchDrinkId(id);
+    setSelectedDrink(responseAPI.drinks[0]);
+    // localStorage.setItem('inProgressRecipes', JSON.stringify(responseAPI.drinks[0]));
+  };
 
-  if (parseDrink === null || arrayToRender === null) {
-    teste = true;
-  }
+  useEffect(() => {
+    const drinkRecipe = localStorage.getItem('inProgressRecipes');
+    const parseRecipe = JSON.parse(drinkRecipe);
+    if (!parseRecipe || parseRecipe.idDrink !== id) {
+      searchId();
+    } else {
+      setSelectedDrink(parseRecipe);
+    }
+  }, []);
+
+  const ingredientsArray = Object.entries(selectedDrink)
+    .filter((keyName) => keyName[0].includes('strIngredient'))
+    .filter((ingredient) => !ingredient.includes(null))
+    .filter((ingredient) => !ingredient.includes(''))
+    .filter((ingredient) => !ingredient.includes(' '));
+
+  const measureArray = Object.entries(selectedDrink)
+    .filter((keyName) => keyName[0].includes('strMeasure'))
+    .filter((ingredient) => !ingredient.includes(null))
+    .filter((ingredient) => !ingredient.includes(''))
+    .filter((ingredient) => !ingredient.includes(' '));
+
+  const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
+
+  const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
+
+  const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
+    .reduce((acc, curr, index) => {
+      acc.push(curr.concat(splicedArrayMeasurements[index]));
+      return acc;
+    }, []);
 
   return (
     <div>
       <img
-        src={ parseDrink.strDrinkThumb }
-        alt={ parseDrink.strDrink }
+        src={ selectedDrink.strDrinkThumb }
+        alt={ selectedDrink.strDrink }
         data-testid="recipe-photo"
         style={ { width: '40px', height: '40px' } }
       />
-      <h1 data-testid="recipe-title">{ parseDrink.strDrink }</h1>
+      <h1 data-testid="recipe-title">{ selectedDrink.strDrink }</h1>
       <button
         type="button"
         data-testid="share-btn"
@@ -43,13 +71,13 @@ function DrinksInProgress() {
       <h3>Ingredientes:</h3>
       <div>
         {
-          arrayToRender.map((ingredient, index) => (
+          arrayOfIngredientsAndMeasurements.map((ingredient, index) => (
             <div
               key={ index }
+              data-testid={ `${index}-ingredient-step` }
             >
               <input
                 type="checkbox"
-                data-testid={ `${index}-ingredient-step` }
               />
             &nbsp;
               <span>
@@ -59,10 +87,10 @@ function DrinksInProgress() {
           ))
         }
       </div>
-      <h4 data-testid="recipe-category">{ parseDrink.strCategory }</h4>
+      <h4 data-testid="recipe-category">{ selectedDrink.strCategory }</h4>
       <div>
         <h3>Instructions: </h3>
-        <p data-testid="instructions">{parseDrink.strInstructions}</p>
+        <p data-testid="instructions">{selectedDrink.strInstructions}</p>
       </div>
       <button
         data-testid="finish-recipe-btn"

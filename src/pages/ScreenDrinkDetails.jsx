@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useEffect, useContext } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { fetchDrinkId } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MealCarousel from '../components/MealCarousel';
+import ApplicationContext from '../context/ApplicationContext';
+import '../App.css';
 
 function ScreenDrinkDetails() {
-  const [selectedDrink, setSelectedDrink] = useState([]);
-  const { id } = useParams();
   const history = useHistory();
+  const { selectedDrink, setSelectedDrink } = useContext(ApplicationContext);
+  const { id } = useParams();
+  const inProgressRecipes = localStorage.getItem('inProgressRecipes');
+  let parseProgressRecipes = JSON.parse(inProgressRecipes);
 
   const searchId = async () => {
     const responseAPI = await fetchDrinkId(id);
     setSelectedDrink(responseAPI.drinks[0]);
-    localStorage.setItem('inProgressRecipes', JSON.stringify(responseAPI.drinks[0]));
+    localStorage.setItem('currentDrink', JSON.stringify(responseAPI.drinks[0]));
   };
 
   useEffect(() => {
-    const drinkRecipe = localStorage.getItem('inProgressRecipes');
+    const drinkRecipe = localStorage.getItem('currentDrink');
     const parseRecipe = JSON.parse(drinkRecipe);
-    if (!parseRecipe || !parseRecipe.idDrink !== id) {
+    if (!parseRecipe || parseRecipe.idDrink !== id) {
       searchId();
-    } else {
-      setSelectedDrink(parseRecipe);
     }
   }, []);
 
@@ -42,15 +44,27 @@ function ScreenDrinkDetails() {
 
   const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
 
-  const arrayOfIngredientsAndMeasurements = () => {
-    const arrayToRender = splicedArrayIngredients
-      .reduce((acc, curr, index) => {
-        acc.push(curr.concat(splicedArrayMeasurements[index]));
-        return acc;
-      }, []);
-    localStorage.setItem('arrayOfIngredientsAndMeasurements',
-      JSON.stringify(arrayToRender));
-    return arrayToRender;
+  const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
+    .reduce((acc, curr, index) => {
+      acc.push(curr.concat(splicedArrayMeasurements[index]));
+      return acc;
+    }, []);
+
+  const startRecipe = () => {
+    // if (!parseProgressRecipes) {
+    //   parseProgressRecipes = {
+    //     cocktails: {
+    //       [id]: [...arrayOfIngredientsAndMeasurements],
+    //     },
+    //     meals: {},
+    //   };
+    // } else {
+    //   arrayOfIngredientsAndMeasurements.filter((_array, index) => index);
+    //   console.log(arrayOfIngredientsAndMeasurements)
+    //   parseProgressRecipes.cocktails[id] = [...arrayOfIngredientsAndMeasurements];
+    // }
+    // localStorage.setItem('inProgressRecipes', JSON.stringify(parseProgressRecipes));
+    history.push(`/bebidas/${id}/in-progress`);
   };
 
   return (
@@ -77,7 +91,7 @@ function ScreenDrinkDetails() {
       <h3>Ingredientes:</h3>
       <div>
         {
-          arrayOfIngredientsAndMeasurements().map((e, index) => (
+          arrayOfIngredientsAndMeasurements.map((e, index) => (
             <div key={ index }>
               <p
                 data-testid={ `${index}-ingredient-name-and-measure` }
@@ -88,18 +102,27 @@ function ScreenDrinkDetails() {
           ))
         }
       </div>
-      <h4 data-testid="recipe-category">{ selectedDrink.strCategory }</h4>
+
+      <h4
+        data-testid="recipe-category"
+      >
+        { `${selectedDrink.strCategory} - ${selectedDrink.strAlcoholic}` }
+      </h4>
       <div>
         <h3>Instructions: </h3>
         <p data-testid="instructions">{selectedDrink.strInstructions}</p>
       </div>
-      <button
-        data-testid="start-recipe-btn"
-        type="button"
-        onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
-      >
-        Iniciar Receita
-      </button>
+      <MealCarousel />
+      <footer>
+        <button
+          data-testid="start-recipe-btn"
+          type="button"
+          onClick={ () => startRecipe() }
+          className="button-start-recipe"
+        >
+          Iniciar Receita
+        </button>
+      </footer>
     </div>
   );
 }
