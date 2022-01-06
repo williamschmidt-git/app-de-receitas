@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import DrinkCarousel from '../components/DrinkCarousel';
+import DrinkCarousel from '../components/MealCarousel';
 import ApplicationContext from '../context/ApplicationContext';
 import '../App.css';
 
@@ -69,9 +69,9 @@ function ScreenDrinkDetails() {
       </h4>
       <div>
         <h3>Instructions: </h3>
-        <p data-testid="instructions">{selectedDrink.strInstructions}</p>
+        {/* <p data-testid="instructions">{selectedDrink.strInstructions}</p> */}
       </div>
-      <DrinkCarousel />
+      {/* <DrinkCarousel /> */}
       <footer>
         <button
           data-testid="start-recipe-btn"
@@ -81,6 +81,14 @@ function ScreenDrinkDetails() {
         >
           Iniciar Receita
         </button>
+        {/* <button
+          data-testid="start-recipe-btn"
+          type="button"
+          onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+          className="button-start-recipe"
+        >
+          Continuar Receita
+        </button> */}
       </footer>
     </div>
   );
