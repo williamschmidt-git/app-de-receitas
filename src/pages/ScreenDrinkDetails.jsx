@@ -1,11 +1,12 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import DrinkCarousel from '../components/MealCarousel';
 import ApplicationContext from '../context/ApplicationContext';
 import '../App.css';
+import MealCarousel from '../components/MealCarousel';
 
 function ScreenDrinkDetails() {
   const history = useHistory();
@@ -19,11 +20,7 @@ function ScreenDrinkDetails() {
   };
 
   useEffect(() => {
-    const drinkRecipe = localStorage.getItem('currentDrink');
-    const parseRecipe = JSON.parse(drinkRecipe);
-    if (!parseRecipe || parseRecipe.idDrink !== id) {
-      searchId();
-    }
+    searchId();
   }, []);
 
   return (
@@ -38,6 +35,10 @@ function ScreenDrinkDetails() {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => {
+          copy(`http://localhost:3000/bebidas/${id}`);
+          global.alert('Link copiado!');
+        } }
       >
         <img src={ shareIcon } alt="share" />
       </button>
@@ -71,7 +72,7 @@ function ScreenDrinkDetails() {
         <h3>Instructions: </h3>
         {/* <p data-testid="instructions">{selectedDrink.strInstructions}</p> */}
       </div>
-      {/* <DrinkCarousel /> */}
+      <MealCarousel />
       <footer>
         <button
           data-testid="start-recipe-btn"

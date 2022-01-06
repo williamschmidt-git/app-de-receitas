@@ -14,6 +14,7 @@ function ApplicationProvider({ children }) {
   const [drinkSelected, setDrinkSelected] = useState('');
   const [selectedDrink, setSelectedDrink] = useState([]);
   const [selectedMeal, setSelectedMeal] = useState([]);
+  const [storedProgress, setStoredProgress] = useState({});
 
   const contextValue = {
     mealsArray,
@@ -38,6 +39,8 @@ function ApplicationProvider({ children }) {
     setSelectedDrink,
     selectedMeal,
     setSelectedMeal,
+    storedProgress,
+    setStoredProgress,
   };
 
   return (

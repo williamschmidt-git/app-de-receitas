@@ -1,16 +1,18 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
+import copy from 'clipboard-copy';
 import ApplicationContext from '../context/ApplicationContext';
 import { fetchMealId, arrayOfIngredientsAndMeasurements, saveFavoriteRecipeOnStorage } from '../services/helpers';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import MealCarousel from '../components/DrinkCarousel';
+import DrinkCarousel from '../components/DrinkCarousel';
 
 function ScreenMealDetails() {
   const { id } = useParams();
   const history = useHistory();
   const { selectedMeal, setSelectedMeal } = useContext(ApplicationContext);
+
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
     setSelectedMeal(responseAPI.meals[0]);
@@ -36,6 +38,9 @@ function ScreenMealDetails() {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => {
+          copy(`http://localhost:3000/comidas/${id}`);
+        } }
       >
         <img src={ shareIcon } alt="share" />
 
@@ -71,7 +76,7 @@ function ScreenMealDetails() {
         {/* <p data-testid="instructions">{selectedMeal.strInstructions}</p> */}
       </div>
       <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } />
-      {/* <MealCarousel /> */}
+      <DrinkCarousel />
       <footer>
         <button
           data-testid="start-recipe-btn"

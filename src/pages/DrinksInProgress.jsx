@@ -4,9 +4,15 @@ import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/hel
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
+import { getInProgressStoraged, getProgressStored } from '../services/supportFunctions';
 
 function DrinksInProgress() {
-  const { selectedDrink, setSelectedDrink } = useContext(ApplicationContext);
+  const {
+    selectedDrink,
+    setSelectedDrink,
+    storedProgress,
+    setStoredProgress,
+  } = useContext(ApplicationContext);
   const { id } = useParams();
 
   const searchId = async () => {
@@ -15,7 +21,28 @@ function DrinksInProgress() {
   };
 
   useEffect(() => {
-    searchId();
+    const currentDrink = localStorage.getItem('currentDrink');
+    const parseCurrentDrink = JSON.parse(currentDrink);
+    if (!parseCurrentDrink) {
+      searchId();
+    } else {
+      setSelectedDrink(parseCurrentDrink);
+    }
+  }, []);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('inProgressRecipes');
+    const parseRecipesInProgress = JSON.parse(stored);
+    if (!parseRecipesInProgress) {
+      const inProgressRecipes = {
+        cocktails: {},
+        meals: {},
+      };
+      setStoredProgress(inProgressRecipes);
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    } else {
+      setStoredProgress(parseRecipesInProgress);
+    }
   }, []);
 
   return (
@@ -49,6 +76,14 @@ function DrinksInProgress() {
             >
               <input
                 type="checkbox"
+                checked={ getProgressStored(ingredient, id, storedProgress, 'cocktails') }
+                name={ ingredient[0] }
+                onChange={ ({ target }) => {
+                  getInProgressStoraged('cocktails', id, target.name);
+                  const getStoredProgress = localStorage.getItem('inProgressRecipes');
+                  const parseStored = JSON.parse(getStoredProgress);
+                  setStoredProgress(parseStored);
+                } }
               />
             &nbsp;
               <span>
