@@ -5,7 +5,7 @@ import ApplicationContext from '../context/ApplicationContext';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import DrinkCarousel from '../components/DrinkCarousel';
+import MealCarousel from '../components/DrinkCarousel';
 
 function ScreenMealDetails() {
   const { id } = useParams();
@@ -41,8 +41,6 @@ function ScreenMealDetails() {
   //     acc.push(curr.concat(splicedArrayMeasurements[index]));
   //     return acc;
   //   }, []);
-
-  console.log(arrayOfIngredientsAndMeasurements);
 
   return (
     <div>
@@ -90,7 +88,7 @@ function ScreenMealDetails() {
         <p data-testid="instructions">{selectedMeal.strInstructions}</p>
       </div>
       <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } />
-      <DrinkCarousel />
+      <MealCarousel />
       <footer>
         <button
           data-testid="start-recipe-btn"

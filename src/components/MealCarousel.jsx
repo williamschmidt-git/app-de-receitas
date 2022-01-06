@@ -1,44 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { fetchMeals } from '../services/helpers';
+import { fetchDrinks } from '../services/helpers';
 import '../App.css';
 
-const MAX_MEALS = 5;
+const MAX_DRINKS = 5;
 
 function MealCarousel() {
-  const [meals, setMeals] = useState([]);
+  const [drinks, setDrinks] = useState([]);
 
   const requestAPI = async () => {
-    const responseAPI = await fetchMeals();
-    setMeals(responseAPI.meals);
+    const responseAPI = await fetchDrinks();
+    setDrinks(responseAPI.drinks);
   };
 
   useEffect(() => {
     requestAPI();
   }, []);
 
-  const renderMeals = meals.filter((meal, index) => index <= MAX_MEALS && meal);
+  console.log(drinks);
+
+  const renderDrinks = drinks.filter((drink, index) => index <= MAX_DRINKS && drink);
   return (
     <div className="container">
-      { renderMeals.map((meal, index) => (
+      { renderDrinks.map((drink, index) => (
         <div
-          key={ meal.idMeal }
           className="carousel"
+          key={ drink.idDrink }
         >
-          <div className="image">
+          <div
+            className="image"
+          >
             <img
               style={ { height: '50px', width: '50px' } }
-              src={ meal.strMealThumb }
-              name={ meal.idMeal }
-              alt="Meal"
+              src={ drink.strDrinkThumb }
+              name={ drink.idDrink }
+              alt="Drink"
               data-testid={ `${index}-recomendation-card` }
             />
           </div>
           <div className="info">
             <p className="category">
-              { meal.strCategory }
+              { drink.strAlcoholic }
             </p>
             <h4 className="name">
-              { meal.strMeal }
+              { drink.strDrink }
             </h4>
           </div>
         </div>

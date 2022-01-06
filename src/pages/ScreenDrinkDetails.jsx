@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import MealCarousel from '../components/MealCarousel';
+import DrinkCarousel from '../components/DrinkCarousel';
 import ApplicationContext from '../context/ApplicationContext';
 import '../App.css';
 
@@ -93,7 +93,7 @@ function ScreenDrinkDetails() {
         <h3>Instructions: </h3>
         <p data-testid="instructions">{selectedDrink.strInstructions}</p>
       </div>
-      <MealCarousel />
+      <DrinkCarousel />
       <footer>
         <button
           data-testid="start-recipe-btn"
