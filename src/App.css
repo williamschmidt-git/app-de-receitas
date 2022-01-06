@@ -1,7 +1,12 @@
-.meals {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-container {
   align-items: center;
-  background: #0fa36b;
-  color: #464646;
+  background: #f0dfdf;
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
@@ -15,6 +20,7 @@
   position: fixed;
   width: 10%;
 }
+
 footer {
   bottom: 0;
   position: fixed;

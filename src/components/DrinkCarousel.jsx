@@ -1,49 +1,44 @@
-/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from 'react';
-import { fetchDrinks } from '../services/helpers';
+import { fetchMeals } from '../services/helpers';
 import '../App.css';
 
-const MAX_DRINKS = 5;
+const MAX_MEALS = 5;
 
 function DrinkCarousel() {
-  const [drinks, setDrinks] = useState([]);
+  const [meals, setMeals] = useState([]);
 
   const requestAPI = async () => {
-    const responseAPI = await fetchDrinks();
-    setDrinks(responseAPI.drinks);
+    const responseAPI = await fetchMeals();
+    setMeals(responseAPI.meals);
   };
 
   useEffect(() => {
     requestAPI();
   }, []);
 
-  console.log(drinks);
-
-  const renderDrinks = drinks.filter((drink, index) => index <= MAX_DRINKS && drink);
+  const renderMeals = meals.filter((meal, index) => index <= MAX_MEALS && meal);
   return (
     <div className="container">
-      { renderDrinks.map((drink, index) => (
+      { renderMeals.map((meal, index) => (
         <div
+          key={ meal.idMeal }
           className="carousel"
-          key={ drink.idDrink }
         >
-          <div
-            className="image"
-          >
+          <div className="image">
             <img
               style={ { height: '50px', width: '50px' } }
-              src={ drink.strDrinkThumb }
-              name={ drink.idDrink }
-              alt="Drink"
+              src={ meal.strMealThumb }
+              name={ meal.idMeal }
+              alt="Meal"
               data-testid={ `${index}-recomendation-card` }
             />
           </div>
           <div className="info">
             <p className="category">
-              { drink.strAlcoholic }
+              { meal.strCategory }
             </p>
             <h4 className="name">
-              { drink.strDrink }
+              { meal.strMeal }
             </h4>
           </div>
         </div>
