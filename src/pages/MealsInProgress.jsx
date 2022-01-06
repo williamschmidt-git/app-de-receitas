@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import { getInProgressStoraged, getProgressStored } from '../services/supportFunctions';
+import ApplicationContext from '../context/ApplicationContext';
 
 function MealsInProgress() {
-  const [selectedMeal, setSelectedMeal] = useState([]);
+  const { storedProgress, setStoredProgress } = useContext(ApplicationContext);
+  const [selectedMeal, setSelectedMeal] = useState({});
   const { id } = useParams();
 
   const searchId = async () => {
@@ -14,7 +17,28 @@ function MealsInProgress() {
   };
 
   useEffect(() => {
-    searchId();
+    const currentMeal = localStorage.getItem('currentMeal');
+    const parseCurrentMeal = JSON.parse(currentMeal);
+    if (!parseCurrentMeal) {
+      searchId();
+    } else {
+      setSelectedMeal(parseCurrentMeal);
+    }
+  }, []);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('inProgressRecipes');
+    const parseRecipesInProgress = JSON.parse(stored);
+    if (!parseRecipesInProgress) {
+      const inProgressRecipes = {
+        cocktails: {},
+        meals: {},
+      };
+      setStoredProgress(inProgressRecipes);
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    } else {
+      setStoredProgress(parseRecipesInProgress);
+    }
   }, []);
 
   return (
@@ -48,8 +72,14 @@ function MealsInProgress() {
             >
               <input
                 type="checkbox"
+                checked={ getProgressStored(ingredient, id, storedProgress, 'meals') }
                 name={ ingredient[0] }
-                onClick={ ({ target }) => console.log(target.name) }
+                onChange={ ({ target }) => {
+                  getInProgressStoraged('meals', id, target.name);
+                  const getStoredProgress = localStorage.getItem('inProgressRecipes');
+                  const parseStored = JSON.parse(getStoredProgress);
+                  setStoredProgress(parseStored);
+                } }
               />
             &nbsp;
               <span>
