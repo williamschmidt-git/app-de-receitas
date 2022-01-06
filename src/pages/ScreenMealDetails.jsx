@@ -21,27 +21,6 @@ function ScreenMealDetails() {
     searchId();
   }, []);
 
-  // const ingredientsArray = Object.entries(selectedMeal)
-  //   .filter((keyName) => keyName[0].includes('strIngredient'))
-  //   .filter((i) => !i.includes(''))
-  //   .filter((j) => !j.includes(null));
-
-  // const measureArray = Object.entries(selectedMeal)
-  //   .filter((keyName) => keyName[0].includes('strMeasure'))
-  //   .filter((i) => !i.includes(''))
-  //   .filter((j) => !j.includes(null))
-  //   .filter((k) => !k.includes(' '));
-
-  // const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
-
-  // const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
-
-  // const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
-  //   .reduce((acc, curr, index) => {
-  //     acc.push(curr.concat(splicedArrayMeasurements[index]));
-  //     return acc;
-  //   }, []);
-
   return (
     <div>
       <img

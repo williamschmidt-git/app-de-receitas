@@ -17,28 +17,6 @@ function MealsInProgress() {
     searchId();
   }, []);
 
-  // const ingredientsArray = Object.entries(selectedMeal)
-  //   .filter((keyName) => keyName[0].includes('strIngredient'))
-  //   .filter((ingredient) => !ingredient.includes(null))
-  //   .filter((ingredient) => !ingredient.includes(''))
-  //   .filter((ingredient) => !ingredient.includes(' '));
-
-  // const measureArray = Object.entries(selectedMeal)
-  //   .filter((keyName) => keyName[0].includes('strMeasure'))
-  //   .filter((ingredient) => !ingredient.includes(null))
-  //   .filter((ingredient) => !ingredient.includes(''))
-  //   .filter((ingredient) => !ingredient.includes(' '));
-
-  // const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
-
-  // const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
-
-  // const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
-  //   .reduce((acc, curr, index) => {
-  //     acc.push(curr.concat(splicedArrayMeasurements[index]));
-  //     return acc;
-  //   }, []);
-
   return (
     <div>
       <img
