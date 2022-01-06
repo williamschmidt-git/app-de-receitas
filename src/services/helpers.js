@@ -93,3 +93,25 @@ export const fetchDrinkId = (idDrink) => {
     .then((response) => response.json());
   return responseAPI;
 };
+
+export const arrayOfIngredientsAndMeasurements = (selectedRecipe) => {
+  const ingredientsArray = Object.entries(selectedRecipe)
+    .filter((keyName) => keyName[0].includes('strIngredient'))
+    .filter((ingredient) => !ingredient.includes(null))
+    .filter((ingredient) => !ingredient.includes(''))
+    .filter((ingredient) => !ingredient.includes(' '))
+    .map((e) => e.splice(1, 1));
+
+  const measureArray = Object.entries(selectedRecipe)
+    .filter((keyName) => keyName[0].includes('strMeasure'))
+    .filter((ingredient) => !ingredient.includes(null))
+    .filter((ingredient) => !ingredient.includes(''))
+    .filter((ingredient) => !ingredient.includes(' '))
+    .map((e) => e.splice(1, 1));
+
+  return ingredientsArray
+    .reduce((acc, curr, index) => {
+      acc.push(curr.concat(measureArray[index]));
+      return acc;
+    }, []);
+};

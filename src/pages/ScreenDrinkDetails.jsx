@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { fetchDrinkId } from '../services/helpers';
+import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import MealCarousel from '../components/MealCarousel';
@@ -11,8 +11,6 @@ function ScreenDrinkDetails() {
   const history = useHistory();
   const { selectedDrink, setSelectedDrink } = useContext(ApplicationContext);
   const { id } = useParams();
-  const inProgressRecipes = localStorage.getItem('inProgressRecipes');
-  let parseProgressRecipes = JSON.parse(inProgressRecipes);
 
   const searchId = async () => {
     const responseAPI = await fetchDrinkId(id);
@@ -28,44 +26,27 @@ function ScreenDrinkDetails() {
     }
   }, []);
 
-  const ingredientsArray = Object.entries(selectedDrink)
-    .filter((keyName) => keyName[0].includes('strIngredient'))
-    .filter((ingredient) => !ingredient.includes(null))
-    .filter((ingredient) => !ingredient.includes(''))
-    .filter((ingredient) => !ingredient.includes(' '));
+  // const ingredientsArray = Object.entries(selectedDrink)
+  //   .filter((keyName) => keyName[0].includes('strIngredient'))
+  //   .filter((ingredient) => !ingredient.includes(null))
+  //   .filter((ingredient) => !ingredient.includes(''))
+  //   .filter((ingredient) => !ingredient.includes(' '));
 
-  const measureArray = Object.entries(selectedDrink)
-    .filter((keyName) => keyName[0].includes('strMeasure'))
-    .filter((ingredient) => !ingredient.includes(null))
-    .filter((ingredient) => !ingredient.includes(''))
-    .filter((ingredient) => !ingredient.includes(' '));
+  // const measureArray = Object.entries(selectedDrink)
+  //   .filter((keyName) => keyName[0].includes('strMeasure'))
+  //   .filter((ingredient) => !ingredient.includes(null))
+  //   .filter((ingredient) => !ingredient.includes(''))
+  //   .filter((ingredient) => !ingredient.includes(' '));
 
-  const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
+  // const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
 
-  const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
+  // const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
 
-  const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
-    .reduce((acc, curr, index) => {
-      acc.push(curr.concat(splicedArrayMeasurements[index]));
-      return acc;
-    }, []);
-
-  const startRecipe = () => {
-    // if (!parseProgressRecipes) {
-    //   parseProgressRecipes = {
-    //     cocktails: {
-    //       [id]: [...arrayOfIngredientsAndMeasurements],
-    //     },
-    //     meals: {},
-    //   };
-    // } else {
-    //   arrayOfIngredientsAndMeasurements.filter((_array, index) => index);
-    //   console.log(arrayOfIngredientsAndMeasurements)
-    //   parseProgressRecipes.cocktails[id] = [...arrayOfIngredientsAndMeasurements];
-    // }
-    // localStorage.setItem('inProgressRecipes', JSON.stringify(parseProgressRecipes));
-    history.push(`/bebidas/${id}/in-progress`);
-  };
+  // const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
+  //   .reduce((acc, curr, index) => {
+  //     acc.push(curr.concat(splicedArrayMeasurements[index]));
+  //     return acc;
+  //   }, []);
 
   return (
     <div>
@@ -91,7 +72,7 @@ function ScreenDrinkDetails() {
       <h3>Ingredientes:</h3>
       <div>
         {
-          arrayOfIngredientsAndMeasurements.map((e, index) => (
+          arrayOfIngredientsAndMeasurements(selectedDrink).map((e, index) => (
             <div key={ index }>
               <p
                 data-testid={ `${index}-ingredient-name-and-measure` }
@@ -117,7 +98,7 @@ function ScreenDrinkDetails() {
         <button
           data-testid="start-recipe-btn"
           type="button"
-          onClick={ () => startRecipe() }
+          onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
           className="button-start-recipe"
         >
           Iniciar Receita

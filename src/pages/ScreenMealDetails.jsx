@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import ApplicationContext from '../context/ApplicationContext';
-import { fetchMealId } from '../services/helpers';
+import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import DrinkCarousel from '../components/DrinkCarousel';
@@ -14,32 +14,33 @@ function ScreenMealDetails() {
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
     setSelectedMeal(responseAPI.meals[0]);
+    localStorage.setItem('currentMeal', JSON.stringify(responseAPI.meals[0]));
   };
 
   useEffect(() => {
     searchId();
   }, []);
 
-  const ingredientsArray = Object.entries(selectedMeal)
-    .filter((keyName) => keyName[0].includes('strIngredient'))
-    .filter((i) => !i.includes(''))
-    .filter((j) => !j.includes(null));
+  // const ingredientsArray = Object.entries(selectedMeal)
+  //   .filter((keyName) => keyName[0].includes('strIngredient'))
+  //   .filter((i) => !i.includes(''))
+  //   .filter((j) => !j.includes(null));
 
-  const measureArray = Object.entries(selectedMeal)
-    .filter((keyName) => keyName[0].includes('strMeasure'))
-    .filter((i) => !i.includes(''))
-    .filter((j) => !j.includes(null))
-    .filter((k) => !k.includes(' '));
+  // const measureArray = Object.entries(selectedMeal)
+  //   .filter((keyName) => keyName[0].includes('strMeasure'))
+  //   .filter((i) => !i.includes(''))
+  //   .filter((j) => !j.includes(null))
+  //   .filter((k) => !k.includes(' '));
 
-  const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
+  // const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
 
-  const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
+  // const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
 
-  const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
-    .reduce((acc, curr, index) => {
-      acc.push(curr.concat(splicedArrayMeasurements[index]));
-      return acc;
-    }, []);
+  // const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
+  //   .reduce((acc, curr, index) => {
+  //     acc.push(curr.concat(splicedArrayMeasurements[index]));
+  //     return acc;
+  //   }, []);
 
   console.log(arrayOfIngredientsAndMeasurements);
 
@@ -71,7 +72,7 @@ function ScreenMealDetails() {
       <h3>Recipe:</h3>
       <div>
         {
-          arrayOfIngredientsAndMeasurements.map((e, index) => (
+          arrayOfIngredientsAndMeasurements(selectedMeal).map((e, index) => (
             <div key={ index }>
               <p
                 data-testid={ `${index}-ingredient-name-and-measure` }

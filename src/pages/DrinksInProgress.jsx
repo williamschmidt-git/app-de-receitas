@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchDrinkId } from '../services/helpers';
+import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
@@ -12,40 +12,33 @@ function DrinksInProgress() {
   const searchId = async () => {
     const responseAPI = await fetchDrinkId(id);
     setSelectedDrink(responseAPI.drinks[0]);
-    // localStorage.setItem('inProgressRecipes', JSON.stringify(responseAPI.drinks[0]));
   };
 
   useEffect(() => {
-    const drinkRecipe = localStorage.getItem('inProgressRecipes');
-    const parseRecipe = JSON.parse(drinkRecipe);
-    if (!parseRecipe || parseRecipe.idDrink !== id) {
-      searchId();
-    } else {
-      setSelectedDrink(parseRecipe);
-    }
+    searchId();
   }, []);
 
-  const ingredientsArray = Object.entries(selectedDrink)
-    .filter((keyName) => keyName[0].includes('strIngredient'))
-    .filter((ingredient) => !ingredient.includes(null))
-    .filter((ingredient) => !ingredient.includes(''))
-    .filter((ingredient) => !ingredient.includes(' '));
+  // const ingredientsArray = Object.entries(selectedDrink)
+  //   .filter((keyName) => keyName[0].includes('strIngredient'))
+  //   .filter((ingredient) => !ingredient.includes(null))
+  //   .filter((ingredient) => !ingredient.includes(''))
+  //   .filter((ingredient) => !ingredient.includes(' '));
 
-  const measureArray = Object.entries(selectedDrink)
-    .filter((keyName) => keyName[0].includes('strMeasure'))
-    .filter((ingredient) => !ingredient.includes(null))
-    .filter((ingredient) => !ingredient.includes(''))
-    .filter((ingredient) => !ingredient.includes(' '));
+  // const measureArray = Object.entries(selectedDrink)
+  //   .filter((keyName) => keyName[0].includes('strMeasure'))
+  //   .filter((ingredient) => !ingredient.includes(null))
+  //   .filter((ingredient) => !ingredient.includes(''))
+  //   .filter((ingredient) => !ingredient.includes(' '));
 
-  const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
+  // const splicedArrayIngredients = ingredientsArray.map((e) => e.splice(1, 1));
 
-  const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
+  // const splicedArrayMeasurements = measureArray.map((e) => e.splice(1, 1));
 
-  const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
-    .reduce((acc, curr, index) => {
-      acc.push(curr.concat(splicedArrayMeasurements[index]));
-      return acc;
-    }, []);
+  // const arrayOfIngredientsAndMeasurements = splicedArrayIngredients
+  //   .reduce((acc, curr, index) => {
+  //     acc.push(curr.concat(splicedArrayMeasurements[index]));
+  //     return acc;
+  //   }, []);
 
   return (
     <div>
@@ -71,7 +64,7 @@ function DrinksInProgress() {
       <h3>Ingredientes:</h3>
       <div>
         {
-          arrayOfIngredientsAndMeasurements.map((ingredient, index) => (
+          arrayOfIngredientsAndMeasurements(selectedDrink).map((ingredient, index) => (
             <div
               key={ index }
               data-testid={ `${index}-ingredient-step` }
