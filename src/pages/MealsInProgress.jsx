@@ -53,6 +53,7 @@ function MealsInProgress() {
         parseRecipesInProgress.meals[id] = [...parseRecipesInProgress.meals[id]];
       }
       setStoredProgress(parseRecipesInProgress);
+      localStorage.setItem('inProgressRecipes', JSON.stringify(parseRecipesInProgress));
     }
   }, []);
 
