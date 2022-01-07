@@ -3,11 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import ApplicationContext from '../context/ApplicationContext';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
-<<<<<<< HEAD
-import { saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
-=======
 import { checkIfThereIsLocalStorage, onClipboardClicked } from '../services/supportFunctions';
->>>>>>> fead3b9a8f61228df8f92bf7b58b9b9d4df8ecf1
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import DrinkCarousel from '../components/DrinkCarousel';
@@ -36,9 +32,6 @@ function ScreenMealDetails() {
     searchId();
   }, []);
 
-<<<<<<< HEAD
-  console.log(selectedMeal);
-=======
   useEffect(() => {
     if (checkIfThereIsLocalStorage('doneRecipes')) {
       const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -53,7 +46,6 @@ function ScreenMealDetails() {
     }
   }, []);
 
->>>>>>> fead3b9a8f61228df8f92bf7b58b9b9d4df8ecf1
   return (
     <div>
       <img
@@ -109,18 +101,6 @@ function ScreenMealDetails() {
       <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } />
       <DrinkCarousel />
       <footer>
-<<<<<<< HEAD
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-          onClick={ () => {
-            history.push(`/comidas/${id}/in-progress`);
-          } }
-          className="button-start-recipe"
-        >
-          Iniciar Receita
-        </button>
-=======
         { hasStartButton ? (
           <button
             data-testid="start-recipe-btn"
@@ -131,7 +111,6 @@ function ScreenMealDetails() {
             {alreadyStarted ? 'Continuar Receita' : 'Iniciar Receita'}
           </button>
         ) : null }
->>>>>>> fead3b9a8f61228df8f92bf7b58b9b9d4df8ecf1
       </footer>
     </div>
   );
