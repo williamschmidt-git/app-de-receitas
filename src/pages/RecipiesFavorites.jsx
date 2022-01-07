@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from '../components/Header';
-
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function RecipiesFavorites() {
-  // const [favorites, setFavorites] = useState([]);
-
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const renderFavorites = (e, type) => {
@@ -30,6 +27,7 @@ function RecipiesFavorites() {
             type="button"
             data-testid="0-horizontal-share-btn"
             src={ shareIcon }
+
           >
             <img alt="share" />
           </button>
@@ -38,8 +36,11 @@ function RecipiesFavorites() {
             type="button"
             data-testid="0-horizontal-favorite-btn"
             src={ blackHeartIcon }
+
           >
-            <img alt="favorite" />
+            <img
+              alt="favorite"
+            />
           </button>
 
         </div>
@@ -66,16 +67,22 @@ function RecipiesFavorites() {
             type="button"
             data-testid="1-horizontal-share-btn"
             src={ shareIcon }
+
           >
-            <img alt="share" />
+            <img
+              alt="share"
+            />
           </button>
 
           <button
             type="button"
             data-testid="1-horizontal-favorite-btn"
             src={ blackHeartIcon }
+
           >
-            <img alt="favorite" />
+            <img
+              alt="favorite"
+            />
           </button>
 
         </div>
@@ -124,17 +131,3 @@ function RecipiesFavorites() {
 }
 
 export default RecipiesFavorites;
-
-// cy.get('[data-testid="filter-by-all-btn"]');
-//       cy.get('[data-testid="filter-by-food-btn"]');
-//       cy.get('[data-testid="filter-by-drink-btn"]');
-//       cy.get('[data-testid="0-horizontal-image"]');
-//       cy.get('[data-testid="0-horizontal-top-text"]');
-//       cy.get('[data-testid="0-horizontal-name"]');
-//       cy.get('[data-testid="0-horizontal-share-btn"]');
-//       cy.get('[data-testid="0-horizontal-favorite-btn"]');
-//       cy.get('[data-testid="1-horizontal-image"]');
-//       cy.get('[data-testid="1-horizontal-top-text"]');
-//       cy.get('[data-testid="1-horizontal-name"]');
-//       cy.get('[data-testid="1-horizontal-share-btn"]');
-//       cy.get('[data-testid="1-horizontal-favorite-btn"]');

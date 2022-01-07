@@ -150,11 +150,3 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
 
   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
 };
-
-// id: '52771',
-//           type: 'comida',
-//           area: 'Italian',
-//           category: 'Vegetarian',
-//           alcoholicOrNot: '',
-//           name: 'Spicy Arrabiata Penne',
-//           image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',

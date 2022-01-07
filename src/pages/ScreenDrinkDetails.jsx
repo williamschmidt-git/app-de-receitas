@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import { fetchDrinkId,
-  arrayOfIngredientsAndMeasurements,
-  saveFavoriteRecipeOnStorage } from '../services/helpers';
+  arrayOfIngredientsAndMeasurements } from '../services/helpers';
+import { saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
@@ -24,8 +24,6 @@ function ScreenDrinkDetails() {
   useEffect(() => {
     searchId();
   }, []);
-
-  console.log(selectedDrink);
 
   return (
     <div>
@@ -77,9 +75,9 @@ function ScreenDrinkDetails() {
       </h4>
       <div>
         <h3>Instructions: </h3>
-        {/* <p data-testid="instructions">{selectedDrink.strInstructions}</p> */}
+        <p data-testid="instructions">{selectedDrink.strInstructions}</p>
       </div>
-      {/* <MealCarousel /> */}
+      <MealCarousel />
       <footer>
         <button
           data-testid="start-recipe-btn"
@@ -89,14 +87,6 @@ function ScreenDrinkDetails() {
         >
           Iniciar Receita
         </button>
-        {/* <button
-          data-testid="start-recipe-btn"
-          type="button"
-          onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
-          className="button-start-recipe"
-        >
-          Continuar Receita
-        </button> */}
       </footer>
     </div>
   );

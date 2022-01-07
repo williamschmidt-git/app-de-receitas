@@ -3,7 +3,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import copy from 'clipboard-copy';
 import ApplicationContext from '../context/ApplicationContext';
-import { fetchMealId, arrayOfIngredientsAndMeasurements, saveFavoriteRecipeOnStorage } from '../services/helpers';
+import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
+import { saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import DrinkCarousel from '../components/DrinkCarousel';
@@ -73,10 +74,10 @@ function ScreenMealDetails() {
       <h4 data-testid="recipe-category">{ `${selectedMeal.strCategory}` }</h4>
       <div>
         <h3>Instructions: </h3>
-        {/* <p data-testid="instructions">{selectedMeal.strInstructions}</p> */}
+        <p data-testid="instructions">{selectedMeal.strInstructions}</p>
       </div>
-      {/* <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } /> */}
-      {/* <DrinkCarousel /> */}
+      <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } />
+      <DrinkCarousel />
       <footer>
         <button
           data-testid="start-recipe-btn"
