@@ -1,9 +1,9 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
-import copy from 'clipboard-copy';
 import ApplicationContext from '../context/ApplicationContext';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
+import { onClipboardClicked } from '../services/supportFunctions';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import DrinkCarousel from '../components/DrinkCarousel';
@@ -11,7 +11,12 @@ import DrinkCarousel from '../components/DrinkCarousel';
 function ScreenMealDetails() {
   const { id } = useParams();
   const history = useHistory();
-  const { selectedMeal, setSelectedMeal } = useContext(ApplicationContext);
+  const {
+    selectedMeal,
+    setSelectedMeal,
+    clipboardState,
+    setClipboardState,
+  } = useContext(ApplicationContext);
 
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
@@ -37,13 +42,14 @@ function ScreenMealDetails() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => {
-          copy(`http://localhost:3000/comidas/${id}`);
-        } }
+        onClick={ () => onClipboardClicked(setClipboardState, id) }
       >
         <img src={ shareIcon } alt="share" />
 
       </button>
+      <p>
+        {clipboardState ? 'Link copiado!' : ''}
+      </p>
       <button
         type="button"
         data-testid="favorite-btn"
