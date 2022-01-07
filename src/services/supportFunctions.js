@@ -1,3 +1,5 @@
+import copy from 'clipboard-copy';
+
 export const getInProgressStoraged = (recipeType, recipeID, targetName) => {
   const stored = localStorage.getItem('inProgressRecipes');
   const parseRecipesInProgress = JSON.parse(stored);
@@ -22,4 +24,13 @@ export const getProgressStored = (ingredient, recipeID, inProgressStored, recipe
     const mealsInProgress = inProgressStored[recipeType][recipeID];
     return mealsInProgress.some((item) => item === ingredient[0]);
   }
+};
+
+export const onClipboardClicked = (setClipboardState, id) => {
+  copy(`http://localhost:3000/bebidas/${id}`);
+  setClipboardState(true);
+  const ONDE_SECOND = 1000;
+  setTimeout(() => {
+    setClipboardState(false);
+  }, ONDE_SECOND);
 };

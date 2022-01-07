@@ -15,6 +15,7 @@ function ApplicationProvider({ children }) {
   const [selectedDrink, setSelectedDrink] = useState([]);
   const [selectedMeal, setSelectedMeal] = useState([]);
   const [storedProgress, setStoredProgress] = useState({});
+  const [clipboardState, setClipboardState] = useState(false);
 
   const contextValue = {
     mealsArray,
@@ -41,6 +42,8 @@ function ApplicationProvider({ children }) {
     setSelectedMeal,
     storedProgress,
     setStoredProgress,
+    clipboardState,
+    setClipboardState,
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import copy from 'clipboard-copy';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
+import { onClipboardClicked } from '../services/supportFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
@@ -10,7 +10,12 @@ import MealCarousel from '../components/MealCarousel';
 
 function ScreenDrinkDetails() {
   const history = useHistory();
-  const { selectedDrink, setSelectedDrink } = useContext(ApplicationContext);
+  const {
+    selectedDrink,
+    setSelectedDrink,
+    clipboardState,
+    setClipboardState,
+  } = useContext(ApplicationContext);
   const { id } = useParams();
 
   const searchId = async () => {
@@ -35,13 +40,13 @@ function ScreenDrinkDetails() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => {
-          copy(`http://localhost:3000/bebidas/${id}`);
-          global.alert('Link copiado!');
-        } }
+        onClick={ () => onClipboardClicked(setClipboardState, id) }
       >
         <img src={ shareIcon } alt="share" />
       </button>
+      <p>
+        {clipboardState ? 'Link copiado!' : ''}
+      </p>
       <button
         type="button"
         data-testid="favorite-btn"
