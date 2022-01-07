@@ -1,16 +1,9 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-<<<<<<< HEAD
-import copy from 'clipboard-copy';
-import { fetchDrinkId,
-  arrayOfIngredientsAndMeasurements } from '../services/helpers';
-import { saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
-=======
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import {
   onClipboardClicked,
   checkIfThereIsLocalStorage } from '../services/supportFunctions';
->>>>>>> fead3b9a8f61228df8f92bf7b58b9b9d4df8ecf1
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
