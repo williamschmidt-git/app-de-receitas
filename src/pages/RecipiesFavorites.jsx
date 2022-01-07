@@ -42,7 +42,6 @@ function RecipiesFavorites() {
               src={ blackHeartIcon }
             />
           </button>
-
         </div>
       );
     }
