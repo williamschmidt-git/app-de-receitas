@@ -20,10 +20,11 @@ export const getInProgressStoraged = (recipeType, recipeID, targetName) => {
 };
 
 export const getProgressStored = (ingredient, recipeID, inProgressStored, recipeType) => {
-  if (inProgressStored[recipeType][recipeID]) {
-    const mealsInProgress = inProgressStored[recipeType][recipeID];
-    return mealsInProgress.some((item) => item === ingredient[0]);
+  if (!inProgressStored[recipeType][recipeID]) {
+    return false;
   }
+  const recipeInProgress = inProgressStored[recipeType][recipeID];
+  return recipeInProgress.some((item) => item === ingredient[0]);
 };
 
 export const onClipboardClicked = (setClipboardState, id) => {
@@ -35,33 +36,11 @@ export const onClipboardClicked = (setClipboardState, id) => {
   }, ONDE_SECOND);
 };
 
-// export const teste = (, id, setStoredProgress) => {
-//   const stored = localStorage.getItem('inProgressRecipes');
-//   const parseRecipesInProgress = JSON.parse(stored);
-//   if (!parseRecipesInProgress) {
-//     const inProgressRecipes = {
-//       cocktails: {},
-//       meals: {
-//         [id]: [],
-//       },
-//     };
-//     setStoredProgress(inProgressRecipes);
-//     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-//   } else {
-//     setStoredProgress(parseRecipesInProgress);
-//   }
-//   const stored = localStorage.getItem('inProgressRecipes');
-//     const parseRecipesInProgress = JSON.parse(stored);
-//     if (!parseRecipesInProgress) {
-//       const inProgressRecipes = {
-//         cocktails: {
-//           [id]: [],
-//         },
-//         meals: {},
-//       };
-//       setStoredProgress(inProgressRecipes);
-//       localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-//     } else {
-//       setStoredProgress(parseRecipesInProgress);
-//     }
-// };
+export const checkIfThereIsLocalStorage = (storageKey) => {
+  const stored = localStorage.getItem(storageKey);
+  const parseStorage = JSON.parse(stored);
+  if (!parseStorage) {
+    return false;
+  }
+  return true;
+};

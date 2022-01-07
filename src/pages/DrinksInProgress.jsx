@@ -4,12 +4,17 @@ import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/hel
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
-import { getInProgressStoraged, getProgressStored } from '../services/supportFunctions';
+import {
+  getInProgressStoraged,
+  getProgressStored,
+  onClipboardClicked } from '../services/supportFunctions';
 
 function DrinksInProgress() {
   const {
     storedProgress,
     setStoredProgress,
+    clipboardState,
+    setClipboardState,
   } = useContext(ApplicationContext);
   const [selectedDrink, setSelectedDrink] = useState({});
   const { id } = useParams();
@@ -42,7 +47,14 @@ function DrinksInProgress() {
       setStoredProgress(inProgressRecipes);
       localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
     } else {
+      const checkedIngredients = parseRecipesInProgress.cocktails[id];
+      if (!checkedIngredients || checkedIngredients.length === 0) {
+        parseRecipesInProgress.cocktails[id] = [];
+      } else {
+        parseRecipesInProgress.cocktails[id] = [...parseRecipesInProgress.cocktails[id]];
+      }
       setStoredProgress(parseRecipesInProgress);
+      localStorage.setItem('inProgressRecipes', JSON.stringify(parseRecipesInProgress));
     }
   }, []);
 
@@ -58,9 +70,11 @@ function DrinksInProgress() {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => onClipboardClicked(setClipboardState, id) }
       >
         <img src={ shareIcon } alt="share" />
       </button>
+      {clipboardState ? 'Link copiado!' : ''}
       <button
         type="button"
         data-testid="favorite-btn"

@@ -3,11 +3,18 @@ import { useParams } from 'react-router-dom';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import { getInProgressStoraged, getProgressStored } from '../services/supportFunctions';
+import {
+  getInProgressStoraged,
+  getProgressStored,
+  onClipboardClicked } from '../services/supportFunctions';
 import ApplicationContext from '../context/ApplicationContext';
 
 function MealsInProgress() {
-  const { storedProgress, setStoredProgress } = useContext(ApplicationContext);
+  const {
+    storedProgress,
+    setStoredProgress,
+    clipboardState,
+    setClipboardState } = useContext(ApplicationContext);
   const [selectedMeal, setSelectedMeal] = useState({});
   const { id } = useParams();
 
@@ -39,6 +46,12 @@ function MealsInProgress() {
       setStoredProgress(inProgressRecipes);
       localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
     } else {
+      const checkedIngredients = parseRecipesInProgress.meals[id];
+      if (!checkedIngredients || checkedIngredients.length === 0) {
+        parseRecipesInProgress.meals[id] = [];
+      } else {
+        parseRecipesInProgress.meals[id] = [...parseRecipesInProgress.meals[id]];
+      }
       setStoredProgress(parseRecipesInProgress);
     }
   }, []);
@@ -55,9 +68,11 @@ function MealsInProgress() {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => onClipboardClicked(setClipboardState, id) }
       >
         <img src={ shareIcon } alt="share" />
       </button>
+      {clipboardState ? 'Link copiado!' : ''}
       <button
         type="button"
         data-testid="favorite-btn"
