@@ -16,8 +16,6 @@ function DrinkCarousel() {
     requestAPI();
   }, []);
 
-  console.log(drinks);
-
   const renderDrinks = drinks.filter((drink, index) => index <= MAX_DRINKS && drink);
   return (
     <div className="container">

@@ -32,7 +32,9 @@ function MealsInProgress() {
     if (!parseRecipesInProgress) {
       const inProgressRecipes = {
         cocktails: {},
-        meals: {},
+        meals: {
+          [id]: [],
+        },
       };
       setStoredProgress(inProgressRecipes);
       localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));

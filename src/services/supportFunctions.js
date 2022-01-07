@@ -34,3 +34,34 @@ export const onClipboardClicked = (setClipboardState, id) => {
     setClipboardState(false);
   }, ONDE_SECOND);
 };
+
+// export const teste = (, id, setStoredProgress) => {
+//   const stored = localStorage.getItem('inProgressRecipes');
+//   const parseRecipesInProgress = JSON.parse(stored);
+//   if (!parseRecipesInProgress) {
+//     const inProgressRecipes = {
+//       cocktails: {},
+//       meals: {
+//         [id]: [],
+//       },
+//     };
+//     setStoredProgress(inProgressRecipes);
+//     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+//   } else {
+//     setStoredProgress(parseRecipesInProgress);
+//   }
+//   const stored = localStorage.getItem('inProgressRecipes');
+//     const parseRecipesInProgress = JSON.parse(stored);
+//     if (!parseRecipesInProgress) {
+//       const inProgressRecipes = {
+//         cocktails: {
+//           [id]: [],
+//         },
+//         meals: {},
+//       };
+//       setStoredProgress(inProgressRecipes);
+//       localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+//     } else {
+//       setStoredProgress(parseRecipesInProgress);
+//     }
+// };

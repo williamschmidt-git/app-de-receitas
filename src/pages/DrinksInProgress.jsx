@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
@@ -8,11 +8,10 @@ import { getInProgressStoraged, getProgressStored } from '../services/supportFun
 
 function DrinksInProgress() {
   const {
-    selectedDrink,
-    setSelectedDrink,
     storedProgress,
     setStoredProgress,
   } = useContext(ApplicationContext);
+  const [selectedDrink, setSelectedDrink] = useState({});
   const { id } = useParams();
 
   const searchId = async () => {
@@ -35,7 +34,9 @@ function DrinksInProgress() {
     const parseRecipesInProgress = JSON.parse(stored);
     if (!parseRecipesInProgress) {
       const inProgressRecipes = {
-        cocktails: {},
+        cocktails: {
+          [id]: [],
+        },
         meals: {},
       };
       setStoredProgress(inProgressRecipes);
