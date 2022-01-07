@@ -1,9 +1,16 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+<<<<<<< HEAD
 import copy from 'clipboard-copy';
 import { fetchDrinkId,
   arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import { saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
+=======
+import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
+import {
+  onClipboardClicked,
+  checkIfThereIsLocalStorage } from '../services/supportFunctions';
+>>>>>>> fead3b9a8f61228df8f92bf7b58b9b9d4df8ecf1
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
@@ -12,7 +19,16 @@ import MealCarousel from '../components/MealCarousel';
 
 function ScreenDrinkDetails() {
   const history = useHistory();
-  const { selectedDrink, setSelectedDrink } = useContext(ApplicationContext);
+  const {
+    selectedDrink,
+    setSelectedDrink,
+    clipboardState,
+    setClipboardState,
+    hasStartButton,
+    setStartButton,
+    alreadyStarted,
+    setRecipeStarted,
+  } = useContext(ApplicationContext);
   const { id } = useParams();
 
   const searchId = async () => {
@@ -24,6 +40,20 @@ function ScreenDrinkDetails() {
   useEffect(() => {
     searchId();
   }, []);
+
+  useEffect(() => {
+    if (checkIfThereIsLocalStorage('doneRecipes')) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const recipeAlreadyMade = doneRecipes.some((recipe) => recipe.id === id);
+      setStartButton(!recipeAlreadyMade);
+    }
+    if (checkIfThereIsLocalStorage('inProgressRecipes')) {
+      const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const recipeStarted = Object.keys(inProgressRecipes.cocktails)
+        .some((recipeID) => recipeID === id);
+      setRecipeStarted(recipeStarted);
+    }
+  });
 
   return (
     <div>
@@ -37,13 +67,13 @@ function ScreenDrinkDetails() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => {
-          copy(`http://localhost:3000/bebidas/${id}`);
-          global.alert('Link copiado!');
-        } }
+        onClick={ () => onClipboardClicked(setClipboardState, id) }
       >
         <img src={ shareIcon } alt="share" />
       </button>
+      <p>
+        {clipboardState ? 'Link copiado!' : ''}
+      </p>
       <button
         type="button"
         data-testid="favorite-btn"
@@ -79,14 +109,16 @@ function ScreenDrinkDetails() {
       </div>
       <MealCarousel />
       <footer>
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-          onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
-          className="button-start-recipe"
-        >
-          Iniciar Receita
-        </button>
+        { hasStartButton ? (
+          <button
+            data-testid="start-recipe-btn"
+            type="button"
+            onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+            className="button-start-recipe"
+          >
+            {alreadyStarted ? 'Continuar Receita' : 'Iniciar Receita'}
+          </button>
+        ) : null }
       </footer>
     </div>
   );

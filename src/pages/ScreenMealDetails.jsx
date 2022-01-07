@@ -1,10 +1,13 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
-import copy from 'clipboard-copy';
 import ApplicationContext from '../context/ApplicationContext';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
+<<<<<<< HEAD
 import { saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
+=======
+import { checkIfThereIsLocalStorage, onClipboardClicked } from '../services/supportFunctions';
+>>>>>>> fead3b9a8f61228df8f92bf7b58b9b9d4df8ecf1
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import DrinkCarousel from '../components/DrinkCarousel';
@@ -12,7 +15,16 @@ import DrinkCarousel from '../components/DrinkCarousel';
 function ScreenMealDetails() {
   const { id } = useParams();
   const history = useHistory();
-  const { selectedMeal, setSelectedMeal } = useContext(ApplicationContext);
+  const {
+    selectedMeal,
+    setSelectedMeal,
+    clipboardState,
+    setClipboardState,
+    hasStartButton,
+    setStartButton,
+    alreadyStarted,
+    setRecipeStarted,
+  } = useContext(ApplicationContext);
 
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
@@ -24,7 +36,24 @@ function ScreenMealDetails() {
     searchId();
   }, []);
 
+<<<<<<< HEAD
   console.log(selectedMeal);
+=======
+  useEffect(() => {
+    if (checkIfThereIsLocalStorage('doneRecipes')) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const recipeAlreadyMade = doneRecipes.some((recipe) => recipe.id === id);
+      setStartButton(!recipeAlreadyMade);
+    }
+    if (checkIfThereIsLocalStorage('inProgressRecipes')) {
+      const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const recipeStarted = Object.keys(inProgressRecipes.meals)
+        .some((recipeID) => recipeID === id);
+      setRecipeStarted(recipeStarted);
+    }
+  }, []);
+
+>>>>>>> fead3b9a8f61228df8f92bf7b58b9b9d4df8ecf1
   return (
     <div>
       <img
@@ -39,13 +68,14 @@ function ScreenMealDetails() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => {
-          copy(`http://localhost:3000/comidas/${id}`);
-        } }
+        onClick={ () => onClipboardClicked(setClipboardState, id) }
       >
         <img src={ shareIcon } alt="share" />
 
       </button>
+      <p>
+        {clipboardState ? 'Link copiado!' : ''}
+      </p>
       <button
         type="button"
         data-testid="favorite-btn"
@@ -79,6 +109,7 @@ function ScreenMealDetails() {
       <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } />
       <DrinkCarousel />
       <footer>
+<<<<<<< HEAD
         <button
           data-testid="start-recipe-btn"
           type="button"
@@ -89,6 +120,18 @@ function ScreenMealDetails() {
         >
           Iniciar Receita
         </button>
+=======
+        { hasStartButton ? (
+          <button
+            data-testid="start-recipe-btn"
+            type="button"
+            onClick={ () => history.push(`/comidas/${id}/in-progress`) }
+            className="button-start-recipe"
+          >
+            {alreadyStarted ? 'Continuar Receita' : 'Iniciar Receita'}
+          </button>
+        ) : null }
+>>>>>>> fead3b9a8f61228df8f92bf7b58b9b9d4df8ecf1
       </footer>
     </div>
   );
