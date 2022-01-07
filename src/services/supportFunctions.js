@@ -20,10 +20,11 @@ export const getInProgressStoraged = (recipeType, recipeID, targetName) => {
 };
 
 export const getProgressStored = (ingredient, recipeID, inProgressStored, recipeType) => {
-  if (inProgressStored[recipeType][recipeID]) {
-    const mealsInProgress = inProgressStored[recipeType][recipeID];
-    return mealsInProgress.some((item) => item === ingredient[0]);
+  if (!inProgressStored[recipeType][recipeID]) {
+    return false;
   }
+  const recipeInProgress = inProgressStored[recipeType][recipeID];
+  return recipeInProgress.some((item) => item === ingredient[0]);
 };
 
 export const onClipboardClicked = (setClipboardState, id) => {
@@ -33,4 +34,13 @@ export const onClipboardClicked = (setClipboardState, id) => {
   setTimeout(() => {
     setClipboardState(false);
   }, ONDE_SECOND);
+};
+
+export const checkIfThereIsLocalStorage = (storageKey) => {
+  const stored = localStorage.getItem(storageKey);
+  const parseStorage = JSON.parse(stored);
+  if (!parseStorage) {
+    return false;
+  }
+  return true;
 };

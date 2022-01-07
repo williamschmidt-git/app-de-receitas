@@ -1,7 +1,9 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
-import { onClipboardClicked } from '../services/supportFunctions';
+import {
+  onClipboardClicked,
+  checkIfThereIsLocalStorage } from '../services/supportFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
@@ -15,6 +17,10 @@ function ScreenDrinkDetails() {
     setSelectedDrink,
     clipboardState,
     setClipboardState,
+    hasStartButton,
+    setStartButton,
+    alreadyStarted,
+    setRecipeStarted,
   } = useContext(ApplicationContext);
   const { id } = useParams();
 
@@ -27,6 +33,20 @@ function ScreenDrinkDetails() {
   useEffect(() => {
     searchId();
   }, []);
+
+  useEffect(() => {
+    if (checkIfThereIsLocalStorage('doneRecipes')) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const recipeAlreadyMade = doneRecipes.some((recipe) => recipe.id === id);
+      setStartButton(!recipeAlreadyMade);
+    }
+    if (checkIfThereIsLocalStorage('inProgressRecipes')) {
+      const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const recipeStarted = Object.keys(inProgressRecipes.cocktails)
+        .some((recipeID) => recipeID === id);
+      setRecipeStarted(recipeStarted);
+    }
+  });
 
   return (
     <div>
@@ -79,14 +99,16 @@ function ScreenDrinkDetails() {
       </div>
       <MealCarousel />
       <footer>
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-          onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
-          className="button-start-recipe"
-        >
-          Iniciar Receita
-        </button>
+        { hasStartButton ? (
+          <button
+            data-testid="start-recipe-btn"
+            type="button"
+            onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+            className="button-start-recipe"
+          >
+            {alreadyStarted ? 'Continuar Receita' : 'Iniciar Receita'}
+          </button>
+        ) : null }
       </footer>
     </div>
   );
