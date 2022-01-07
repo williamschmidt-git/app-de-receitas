@@ -38,7 +38,7 @@ function ScreenDrinkDetails() {
     if (checkIfThereIsLocalStorage('doneRecipes')) {
       const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       const recipeAlreadyMade = doneRecipes.some((recipe) => recipe.id === id);
-      setStartButton(recipeAlreadyMade);
+      setStartButton(!recipeAlreadyMade);
     }
     if (checkIfThereIsLocalStorage('inProgressRecipes')) {
       const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
