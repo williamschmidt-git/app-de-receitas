@@ -1,7 +1,9 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import copy from 'clipboard-copy';
-import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
+import { fetchDrinkId,
+  arrayOfIngredientsAndMeasurements,
+  saveFavoriteRecipeOnStorage } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
@@ -22,6 +24,8 @@ function ScreenDrinkDetails() {
   useEffect(() => {
     searchId();
   }, []);
+
+  console.log(selectedDrink);
 
   return (
     <div>
@@ -45,6 +49,9 @@ function ScreenDrinkDetails() {
       <button
         type="button"
         data-testid="favorite-btn"
+        onClick={ () => {
+          saveFavoriteRecipeOnStorage(selectedDrink, 'bebida');
+        } }
       >
         <img src={ whiteHeartIcon } alt="favorite" />
       </button>
@@ -72,7 +79,7 @@ function ScreenDrinkDetails() {
         <h3>Instructions: </h3>
         {/* <p data-testid="instructions">{selectedDrink.strInstructions}</p> */}
       </div>
-      <MealCarousel />
+      {/* <MealCarousel /> */}
       <footer>
         <button
           data-testid="start-recipe-btn"

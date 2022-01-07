@@ -49,7 +49,7 @@ function ScreenMealDetails() {
         type="button"
         data-testid="favorite-btn"
         onClick={ () => {
-          saveFavoriteRecipeOnStorage(selectedMeal);
+          saveFavoriteRecipeOnStorage(selectedMeal, 'comida');
         } }
       >
         <img src={ whiteHeartIcon } alt="favorite" />
@@ -75,8 +75,8 @@ function ScreenMealDetails() {
         <h3>Instructions: </h3>
         {/* <p data-testid="instructions">{selectedMeal.strInstructions}</p> */}
       </div>
-      <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } />
-      <DrinkCarousel />
+      {/* <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } /> */}
+      {/* <DrinkCarousel /> */}
       <footer>
         <button
           data-testid="start-recipe-btn"

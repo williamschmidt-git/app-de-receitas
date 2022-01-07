@@ -15,6 +15,7 @@ function ApplicationProvider({ children }) {
   const [selectedDrink, setSelectedDrink] = useState([]);
   const [selectedMeal, setSelectedMeal] = useState([]);
   const [storedProgress, setStoredProgress] = useState({});
+  const [storedFavorites, setStoredFavorite] = useState({});
 
   const contextValue = {
     mealsArray,

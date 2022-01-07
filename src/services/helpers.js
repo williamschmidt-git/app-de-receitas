@@ -117,20 +117,8 @@ export const arrayOfIngredientsAndMeasurements = (selectedRecipe) => {
 };
 
 // https://pt.stackoverflow.com/questions/329223/armazenar-um-array-de-objetos-em-um-local-storage-com-js
-export const saveOnLocalStorage = (id) => {
-  const EM_PROGRESSO = 'em progresso';
-  let emProgresso = [];
 
-  if (localStorage.hasOwnProperty(EM_PROGRESSO)) {
-    emProgresso = JSON.parse(localStorage.getItem(EM_PROGRESSO));
-  }
-
-  emProgresso.push(id);
-
-  localStorage.setItem('em progresso', JSON.stringify(emProgresso));
-};
-
-export const saveFavoriteRecipeOnStorage = (recipe) => {
+export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   const FAVORITE_RECIPES = 'favoriteRecipes';
   let favoriteRecipes = [];
 
@@ -138,24 +126,35 @@ export const saveFavoriteRecipeOnStorage = (recipe) => {
     favoriteRecipes = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
   }
 
-  favoriteRecipes.push({
-    id: recipe.idMeal,
-    area: recipe.strArea,
-    category: recipe.strCategory,
-    // alcoholicOrNot: 'alcoholic-ou-non-alcoholic-ou-texto-vazio',
-    name: recipe.strMeal,
-    image: recipe.strMealThumb,
-  });
+  if (recipeType === 'comida') {
+    favoriteRecipes.push({
+      id: recipe.idMeal,
+      type: recipeType,
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    });
+  } else {
+    favoriteRecipes.push({
+      id: recipe.idDrink,
+      type: recipeType,
+      area: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+    });
+  }
 
   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
 };
-// favoriteRecipes:
-// [{
-//   id: id-da-receita,
-//   type: comida-ou-bebida,
-//   area: area-da-receita-ou-texto-vazio,
-//   category: categoria-da-receita-ou-texto-vazio,
-//   alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-//   name: nome-da-receita,
-//   image: imagem-da-receita
-// }]
+
+// id: '52771',
+//           type: 'comida',
+//           area: 'Italian',
+//           category: 'Vegetarian',
+//           alcoholicOrNot: '',
+//           name: 'Spicy Arrabiata Penne',
+//           image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
