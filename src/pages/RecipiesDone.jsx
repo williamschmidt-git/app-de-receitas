@@ -1,20 +1,43 @@
-// import React from 'react';
-// import Header from '../components/Header';
+import React from 'react';
+import Header from '../components/Header';
+import DoneMeals from '../components/DoneMeals';
+import DoneDrinks from '../components/DoneDrinks';
 
-// const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-// const { type } = doneRecipes[0];
+const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
-// function RecipiesDone() {
-//   return (
-//     <div>
-//       <Header pageName="Receitas Feitas" />
-//       { type === 'comida' ?
-//         <img src={ doneRecipes[0].image }/>
+function RecipiesDone() {
+  return (
+    <div>
+      <Header pageName="Receitas Feitas" />
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+      >
+        All
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-food-btn"
+      >
+        Food
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-drink-btn"
+      >
+        Drinks
+      </button>
+      {
+        doneRecipes.map(({ type }) => (
+          type === 'comida' ? (
+            <DoneMeals />
+          ) : (
+            <DoneDrinks />
+          )
+        ))
+      }
+    </div>
+  );
+}
 
-//       }
-
-//     </div>
-//   );
-// }
-
-// export default RecipiesDone;
+export default RecipiesDone;
