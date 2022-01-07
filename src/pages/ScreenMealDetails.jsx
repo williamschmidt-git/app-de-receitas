@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import ApplicationContext from '../context/ApplicationContext';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
-import { checkIfThereIsLocalStorage, onClipboardClicked } from '../services/supportFunctions';
+import { checkIfThereIsLocalStorage, onClipboardClicked, saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import DrinkCarousel from '../components/DrinkCarousel';

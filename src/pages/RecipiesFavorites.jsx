@@ -27,9 +27,8 @@ function RecipiesFavorites() {
             type="button"
             data-testid="0-horizontal-share-btn"
             src={ shareIcon }
-
           >
-            <img alt="share" />
+            <img alt="share" src={ shareIcon } />
           </button>
 
           <button
@@ -40,6 +39,7 @@ function RecipiesFavorites() {
           >
             <img
               alt="favorite"
+              src={ blackHeartIcon }
             />
           </button>
 
@@ -71,6 +71,7 @@ function RecipiesFavorites() {
           >
             <img
               alt="share"
+              src={ shareIcon }
             />
           </button>
 
@@ -82,6 +83,7 @@ function RecipiesFavorites() {
           >
             <img
               alt="favorite"
+              src={ blackHeartIcon }
             />
           </button>
 
