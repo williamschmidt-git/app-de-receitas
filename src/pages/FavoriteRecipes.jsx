@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { onClipboardClicked, unfavoriteButton } from '../services/supportFunctions';
+import ApplicationContext from '../context/ApplicationContext';
 
 function FavoriteRecipes() {
+  const history = useHistory();
+  const { clipboardState,
+    setClipboardState } = useContext(ApplicationContext);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  // useEffect(() => {
+  //   effect;
+  //   return () => {
+  //     cleanup;
+  //   };
+  // }, [favoriteRecipes]);
 
   const renderFavorites = (e, type) => {
     if (type === 'comida') {
@@ -24,13 +37,23 @@ function FavoriteRecipes() {
             type="button"
             data-testid="0-horizontal-share-btn"
             src={ shareIcon }
+            onClick={ () => {
+              const URL = history.location.pathname;
+              onClipboardClicked(setClipboardState, URL);
+            } }
           >
             <img alt="share" src={ shareIcon } />
           </button>
+          <p>
+            {clipboardState ? 'Link copiado!' : ''}
+          </p>
+
           <button
             type="button"
             data-testid="0-horizontal-favorite-btn"
             src={ blackHeartIcon }
+            onClick={ unfavoriteButton }
+
           >
             <img
               alt="favorite"
@@ -58,12 +81,21 @@ function FavoriteRecipes() {
             type="button"
             data-testid="1-horizontal-share-btn"
             src={ shareIcon }
+            onClick={ () => {
+              const URL = history.location.pathname;
+              onClipboardClicked(setClipboardState, URL);
+            } }
+
           >
             <img
               alt="share"
               src={ shareIcon }
             />
           </button>
+          <p>
+            {clipboardState ? 'Link copiado!' : ''}
+          </p>
+
           <button
             type="button"
             data-testid="1-horizontal-favorite-btn"

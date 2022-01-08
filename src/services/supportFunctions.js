@@ -28,6 +28,11 @@ export const getProgressStored = (ingredient, recipeID, inProgressStored, recipe
 };
 
 export const onClipboardClicked = (setClipboardState, URL) => {
+  const removeInProgress = URL.split('/').includes('in-progress');
+  if (removeInProgress) {
+    const positionToslice = 3;
+    URL = URL.split('/').slice(0, positionToslice).join('/');
+  }
   copy(`http://localhost:3000${URL}`);
   setClipboardState(true);
   const ONDE_SECOND = 1000;
@@ -35,6 +40,25 @@ export const onClipboardClicked = (setClipboardState, URL) => {
     setClipboardState(false);
   }, ONDE_SECOND);
 };
+
+// export const onClipboardClicked = (setClipboardState, id, type) => {
+//   if (type === 'comida') {
+//     copy(`http://localhost:3000/comidas/${id}`);
+//     setClipboardState(true);
+//     const ONDE_SECOND = 1000;
+//     setTimeout(() => {
+//       setClipboardState(false);
+//     }, ONDE_SECOND);
+//   }
+//   if (type === 'bebida') {
+//     copy(`http://localhost:3000/bebidas/${id}`);
+//     setClipboardState(true);
+//     const ONDE_SECOND = 1000;
+//     setTimeout(() => {
+//       setClipboardState(false);
+//     }, ONDE_SECOND);
+//   }
+// };
 
 export const checkIfThereIsLocalStorage = (storageKey) => {
   const stored = localStorage.getItem(storageKey);
@@ -77,4 +101,10 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   }
 
   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+};
+
+export const unfavoriteButton = (id) => {
+  const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const newArr = arrayFromStorage.filter((e) => e.id !== id);
+  localStorage.setItem('favoriteRecipes', newArr);
 };

@@ -71,12 +71,7 @@ function MealsInProgress() {
         type="button"
         data-testid="share-btn"
         onClick={ () => {
-          let URL = history.location.pathname;
-          const removeInProgress = URL.split('/').includes('in-progress');
-          if (removeInProgress) {
-            const positionToslice = 3;
-            URL = URL.split('/').slice(0, positionToslice).join('/');
-          }
+          const URL = history.location.pathname;
           onClipboardClicked(setClipboardState, URL);
         } }
       >
