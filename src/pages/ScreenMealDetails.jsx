@@ -62,7 +62,15 @@ function ScreenMealDetails() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => onClipboardClicked(setClipboardState, id) }
+        onClick={ () => {
+          let URL = history.location.pathname;
+          const removeInProgress = URL.split('/').includes('in-progress');
+          if (removeInProgress) {
+            const positionToslice = 3;
+            URL = URL.split('/').slice(0, positionToslice).join('/');
+          }
+          onClipboardClicked(setClipboardState, URL);
+        } }
       >
         <img src={ shareIcon } alt="share" />
 

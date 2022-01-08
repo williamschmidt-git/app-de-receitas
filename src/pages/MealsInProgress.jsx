@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -16,6 +16,7 @@ function MealsInProgress() {
     clipboardState,
     setClipboardState } = useContext(ApplicationContext);
   const [selectedMeal, setSelectedMeal] = useState({});
+  const history = useHistory();
   const { id } = useParams();
 
   const searchId = async () => {
@@ -69,7 +70,15 @@ function MealsInProgress() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => onClipboardClicked(setClipboardState, id) }
+        onClick={ () => {
+          let URL = history.location.pathname;
+          const removeInProgress = URL.split('/').includes('in-progress');
+          if (removeInProgress) {
+            const positionToslice = 3;
+            URL = URL.split('/').slice(0, positionToslice).join('/');
+          }
+          onClipboardClicked(setClipboardState, URL);
+        } }
       >
         <img src={ shareIcon } alt="share" />
       </button>
@@ -115,7 +124,7 @@ function MealsInProgress() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        // onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+        onClick={ () => history.push('/receitas-feitas') }
       >
         Finalizar Receita
       </button>

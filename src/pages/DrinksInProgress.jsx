@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -7,7 +7,8 @@ import ApplicationContext from '../context/ApplicationContext';
 import {
   getInProgressStoraged,
   getProgressStored,
-  onClipboardClicked } from '../services/supportFunctions';
+  onClipboardClicked,
+  checkIfThereIsLocalStorage } from '../services/supportFunctions';
 
 function DrinksInProgress() {
   const {
@@ -17,6 +18,7 @@ function DrinksInProgress() {
     setClipboardState,
   } = useContext(ApplicationContext);
   const [selectedDrink, setSelectedDrink] = useState({});
+  const history = useHistory();
   const { id } = useParams();
 
   const searchId = async () => {
@@ -70,7 +72,15 @@ function DrinksInProgress() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => onClipboardClicked(setClipboardState, id) }
+        onClick={ () => {
+          let URL = history.location.pathname;
+          const removeInProgress = URL.split('/').includes('in-progress');
+          if (removeInProgress) {
+            const positionToslice = 3;
+            URL = URL.split('/').slice(0, positionToslice).join('/');
+          }
+          onClipboardClicked(setClipboardState, URL);
+        } }
       >
         <img src={ shareIcon } alt="share" />
       </button>
@@ -78,6 +88,12 @@ function DrinksInProgress() {
       <button
         type="button"
         data-testid="favorite-btn"
+        // onClick={ () => {
+        //   if (checkIfThereIsLocalStorage('favoriteRecipes')) {
+        //     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+        //   }
+        // } }
       >
         <img src={ whiteHeartIcon } alt="favorite" />
       </button>
@@ -116,7 +132,7 @@ function DrinksInProgress() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        // onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+        onClick={ () => history.push('/receitas-feitas') }
       >
         Finalizar Receita
       </button>

@@ -27,8 +27,8 @@ export const getProgressStored = (ingredient, recipeID, inProgressStored, recipe
   return recipeInProgress.some((item) => item === ingredient[0]);
 };
 
-export const onClipboardClicked = (setClipboardState, id) => {
-  copy(`http://localhost:3000/bebidas/${id}`);
+export const onClipboardClicked = (setClipboardState, URL) => {
+  copy(`http://localhost:3000${URL}`);
   setClipboardState(true);
   const ONDE_SECOND = 1000;
   setTimeout(() => {

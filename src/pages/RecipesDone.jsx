@@ -5,7 +5,7 @@ import DoneDrinks from '../components/DoneDrinks';
 
 const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
-function RecipiesDone() {
+function RecipesDone() {
   return (
     <div>
       <Header pageName="Receitas Feitas" />
@@ -27,17 +27,16 @@ function RecipiesDone() {
       >
         Drinks
       </button>
-      {
-        doneRecipes.map(({ type }) => (
+      {!doneRecipes ? null
+        : doneRecipes.map(({ type }) => (
           type === 'comida' ? (
             <DoneMeals />
           ) : (
             <DoneDrinks />
           )
-        ))
-      }
+        ))}
     </div>
   );
 }
 
-export default RecipiesDone;
+export default RecipesDone;
