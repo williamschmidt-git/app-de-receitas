@@ -88,12 +88,15 @@ function DrinksInProgress() {
       <button
         type="button"
         data-testid="favorite-btn"
-        // onClick={ () => {
-        //   if (checkIfThereIsLocalStorage('favoriteRecipes')) {
-        //     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-
-        //   }
-        // } }
+        onClick={ () => {
+          let addNewRecipe = [];
+          if (checkIfThereIsLocalStorage('favoriteRecipes')) {
+            const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+            addNewRecipe = [...favoriteRecipes, selectedDrink];
+            localStorage.setItem('favoriteRecipes', JSON.stringify(addNewRecipe));
+          }
+          localStorage.setItem('favoriteRecipes', JSON.stringify(addNewRecipe));
+        } }
       >
         <img src={ whiteHeartIcon } alt="favorite" />
       </button>

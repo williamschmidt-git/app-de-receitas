@@ -5,7 +5,8 @@ import ApplicationContext from '../context/ApplicationContext';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import {
   checkIfThereIsLocalStorage,
-  onClipboardClicked } from '../services/supportFunctions';
+  onClipboardClicked,
+  saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import DrinkCarousel from '../components/DrinkCarousel';
@@ -81,6 +82,9 @@ function ScreenMealDetails() {
       <button
         type="button"
         data-testid="favorite-btn"
+        onClick={ () => {
+          saveFavoriteRecipeOnStorage(selectedMeal, 'comida');
+        } }
       >
         <img src={ whiteHeartIcon } alt="favorite" />
 
