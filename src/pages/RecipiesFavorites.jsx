@@ -2,13 +2,20 @@ import React, { useContext } from 'react';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { onClipboardClicked } from '../services/supportFunctions';
+import { onClipboardClicked, unfavoriteButton } from '../services/supportFunctions';
 import ApplicationContext from '../context/ApplicationContext';
 
 function RecipiesFavorites() {
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const { clipboardState,
     setClipboardState } = useContext(ApplicationContext);
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  // useEffect(() => {
+  //   effect;
+  //   return () => {
+  //     cleanup;
+  //   };
+  // }, [favoriteRecipes]);
 
   const renderFavorites = (e, type) => {
     if (type === 'comida') {
@@ -43,6 +50,7 @@ function RecipiesFavorites() {
             type="button"
             data-testid="0-horizontal-favorite-btn"
             src={ blackHeartIcon }
+            onClick={ unfavoriteButton }
 
           >
             <img
