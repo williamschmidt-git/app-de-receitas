@@ -89,8 +89,8 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
 };
 
-// export const unfavoriteButton = (id) => {
-//   const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-//   const newArr = arrayFromStorage.filter((e) => e.id !== id);
-//   localStorage.setItem('favoriteRecipes', newArr);
-// };
+export const unfavoriteButton = (id) => {
+  const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const newArr = arrayFromStorage.filter((e) => e.id !== id);
+  localStorage.setItem('favoriteRecipes', newArr);
+};
