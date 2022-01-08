@@ -27,13 +27,23 @@ export const getProgressStored = (ingredient, recipeID, inProgressStored, recipe
   return recipeInProgress.some((item) => item === ingredient[0]);
 };
 
-export const onClipboardClicked = (setClipboardState, id) => {
-  copy(`http://localhost:3000/bebidas/${id}`);
-  setClipboardState(true);
-  const ONDE_SECOND = 1000;
-  setTimeout(() => {
-    setClipboardState(false);
-  }, ONDE_SECOND);
+export const onClipboardClicked = (setClipboardState, id, type) => {
+  if (type === 'comida') {
+    copy(`http://localhost:3000/comidas/${id}`);
+    setClipboardState(true);
+    const ONDE_SECOND = 1000;
+    setTimeout(() => {
+      setClipboardState(false);
+    }, ONDE_SECOND);
+  }
+  if (type === 'bebida') {
+    copy(`http://localhost:3000/bebidas/${id}`);
+    setClipboardState(true);
+    const ONDE_SECOND = 1000;
+    setTimeout(() => {
+      setClipboardState(false);
+    }, ONDE_SECOND);
+  }
 };
 
 export const checkIfThereIsLocalStorage = (storageKey) => {

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { onClipboardClicked } from '../services/supportFunctions';
+import ApplicationContext from '../context/ApplicationContext';
 
 function RecipiesFavorites() {
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const { clipboardState,
+    setClipboardState } = useContext(ApplicationContext);
 
   const renderFavorites = (e, type) => {
     if (type === 'comida') {
@@ -27,9 +31,13 @@ function RecipiesFavorites() {
             type="button"
             data-testid="0-horizontal-share-btn"
             src={ shareIcon }
+            onClick={ () => onClipboardClicked(setClipboardState, e.id, 'comida') }
           >
             <img alt="share" src={ shareIcon } />
           </button>
+          <p>
+            {clipboardState ? 'Link copiado!' : ''}
+          </p>
 
           <button
             type="button"
@@ -66,6 +74,7 @@ function RecipiesFavorites() {
             type="button"
             data-testid="1-horizontal-share-btn"
             src={ shareIcon }
+            onClick={ () => onClipboardClicked(setClipboardState, e.id, 'bebida') }
 
           >
             <img
@@ -73,6 +82,9 @@ function RecipiesFavorites() {
               src={ shareIcon }
             />
           </button>
+          <p>
+            {clipboardState ? 'Link copiado!' : ''}
+          </p>
 
           <button
             type="button"
