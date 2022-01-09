@@ -11,7 +11,8 @@ import {
   onClipboardClicked,
   saveFavoriteRecipeOnStorage,
   setHeartIcon,
-  isButtonFinishDisabled } from '../services/supportFunctions';
+  isButtonFinishDisabled,
+  saveDoneRecipeOnStorage } from '../services/supportFunctions';
 
 function DrinksInProgress() {
   const {
@@ -143,7 +144,10 @@ function DrinksInProgress() {
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ isFinishButtonEnabled }
-        onClick={ () => history.push('/receitas-feitas') }
+        onClick={ () => {
+          history.push('/receitas-feitas');
+          saveDoneRecipeOnStorage(selectedDrink, 'bebida');
+        } }
       >
         Finalizar Receita
       </button>

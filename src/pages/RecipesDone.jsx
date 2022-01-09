@@ -27,14 +27,20 @@ function RecipesDone() {
       >
         Drinks
       </button>
-      {!doneRecipes ? null
-        : doneRecipes.map(({ type }) => (
-          type === 'comida' ? (
-            <DoneMeals />
-          ) : (
-            <DoneDrinks />
-          )
-        ))}
+      {
+        !doneRecipes ? (
+          <div>
+            teste
+          </div>
+        ) : (
+          doneRecipes.map(({ type }) => (
+            type === 'comida' ? (
+              <DoneMeals />
+            ) : (
+              <DoneDrinks />
+            )
+          )))
+      }
     </div>
   );
 }

@@ -10,7 +10,8 @@ import {
   onClipboardClicked,
   saveFavoriteRecipeOnStorage,
   setHeartIcon,
-  isButtonFinishDisabled } from '../services/supportFunctions';
+  isButtonFinishDisabled,
+  saveDoneRecipeOnStorage } from '../services/supportFunctions';
 import ApplicationContext from '../context/ApplicationContext';
 
 function MealsInProgress() {
@@ -142,7 +143,10 @@ function MealsInProgress() {
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ isFinishButtonEnabled }
-        onClick={ () => history.push('/receitas-feitas') }
+        onClick={ () => {
+          history.push('/receitas-feitas');
+          saveDoneRecipeOnStorage(selectedMeal, 'comida');
+        } }
       >
         Finalizar Receita
       </button>

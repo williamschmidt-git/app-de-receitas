@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchDrinks } from '../services/helpers';
-import '../App.css';
+import '../styles/carousel.css';
 
 const MAX_DRINKS = 5;
 
