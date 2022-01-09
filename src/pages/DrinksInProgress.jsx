@@ -3,12 +3,16 @@ import { useHistory, useParams } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
 import {
   getInProgressStoraged,
   getProgressStored,
-  saveDoneRecipeOnStorage,
-  onClipboardClicked } from '../services/supportFunctions';
+  onClipboardClicked,
+  saveFavoriteRecipeOnStorage,
+  setHeartIcon,
+  isButtonFinishDisabled,
+  saveDoneRecipeOnStorage } from '../services/supportFunctions';
 
 function DrinksInProgress() {
   const {
@@ -18,8 +22,10 @@ function DrinksInProgress() {
     setClipboardState,
   } = useContext(ApplicationContext);
   const [selectedDrink, setSelectedDrink] = useState({});
-  const { id } = useParams();
+  const [isRecipeFavorite, setRecipeToFavorite] = useState(false);
+  const [isFinishButtonEnabled, setButtonToFinish] = useState(true);
   const history = useHistory();
+  const { id } = useParams();
 
   const searchId = async () => {
     const responseAPI = await fetchDrinkId(id);
@@ -60,6 +66,14 @@ function DrinksInProgress() {
     }
   }, []);
 
+  useEffect(() => {
+    setHeartIcon(setRecipeToFavorite, id);
+  }, []);
+
+  useEffect(() => {
+    isButtonFinishDisabled(storedProgress, history, selectedDrink, setButtonToFinish);
+  }, [storedProgress]);
+
   return (
     <div>
       <img
@@ -72,7 +86,10 @@ function DrinksInProgress() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => onClipboardClicked(setClipboardState, id) }
+        onClick={ () => {
+          const URL = history.location.pathname;
+          onClipboardClicked(setClipboardState, URL);
+        } }
       >
         <img src={ shareIcon } alt="share" />
       </button>
@@ -80,8 +97,16 @@ function DrinksInProgress() {
       <button
         type="button"
         data-testid="favorite-btn"
+        src={ isRecipeFavorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
+        onClick={ () => {
+          saveFavoriteRecipeOnStorage(selectedDrink, 'bebida');
+          setRecipeToFavorite(!isRecipeFavorite);
+        } }
       >
-        <img src={ whiteHeartIcon } alt="favorite" />
+        {isRecipeFavorite ? (
+          <img src={ blackHeartIcon } alt="desfavoritar" />
+        )
+          : (<img src={ whiteHeartIcon } alt="favoritar" />) }
       </button>
       <h3>Ingredientes:</h3>
       <div>
@@ -118,6 +143,7 @@ function DrinksInProgress() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
+        disabled={ isFinishButtonEnabled }
         onClick={ () => {
           history.push('/receitas-feitas');
           saveDoneRecipeOnStorage(selectedDrink, 'bebida');
