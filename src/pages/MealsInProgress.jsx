@@ -18,7 +18,7 @@ function MealsInProgress() {
     setClipboardState } = useContext(ApplicationContext);
   const [selectedMeal, setSelectedMeal] = useState({});
   const { id } = useParams();
-  const history = useEffect();
+  const history = useHistory();
 
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
