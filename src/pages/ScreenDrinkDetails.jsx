@@ -3,7 +3,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import {
   onClipboardClicked,
-  checkIfThereIsLocalStorage, saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
+  checkIfThereIsLocalStorage,
+  saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';

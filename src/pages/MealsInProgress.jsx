@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import {
   getInProgressStoraged,
   getProgressStored,
+  saveDoneRecipeOnStorage,
   onClipboardClicked } from '../services/supportFunctions';
 import ApplicationContext from '../context/ApplicationContext';
 
@@ -17,6 +18,7 @@ function MealsInProgress() {
     setClipboardState } = useContext(ApplicationContext);
   const [selectedMeal, setSelectedMeal] = useState({});
   const { id } = useParams();
+  const history = useHistory();
 
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
@@ -114,7 +116,10 @@ function MealsInProgress() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        // onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+        onClick={ () => {
+          history.push('/receitas-feitas');
+          saveDoneRecipeOnStorage(selectedMeal, 'comida');
+        } }
       >
         Finalizar Receita
       </button>

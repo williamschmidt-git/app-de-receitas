@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -7,6 +7,7 @@ import ApplicationContext from '../context/ApplicationContext';
 import {
   getInProgressStoraged,
   getProgressStored,
+  saveDoneRecipeOnStorage,
   onClipboardClicked } from '../services/supportFunctions';
 
 function DrinksInProgress() {
@@ -18,6 +19,7 @@ function DrinksInProgress() {
   } = useContext(ApplicationContext);
   const [selectedDrink, setSelectedDrink] = useState({});
   const { id } = useParams();
+  const history = useHistory();
 
   const searchId = async () => {
     const responseAPI = await fetchDrinkId(id);
@@ -116,7 +118,10 @@ function DrinksInProgress() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        // onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+        onClick={ () => {
+          history.push('/receitas-feitas');
+          saveDoneRecipeOnStorage(selectedDrink, 'bebida');
+        } }
       >
         Finalizar Receita
       </button>
