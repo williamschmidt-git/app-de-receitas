@@ -1,12 +1,14 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import {
   onClipboardClicked,
   checkIfThereIsLocalStorage,
-  saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
+  saveFavoriteRecipeOnStorage,
+  setHeartIcon } from '../services/supportFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
 import '../App.css';
 import MealCarousel from '../components/MealCarousel';
@@ -24,6 +26,7 @@ function ScreenDrinkDetails() {
     setRecipeStarted,
   } = useContext(ApplicationContext);
   const { id } = useParams();
+  const [isRecipeFavorite, setRecipeToFavorite] = useState(false);
 
   const searchId = async () => {
     const responseAPI = await fetchDrinkId(id);
@@ -49,6 +52,10 @@ function ScreenDrinkDetails() {
     }
   });
 
+  useEffect(() => {
+    setHeartIcon(setRecipeToFavorite, id);
+  }, []);
+
   return (
     <div>
       <img
@@ -61,7 +68,10 @@ function ScreenDrinkDetails() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => onClipboardClicked(setClipboardState, id) }
+        onClick={ () => {
+          const URL = history.location.pathname;
+          onClipboardClicked(setClipboardState, URL);
+        } }
       >
         <img src={ shareIcon } alt="share" />
       </button>
@@ -71,11 +81,16 @@ function ScreenDrinkDetails() {
       <button
         type="button"
         data-testid="favorite-btn"
+        src={ isRecipeFavorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
         onClick={ () => {
           saveFavoriteRecipeOnStorage(selectedDrink, 'bebida');
+          setRecipeToFavorite(!isRecipeFavorite);
         } }
       >
-        <img src={ whiteHeartIcon } alt="favorite" />
+        {isRecipeFavorite ? (
+          <img src={ blackHeartIcon } alt="desfavoritar" />
+        )
+          : (<img src={ whiteHeartIcon } alt="favoritar" />) }
       </button>
       <h3>Ingredientes:</h3>
       <div>

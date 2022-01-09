@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useHistory } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { fetchMeals } from '../services/helpers';
