@@ -6,7 +6,8 @@ import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/help
 import {
   checkIfThereIsLocalStorage,
   onClipboardClicked,
-  saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
+  saveFavoriteRecipeOnStorage,
+  setHeartIcon } from '../services/supportFunctions';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
@@ -26,6 +27,7 @@ function ScreenMealDetails() {
     setRecipeStarted,
   } = useContext(ApplicationContext);
   const [isRecipeFavorite, setRecipeToFavorite] = useState(false);
+  
 
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
@@ -49,6 +51,10 @@ function ScreenMealDetails() {
         .some((recipeID) => recipeID === id);
       setRecipeStarted(recipeStarted);
     }
+  }, []);
+
+  useEffect(() => {
+    setHeartIcon(setRecipeToFavorite, id);
   }, []);
 
   return (
