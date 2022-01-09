@@ -10,7 +10,7 @@ import ExploreRecipies from './pages/ExploreRecipies';
 import ExploreDrinks from './pages/ExploreDrinks';
 import ExploreRecipiesIngredients from './pages/ExploreRecipiesIngredients';
 import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
-// import RecipiesDone from './pages/RecipiesDone';
+import RecipiesDone from './pages/RecipiesDone';
 import RecipiesFavorites from './pages/RecipiesFavorites';
 import ExploreRecipiesArea from './pages/ExploreRecipiesArea';
 import Explore from './pages/Explore';
@@ -47,7 +47,7 @@ function App() {
             />
             <Route path="/explorar/comidas/area" component={ ExploreRecipiesArea } />
             <Route path="/perfil" component={ Profile } />
-            {/* <Route path="/receitas-feitas" component={ RecipiesDone } /> */}
+            <Route path="/receitas-feitas" component={ RecipiesDone } />
             <Route path="/receitas-favoritas" component={ RecipiesFavorites } />
             <Route path="*" component={ NotFound } />
           </Switch>

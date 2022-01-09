@@ -15,7 +15,7 @@ function ApplicationProvider({ children }) {
   const [selectedDrink, setSelectedDrink] = useState([]);
   const [selectedMeal, setSelectedMeal] = useState([]);
   const [storedProgress, setStoredProgress] = useState({});
-  const [storedFavorites, setStoredFavorite] = useState({});
+  // const [storedFavorites, setStoredFavorite] = useState({});
   const [clipboardState, setClipboardState] = useState(false);
   const [hasStartButton, setStartButton] = useState(true);
   const [alreadyStarted, setRecipeStarted] = useState(false);

@@ -60,7 +60,7 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   const FAVORITE_RECIPES = 'favoriteRecipes';
   let favoriteRecipes = [];
 
-  if (localStorage.hasOwnProperty(FAVORITE_RECIPES)) {
+  if (localStorage.FAVORITE_RECIPES) {
     favoriteRecipes = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
   }
 
@@ -93,4 +93,41 @@ export const unfavoriteButton = (id) => {
   const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const newArr = arrayFromStorage.filter((e) => e.id !== id);
   localStorage.setItem('favoriteRecipes', newArr);
+};
+
+export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
+  const DONE_RECIPES = 'doneRecipes';
+  let doneRecipes = [];
+
+  if (localStorage.DONE_RECIPES) {
+    doneRecipes = JSON.parse(localStorage.getItem(DONE_RECIPES));
+  }
+
+  if (recipeType === 'comida') {
+    doneRecipes.push({
+      id: recipe.idMeal,
+      type: recipeType,
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+      doneDate: '',
+      tags: [],
+    });
+  } else {
+    doneRecipes.push({
+      id: recipe.idDrink,
+      type: recipeType,
+      area: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+      doneDate: '',
+      tags: [],
+    });
+  }
+
+  localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 };
