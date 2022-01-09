@@ -1,4 +1,5 @@
 import copy from 'clipboard-copy';
+import { arrayOfIngredientsAndMeasurements } from './helpers';
 
 export const getInProgressStoraged = (recipeType, recipeID, targetName) => {
   const stored = localStorage.getItem('inProgressRecipes');
@@ -66,40 +67,54 @@ export const checkIfThereIsLocalStorage = (storageKey) => {
   if (!parseStorage) {
     return false;
   }
-  return true;
+  return parseStorage;
+};
+
+const removeRecipe = (favoriteRecipes, addRecipeOnStorage) => {
+  const recipeIndex = favoriteRecipes.indexOf(addRecipeOnStorage);
+  favoriteRecipes.splice(recipeIndex, 1);
+  return favoriteRecipes;
 };
 
 // https://pt.stackoverflow.com/questions/329223/armazenar-um-array-de-objetos-em-um-local-storage-com-js
 export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   const FAVORITE_RECIPES = 'favoriteRecipes';
   let favoriteRecipes = [];
+  let mealOrDrink = 'idMeal';
+  if (recipeType === 'bebida') mealOrDrink = 'idDrink';
 
   if (localStorage.hasOwnProperty(FAVORITE_RECIPES)) {
     favoriteRecipes = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
   }
 
-  if (recipeType === 'comida') {
-    favoriteRecipes.push({
-      id: recipe.idMeal,
-      type: recipeType,
-      area: recipe.strArea,
-      category: recipe.strCategory,
-      alcoholicOrNot: '',
-      name: recipe.strMeal,
-      image: recipe.strMealThumb,
-    });
-  } else {
-    favoriteRecipes.push({
-      id: recipe.idDrink,
-      type: recipeType,
-      area: '',
-      category: recipe.strCategory,
-      alcoholicOrNot: recipe.strAlcoholic,
-      name: recipe.strDrink,
-      image: recipe.strDrinkThumb,
-    });
-  }
+  const addRecipeOnStorage = favoriteRecipes
+    .find((recipeOnStorage) => recipeOnStorage.id === recipe[mealOrDrink]);
 
+  if (!addRecipeOnStorage) {
+    if (recipeType === 'comida') {
+      favoriteRecipes.push({
+        id: recipe.idMeal,
+        type: recipeType,
+        area: recipe.strArea,
+        category: recipe.strCategory,
+        alcoholicOrNot: '',
+        name: recipe.strMeal,
+        image: recipe.strMealThumb,
+      });
+    } else {
+      favoriteRecipes.push({
+        id: recipe.idDrink,
+        type: recipeType,
+        area: '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic,
+        name: recipe.strDrink,
+        image: recipe.strDrinkThumb,
+      });
+    }
+  } else {
+    removeRecipe(favoriteRecipes, addRecipeOnStorage);
+  }
   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
 };
 
@@ -107,4 +122,36 @@ export const unfavoriteButton = (id) => {
   const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const newArr = arrayFromStorage.filter((e) => e.id !== id);
   localStorage.setItem('favoriteRecipes', newArr);
+};
+
+export const setHeartIcon = (setRecipeToFavorite, id) => {
+  const checkLocalStorage = checkIfThereIsLocalStorage('favoriteRecipes');
+  if (checkLocalStorage && checkLocalStorage.length !== 0) {
+    const parseFavoritedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isRecipeFavorited = parseFavoritedRecipes
+      .some((storedAsFavorite) => storedAsFavorite.id === id);
+    if (isRecipeFavorited) setRecipeToFavorite(true);
+  }
+};
+
+export const isButtonFinishDisabled = (
+  storedProgress,
+  history,
+  selectedMeal,
+  setButtonToFinish,
+) => {
+  if (Object.entries(storedProgress).length !== 0) {
+    const splitedPathname = history.location.pathname.split('/');
+    let recipeType = splitedPathname[1];
+    const id = splitedPathname[2];
+    if (recipeType === 'comidas') recipeType = 'meals';
+    if (recipeType === 'bebidas') recipeType = 'cocktails';
+    const numberOfCheckboxes = arrayOfIngredientsAndMeasurements(selectedMeal).length;
+    const numberOfChecked = storedProgress[recipeType][id].length;
+    if (numberOfCheckboxes === numberOfChecked) {
+      setButtonToFinish(false);
+    } else {
+      setButtonToFinish(true);
+    }
+  }
 };

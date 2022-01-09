@@ -117,9 +117,7 @@ function FavoriteRecipes() {
       <div>
         {
           !favoriteRecipes ? (
-            <div>
-              oi
-            </div>
+            null
           ) : (
             <div>
               {favoriteRecipes.map((e) => (

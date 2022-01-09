@@ -3,12 +3,15 @@ import { useHistory, useParams } from 'react-router-dom';
 import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
 import {
   getInProgressStoraged,
   getProgressStored,
   onClipboardClicked,
-  checkIfThereIsLocalStorage } from '../services/supportFunctions';
+  saveFavoriteRecipeOnStorage,
+  setHeartIcon,
+  isButtonFinishDisabled } from '../services/supportFunctions';
 
 function DrinksInProgress() {
   const {
@@ -18,6 +21,8 @@ function DrinksInProgress() {
     setClipboardState,
   } = useContext(ApplicationContext);
   const [selectedDrink, setSelectedDrink] = useState({});
+  const [isRecipeFavorite, setRecipeToFavorite] = useState(false);
+  const [isFinishButtonEnabled, setButtonToFinish] = useState(true);
   const history = useHistory();
   const { id } = useParams();
 
@@ -60,6 +65,14 @@ function DrinksInProgress() {
     }
   }, []);
 
+  useEffect(() => {
+    setHeartIcon(setRecipeToFavorite, id);
+  }, []);
+
+  useEffect(() => {
+    isButtonFinishDisabled(storedProgress, history, selectedDrink, setButtonToFinish);
+  }, [storedProgress]);
+
   return (
     <div>
       <img
@@ -83,17 +96,16 @@ function DrinksInProgress() {
       <button
         type="button"
         data-testid="favorite-btn"
+        src={ isRecipeFavorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
         onClick={ () => {
-          let addNewRecipe = [];
-          if (checkIfThereIsLocalStorage('favoriteRecipes')) {
-            const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-            addNewRecipe = [...favoriteRecipes, selectedDrink];
-            localStorage.setItem('favoriteRecipes', JSON.stringify(addNewRecipe));
-          }
-          localStorage.setItem('favoriteRecipes', JSON.stringify(addNewRecipe));
+          saveFavoriteRecipeOnStorage(selectedDrink, 'bebida');
+          setRecipeToFavorite(!isRecipeFavorite);
         } }
       >
-        <img src={ whiteHeartIcon } alt="favorite" />
+        {isRecipeFavorite ? (
+          <img src={ blackHeartIcon } alt="desfavoritar" />
+        )
+          : (<img src={ whiteHeartIcon } alt="favoritar" />) }
       </button>
       <h3>Ingredientes:</h3>
       <div>
@@ -130,6 +142,7 @@ function DrinksInProgress() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
+        disabled={ isFinishButtonEnabled }
         onClick={ () => history.push('/receitas-feitas') }
       >
         Finalizar Receita

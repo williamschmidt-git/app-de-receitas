@@ -3,10 +3,14 @@ import { useHistory, useParams } from 'react-router-dom';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import {
   getInProgressStoraged,
   getProgressStored,
-  onClipboardClicked } from '../services/supportFunctions';
+  onClipboardClicked,
+  saveFavoriteRecipeOnStorage,
+  setHeartIcon,
+  isButtonFinishDisabled } from '../services/supportFunctions';
 import ApplicationContext from '../context/ApplicationContext';
 
 function MealsInProgress() {
@@ -16,6 +20,8 @@ function MealsInProgress() {
     clipboardState,
     setClipboardState } = useContext(ApplicationContext);
   const [selectedMeal, setSelectedMeal] = useState({});
+  const [isRecipeFavorite, setRecipeToFavorite] = useState(false);
+  const [isFinishButtonEnabled, setButtonToFinish] = useState(true);
   const history = useHistory();
   const { id } = useParams();
 
@@ -58,6 +64,14 @@ function MealsInProgress() {
     }
   }, []);
 
+  useEffect(() => {
+    setHeartIcon(setRecipeToFavorite, id);
+  }, []);
+
+  useEffect(() => {
+    isButtonFinishDisabled(storedProgress, history, selectedMeal, setButtonToFinish);
+  }, [storedProgress]);
+
   return (
     <div>
       <img
@@ -81,8 +95,16 @@ function MealsInProgress() {
       <button
         type="button"
         data-testid="favorite-btn"
+        src={ isRecipeFavorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
+        onClick={ () => {
+          saveFavoriteRecipeOnStorage(selectedMeal, 'comida');
+          setRecipeToFavorite(!isRecipeFavorite);
+        } }
       >
-        <img src={ whiteHeartIcon } alt="favorite" />
+        {isRecipeFavorite ? (
+          <img src={ blackHeartIcon } alt="desfavoritar" />
+        )
+          : (<img src={ whiteHeartIcon } alt="favoritar" />) }
       </button>
       <h3>Ingredientes:</h3>
       <div>
@@ -119,6 +141,7 @@ function MealsInProgress() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
+        disabled={ isFinishButtonEnabled }
         onClick={ () => history.push('/receitas-feitas') }
       >
         Finalizar Receita

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import ApplicationContext from '../context/ApplicationContext';
@@ -8,6 +8,7 @@ import {
   onClipboardClicked,
   saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import DrinkCarousel from '../components/DrinkCarousel';
 
@@ -24,6 +25,7 @@ function ScreenMealDetails() {
     alreadyStarted,
     setRecipeStarted,
   } = useContext(ApplicationContext);
+  const [isRecipeFavorite, setRecipeToFavorite] = useState(false);
 
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
@@ -77,12 +79,16 @@ function ScreenMealDetails() {
       <button
         type="button"
         data-testid="favorite-btn"
+        src={ isRecipeFavorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
         onClick={ () => {
           saveFavoriteRecipeOnStorage(selectedMeal, 'comida');
+          setRecipeToFavorite(!isRecipeFavorite);
         } }
       >
-        <img src={ whiteHeartIcon } alt="favorite" />
-
+        {isRecipeFavorite ? (
+          <img src={ blackHeartIcon } alt="desfavoritar" />
+        )
+          : (<img src={ whiteHeartIcon } alt="favoritar" />) }
       </button>
       <h3>Recipe:</h3>
       <div>
