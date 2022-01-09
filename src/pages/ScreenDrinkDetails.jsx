@@ -4,7 +4,8 @@ import { fetchDrinkId, arrayOfIngredientsAndMeasurements } from '../services/hel
 import {
   onClipboardClicked,
   checkIfThereIsLocalStorage,
-  saveFavoriteRecipeOnStorage } from '../services/supportFunctions';
+  saveFavoriteRecipeOnStorage,
+  setHeartIcon } from '../services/supportFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -50,6 +51,10 @@ function ScreenDrinkDetails() {
       setRecipeStarted(recipeStarted);
     }
   });
+
+  useEffect(() => {
+    setHeartIcon(setRecipeToFavorite, id);
+  }, []);
 
   return (
     <div>
