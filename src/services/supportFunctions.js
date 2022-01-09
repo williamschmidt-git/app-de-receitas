@@ -174,7 +174,7 @@ export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
       name: recipe.strMeal,
       image: recipe.strMealThumb,
       doneDate: '',
-      tags: [],
+      tags: [recipe.strTags[0], recipe.strTags[1]],
     });
   } else {
     doneRecipes.push({
