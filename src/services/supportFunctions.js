@@ -117,12 +117,6 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
 };
 
-export const unfavoriteButton = (id) => {
-  const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  const newArr = arrayFromStorage.filter((e) => e.id !== id);
-  localStorage.setItem('favoriteRecipes', newArr);
-};
-
 export const setHeartIcon = (setRecipeToFavorite, id) => {
   const checkLocalStorage = checkIfThereIsLocalStorage('favoriteRecipes');
   if (checkLocalStorage && checkLocalStorage.length !== 0) {
@@ -180,7 +174,7 @@ export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
       name: recipe.strMeal,
       image: recipe.strMealThumb,
       doneDate: '',
-      tags: [],
+      tags: [recipe.strTags[0], recipe.strTags[1]],
     });
   } else {
     doneRecipes.push({
@@ -197,4 +191,11 @@ export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
   }
 
   localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+};
+
+export const unfavoriteButton = (id) => {
+  const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  arrayFromStorage.splice(arrayFromStorage.indexOf(id, 0), 1);
+  console.log(arrayFromStorage);
+  localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFromStorage));
 };

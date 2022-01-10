@@ -39,6 +39,7 @@ function MealsInProgress() {
     } else {
       setSelectedMeal(parseCurrentMeal);
     }
+    console.log(parseCurrentMeal);
   }, []);
 
   useEffect(() => {

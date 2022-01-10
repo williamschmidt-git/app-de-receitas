@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
@@ -7,17 +7,11 @@ import { onClipboardClicked, unfavoriteButton } from '../services/supportFunctio
 import ApplicationContext from '../context/ApplicationContext';
 
 function FavoriteRecipes() {
+  const [reRender, setRerender] = useState(false);
   const history = useHistory();
   const { clipboardState,
     setClipboardState } = useContext(ApplicationContext);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-
-  // useEffect(() => {
-  //   effect;
-  //   return () => {
-  //     cleanup;
-  //   };
-  // }, [favoriteRecipes]);
 
   const renderFavorites = (e, type) => {
     if (type === 'comida') {
@@ -53,7 +47,10 @@ function FavoriteRecipes() {
             type="button"
             data-testid="0-horizontal-favorite-btn"
             src={ blackHeartIcon }
-            onClick={ unfavoriteButton }
+            onClick={ () => {
+              unfavoriteButton(e.id);
+              setRerender(!reRender);
+            } }
 
           >
             <img
@@ -101,6 +98,11 @@ function FavoriteRecipes() {
             type="button"
             data-testid="1-horizontal-favorite-btn"
             src={ blackHeartIcon }
+            onClick={ () => {
+              unfavoriteButton(e.id);
+              setRerender(!reRender);
+            } }
+
           >
             <img
               alt="favorite"
@@ -112,37 +114,46 @@ function FavoriteRecipes() {
     }
   };
 
+  const renderFavorited = (arrayOfFavorites) => (
+    <div>
+      {
+        !arrayOfFavorites ? (
+          <div>
+            oi
+          </div>
+
+        ) : (
+          <div>
+            {arrayOfFavorites.map((e) => (
+              <div key={ e.id }>
+                <div>
+                  {renderFavorites(e, e.type)}
+                </div>
+
+              </div>
+            ))}
+            <div>
+              <button data-testid="filter-by-food-btn" type="button">
+                Food
+              </button>
+              <button data-testid="filter-by-drink-btn" type="button">
+                Drink
+              </button>
+              <button data-testid="filter-by-all-btn" type="button">
+                All
+              </button>
+            </div>
+          </div>
+
+        )
+      }
+    </div>
+  );
+
   return (
     <div>
       <Header pageName="Receitas Favoritas" />
-      <div>
-        {
-          !favoriteRecipes ? (
-            null
-          ) : (
-            <div>
-              {favoriteRecipes.map((e) => (
-                <div key={ e.id }>
-                  <div>
-                    {renderFavorites(e, e.type)}
-                  </div>
-                </div>
-              ))}
-              <div>
-                <button data-testid="filter-by-food-btn" type="button">
-                  Food
-                </button>
-                <button data-testid="filter-by-drink-btn" type="button">
-                  Drink
-                </button>
-                <button data-testid="filter-by-all-btn" type="button">
-                  All
-                </button>
-              </div>
-            </div>
-          )
-        }
-      </div>
+      {renderFavorited(favoriteRecipes)}
     </div>
   );
 }

@@ -27,7 +27,6 @@ function ScreenMealDetails() {
     setRecipeStarted,
   } = useContext(ApplicationContext);
   const [isRecipeFavorite, setRecipeToFavorite] = useState(false);
-  
 
   const searchId = async () => {
     const responseAPI = await fetchMealId(id);
