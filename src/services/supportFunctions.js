@@ -60,7 +60,7 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   const FAVORITE_RECIPES = 'favoriteRecipes';
   let favoriteRecipes = [];
 
-  if (localStorage.hasOwnProperty(FAVORITE_RECIPES)) {
+  if (localStorage[FAVORITE_RECIPES]) {
     favoriteRecipes = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
   }
 
@@ -91,6 +91,7 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
 
 export const unfavoriteButton = (id) => {
   const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  const newArr = arrayFromStorage.filter((e) => e.id !== id);
-  localStorage.setItem('favoriteRecipes', newArr);
+  arrayFromStorage.splice(arrayFromStorage.indexOf(id, 0), 1);
+  console.log(arrayFromStorage);
+  localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFromStorage));
 };
