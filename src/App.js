@@ -12,7 +12,7 @@ import ExploreMealsIngredients from './pages/ExploreMealsIngredients';
 import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
 import RecipesDone from './pages/RecipesDone';
 import FavoriteRecipes from './pages/FavoriteRecipes';
-import ExploreRecipiesArea from './pages/ExploreRecipiesArea';
+import ExploreRecipesByArea from './pages/ExploreRecipesByArea';
 import Explore from './pages/Explore';
 import ApplicationProvider from './context/provider/ApplicationProvider';
 import NotFound from './pages/NotFound';
@@ -50,7 +50,7 @@ function App() {
             <Route
               exact
               path="/explorar/comidas/area"
-              component={ ExploreRecipiesArea }
+              component={ ExploreRecipesByArea }
             />
             <Route exact path="/perfil" component={ Profile } />
             <Route exact path="/receitas-feitas" component={ RecipesDone } />
