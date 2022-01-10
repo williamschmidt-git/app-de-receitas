@@ -1,4 +1,5 @@
 import copy from 'clipboard-copy';
+import { arrayOfIngredientsAndMeasurements } from './helpers';
 
 export const getInProgressStoraged = (recipeType, recipeID, targetName) => {
   const stored = localStorage.getItem('inProgressRecipes');
@@ -27,24 +28,38 @@ export const getProgressStored = (ingredient, recipeID, inProgressStored, recipe
   return recipeInProgress.some((item) => item === ingredient[0]);
 };
 
-export const onClipboardClicked = (setClipboardState, id, type) => {
-  if (type === 'comida') {
-    copy(`http://localhost:3000/comidas/${id}`);
-    setClipboardState(true);
-    const ONDE_SECOND = 1000;
-    setTimeout(() => {
-      setClipboardState(false);
-    }, ONDE_SECOND);
+export const onClipboardClicked = (setClipboardState, URL) => {
+  const removeInProgress = URL.split('/').includes('in-progress');
+  if (removeInProgress) {
+    const positionToslice = 3;
+    URL = URL.split('/').slice(0, positionToslice).join('/');
   }
-  if (type === 'bebida') {
-    copy(`http://localhost:3000/bebidas/${id}`);
-    setClipboardState(true);
-    const ONDE_SECOND = 1000;
-    setTimeout(() => {
-      setClipboardState(false);
-    }, ONDE_SECOND);
-  }
+  copy(`http://localhost:3000${URL}`);
+  setClipboardState(true);
+  const ONDE_SECOND = 1000;
+  setTimeout(() => {
+    setClipboardState(false);
+  }, ONDE_SECOND);
 };
+
+// export const onClipboardClicked = (setClipboardState, id, type) => {
+//   if (type === 'comida') {
+//     copy(`http://localhost:3000/comidas/${id}`);
+//     setClipboardState(true);
+//     const ONDE_SECOND = 1000;
+//     setTimeout(() => {
+//       setClipboardState(false);
+//     }, ONDE_SECOND);
+//   }
+//   if (type === 'bebida') {
+//     copy(`http://localhost:3000/bebidas/${id}`);
+//     setClipboardState(true);
+//     const ONDE_SECOND = 1000;
+//     setTimeout(() => {
+//       setClipboardState(false);
+//     }, ONDE_SECOND);
+//   }
+// };
 
 export const checkIfThereIsLocalStorage = (storageKey) => {
   const stored = localStorage.getItem(storageKey);
@@ -52,20 +67,99 @@ export const checkIfThereIsLocalStorage = (storageKey) => {
   if (!parseStorage) {
     return false;
   }
-  return true;
+  return parseStorage;
+};
+
+const removeRecipe = (favoriteRecipes, addRecipeOnStorage) => {
+  const recipeIndex = favoriteRecipes.indexOf(addRecipeOnStorage);
+  favoriteRecipes.splice(recipeIndex, 1);
+  return favoriteRecipes;
 };
 
 // https://pt.stackoverflow.com/questions/329223/armazenar-um-array-de-objetos-em-um-local-storage-com-js
 export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   const FAVORITE_RECIPES = 'favoriteRecipes';
   let favoriteRecipes = [];
+  let mealOrDrink = 'idMeal';
+  if (recipeType === 'bebida') mealOrDrink = 'idDrink';
 
-  if (localStorage[FAVORITE_RECIPES]) {
+  if (localStorage.FAVORITE_RECIPES) {
     favoriteRecipes = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
   }
 
+  const addRecipeOnStorage = favoriteRecipes
+    .find((recipeOnStorage) => recipeOnStorage.id === recipe[mealOrDrink]);
+
+  if (!addRecipeOnStorage) {
+    if (recipeType === 'comida') {
+      favoriteRecipes.push({
+        id: recipe.idMeal,
+        type: recipeType,
+        area: recipe.strArea,
+        category: recipe.strCategory,
+        alcoholicOrNot: '',
+        name: recipe.strMeal,
+        image: recipe.strMealThumb,
+      });
+    } else {
+      favoriteRecipes.push({
+        id: recipe.idDrink,
+        type: recipeType,
+        area: '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic,
+        name: recipe.strDrink,
+        image: recipe.strDrinkThumb,
+      });
+    }
+  } else {
+    removeRecipe(favoriteRecipes, addRecipeOnStorage);
+  }
+  localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+};
+
+export const setHeartIcon = (setRecipeToFavorite, id) => {
+  const checkLocalStorage = checkIfThereIsLocalStorage('favoriteRecipes');
+  if (checkLocalStorage && checkLocalStorage.length !== 0) {
+    const parseFavoritedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isRecipeFavorited = parseFavoritedRecipes
+      .some((storedAsFavorite) => storedAsFavorite.id === id);
+    if (isRecipeFavorited) setRecipeToFavorite(true);
+  }
+};
+
+export const isButtonFinishDisabled = (
+  storedProgress,
+  history,
+  selectedMeal,
+  setButtonToFinish,
+) => {
+  if (Object.entries(storedProgress).length !== 0) {
+    const splitedPathname = history.location.pathname.split('/');
+    let recipeType = splitedPathname[1];
+    const id = splitedPathname[2];
+    if (recipeType === 'comidas') recipeType = 'meals';
+    if (recipeType === 'bebidas') recipeType = 'cocktails';
+    const numberOfCheckboxes = arrayOfIngredientsAndMeasurements(selectedMeal).length;
+    const numberOfChecked = storedProgress[recipeType][id].length;
+    if (numberOfCheckboxes === numberOfChecked) {
+      setButtonToFinish(false);
+    } else {
+      setButtonToFinish(true);
+    }
+  }
+};
+
+export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
+  const DONE_RECIPES = 'doneRecipes';
+  let doneRecipes = [];
+
+  if (localStorage.DONE_RECIPES) {
+    doneRecipes = JSON.parse(localStorage.getItem(DONE_RECIPES));
+  }
+
   if (recipeType === 'comida') {
-    favoriteRecipes.push({
+    doneRecipes.push({
       id: recipe.idMeal,
       type: recipeType,
       area: recipe.strArea,
@@ -73,9 +167,11 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
       alcoholicOrNot: '',
       name: recipe.strMeal,
       image: recipe.strMealThumb,
+      doneDate: '',
+      tags: [recipe.strTags[0], recipe.strTags[1]],
     });
   } else {
-    favoriteRecipes.push({
+    doneRecipes.push({
       id: recipe.idDrink,
       type: recipeType,
       area: '',
@@ -83,10 +179,12 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
       alcoholicOrNot: recipe.strAlcoholic,
       name: recipe.strDrink,
       image: recipe.strDrinkThumb,
+      doneDate: '',
+      tags: [],
     });
   }
 
-  localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 };
 
 export const unfavoriteButton = (id) => {

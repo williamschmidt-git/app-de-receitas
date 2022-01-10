@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { fetchMealId, arrayOfIngredientsAndMeasurements } from '../services/helpers';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import {
   getInProgressStoraged,
   getProgressStored,
-  onClipboardClicked } from '../services/supportFunctions';
+  onClipboardClicked,
+  saveFavoriteRecipeOnStorage,
+  setHeartIcon,
+  isButtonFinishDisabled,
+  saveDoneRecipeOnStorage } from '../services/supportFunctions';
 import ApplicationContext from '../context/ApplicationContext';
 
 function MealsInProgress() {
@@ -16,6 +21,9 @@ function MealsInProgress() {
     clipboardState,
     setClipboardState } = useContext(ApplicationContext);
   const [selectedMeal, setSelectedMeal] = useState({});
+  const [isRecipeFavorite, setRecipeToFavorite] = useState(false);
+  const [isFinishButtonEnabled, setButtonToFinish] = useState(true);
+  const history = useHistory();
   const { id } = useParams();
 
   const searchId = async () => {
@@ -31,6 +39,7 @@ function MealsInProgress() {
     } else {
       setSelectedMeal(parseCurrentMeal);
     }
+    console.log(parseCurrentMeal);
   }, []);
 
   useEffect(() => {
@@ -53,8 +62,17 @@ function MealsInProgress() {
         parseRecipesInProgress.meals[id] = [...parseRecipesInProgress.meals[id]];
       }
       setStoredProgress(parseRecipesInProgress);
+      localStorage.setItem('inProgressRecipes', JSON.stringify(parseRecipesInProgress));
     }
   }, []);
+
+  useEffect(() => {
+    setHeartIcon(setRecipeToFavorite, id);
+  }, []);
+
+  useEffect(() => {
+    isButtonFinishDisabled(storedProgress, history, selectedMeal, setButtonToFinish);
+  }, [storedProgress]);
 
   return (
     <div>
@@ -68,7 +86,10 @@ function MealsInProgress() {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => onClipboardClicked(setClipboardState, id) }
+        onClick={ () => {
+          const URL = history.location.pathname;
+          onClipboardClicked(setClipboardState, URL);
+        } }
       >
         <img src={ shareIcon } alt="share" />
       </button>
@@ -76,8 +97,16 @@ function MealsInProgress() {
       <button
         type="button"
         data-testid="favorite-btn"
+        src={ isRecipeFavorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
+        onClick={ () => {
+          saveFavoriteRecipeOnStorage(selectedMeal, 'comida');
+          setRecipeToFavorite(!isRecipeFavorite);
+        } }
       >
-        <img src={ whiteHeartIcon } alt="favorite" />
+        {isRecipeFavorite ? (
+          <img src={ blackHeartIcon } alt="desfavoritar" />
+        )
+          : (<img src={ whiteHeartIcon } alt="favoritar" />) }
       </button>
       <h3>Ingredientes:</h3>
       <div>
@@ -114,7 +143,11 @@ function MealsInProgress() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        // onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+        disabled={ isFinishButtonEnabled }
+        onClick={ () => {
+          history.push('/receitas-feitas');
+          saveDoneRecipeOnStorage(selectedMeal, 'comida');
+        } }
       >
         Finalizar Receita
       </button>

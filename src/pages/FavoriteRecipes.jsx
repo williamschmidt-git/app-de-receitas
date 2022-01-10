@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { onClipboardClicked, unfavoriteButton } from '../services/supportFunctions';
 import ApplicationContext from '../context/ApplicationContext';
 
-function RecipiesFavorites() {
+function FavoriteRecipes() {
   const [reRender, setRerender] = useState(false);
+  const history = useHistory();
   const { clipboardState,
     setClipboardState } = useContext(ApplicationContext);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -18,21 +20,21 @@ function RecipiesFavorites() {
           <h4 data-testid="0-horizontal-name">
             {e.name}
           </h4>
-
           <img
             src={ e.image }
             alt={ e.name }
             style={ { width: '40px', height: '40px' } }
             data-testid="0-horizontal-image"
           />
-
           <h5 data-testid="0-horizontal-top-text">{`${e.area} - ${e.category}`}</h5>
-
           <button
             type="button"
             data-testid="0-horizontal-share-btn"
             src={ shareIcon }
-            onClick={ () => onClipboardClicked(setClipboardState, e.id, 'comida') }
+            onClick={ () => {
+              const URL = history.location.pathname;
+              onClipboardClicked(setClipboardState, URL);
+            } }
           >
             <img alt="share" src={ shareIcon } />
           </button>
@@ -65,21 +67,21 @@ function RecipiesFavorites() {
           <h4 data-testid="1-horizontal-name">
             {e.name}
           </h4>
-
           <img
             src={ e.image }
             alt={ e.name }
             style={ { width: '40px', height: '40px' } }
             data-testid="1-horizontal-image"
           />
-
           <h5 data-testid="1-horizontal-top-text">{e.alcoholicOrNot}</h5>
-
           <button
             type="button"
             data-testid="1-horizontal-share-btn"
             src={ shareIcon }
-            onClick={ () => onClipboardClicked(setClipboardState, e.id, 'bebida') }
+            onClick={ () => {
+              const URL = history.location.pathname;
+              onClipboardClicked(setClipboardState, URL);
+            } }
 
           >
             <img
@@ -106,7 +108,6 @@ function RecipiesFavorites() {
               src={ blackHeartIcon }
             />
           </button>
-
         </div>
       );
     }
@@ -156,4 +157,4 @@ function RecipiesFavorites() {
   );
 }
 
-export default RecipiesFavorites;
+export default FavoriteRecipes;

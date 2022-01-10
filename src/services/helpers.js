@@ -122,7 +122,7 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   const FAVORITE_RECIPES = 'favoriteRecipes';
   let favoriteRecipes = [];
 
-  if (localStorage[FAVORITE_RECIPES]) {
+  if (localStorage.FAVORITE_RECIPES) {
     favoriteRecipes = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
   }
 
