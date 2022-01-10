@@ -190,6 +190,6 @@ export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
 export const unfavoriteButton = (id) => {
   const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
   arrayFromStorage.splice(arrayFromStorage.indexOf(id, 0), 1);
-  console.log(arrayFromStorage);
+
   localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFromStorage));
 };

@@ -14,44 +14,30 @@ function FavoriteRecipes() {
   const { clipboardState,
     setClipboardState } = useContext(ApplicationContext);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  console.log(filteredStorage);
 
-  const renderByFilterButton = ({ target }, array) => {
-    // console.log(target.innerText);
-    if (target) {
-      if (target.innerText === 'Food') {
-        const newArr = array.filter((e) => e.type === 'comida');
-        setFilteredStorage(newArr);
-      } else if (target.innerText === 'Drink') {
-        const newArr = array.filter((e) => e.type === 'bebida');
-        console.log(newArr);
-        setFilteredStorage(newArr);
-      }
-    } else {
-      return renderFavorited();
-    }
-  };
-
-  const renderFavorites = (e, type) => {
+  const renderFavorites = (e, type, index) => {
     if (type === 'comida') {
       return (
         <div key={ e.id }>
-          <h4 data-testid="0-horizontal-name">
+          <h4 data-testid={ `${index}-horizontal-name` }>
             {e.name}
           </h4>
           <img
             src={ e.image }
             alt={ e.name }
             style={ { width: '40px', height: '40px' } }
-            data-testid="0-horizontal-image"
+            data-testid={ `${index}-horizontal-image` }
           />
-          <h5 data-testid="0-horizontal-top-text">{`${e.area} - ${e.category}`}</h5>
+          <h5 data-testid={ `${index}-horizontal-top-text` }>
+            {`${e.area} - ${e.category}`}
+          </h5>
           <button
             type="button"
-            data-testid="0-horizontal-share-btn"
+            data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
             onClick={ () => {
-              const URL = history.location.pathname;
+              const URL = `/${e.type}s/${e.id}`;
+
               onClipboardClicked(setClipboardState, URL);
             } }
           >
@@ -63,7 +49,7 @@ function FavoriteRecipes() {
 
           <button
             type="button"
-            data-testid="0-horizontal-favorite-btn"
+            data-testid={ `${index}-horizontal-favorite-btn` }
             src={ blackHeartIcon }
             onClick={ () => {
               unfavoriteButton(e.id);
@@ -83,19 +69,19 @@ function FavoriteRecipes() {
     if (type === 'bebida') {
       return (
         <div key={ e.id }>
-          <h4 data-testid="1-horizontal-name">
+          <h4 data-testid={ `${index}-horizontal-name` }>
             {e.name}
           </h4>
           <img
             src={ e.image }
             alt={ e.name }
             style={ { width: '40px', height: '40px' } }
-            data-testid="1-horizontal-image"
+            data-testid={ `${index}-horizontal-image` }
           />
-          <h5 data-testid="1-horizontal-top-text">{e.alcoholicOrNot}</h5>
+          <h5 data-testid={ `${index}-horizontal-top-text` }>{e.alcoholicOrNot}</h5>
           <button
             type="button"
-            data-testid="1-horizontal-share-btn"
+            data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
             onClick={ () => {
               const URL = history.location.pathname;
@@ -114,7 +100,7 @@ function FavoriteRecipes() {
 
           <button
             type="button"
-            data-testid="1-horizontal-favorite-btn"
+            data-testid={ `${index}-horizontal-favorite-btn` }
             src={ blackHeartIcon }
             onClick={ () => {
               unfavoriteButton(e.id);
@@ -141,33 +127,48 @@ function FavoriteRecipes() {
 
         ) : (
           <div>
-            {arrayOfFavorites.map((e) => (
+            {arrayOfFavorites.map((e, index) => (
               <div key={ e.id }>
                 <div>
-                  {renderFavorites(e, e.type)}
+                  {renderFavorites(e, e.type, index)}
                 </div>
 
               </div>
             ))}
-
           </div>
-
         )
       }
     </div>
   );
 
+  const renderByFilterButton = ({ target }, array) => {
+    if (target.value === 'Food') {
+      const newArr = array.filter((e) => e.type === 'comida');
+      setFilteredStorage(newArr);
+    } else if (target.value === 'Drink') {
+      const newArr = array.filter((e) => e.type === 'bebida');
+      setFilteredStorage(newArr);
+      return newArr;
+    } else {
+      setFilteredStorage(array);
+    }
+  };
+
   return (
     <div>
       <Header pageName="Receitas Favoritas" />
-      {renderFavorited(favoriteRecipes)}
-      {/* {renderByFilterButton(favoriteRecipes)} */}
+      {filteredStorage.length > 0 ? (
+        renderFavorited(filteredStorage)
+      ) : (
+        renderFavorited(favoriteRecipes)
+      )}
+
       <div>
         <button
           data-testid="filter-by-food-btn"
           type="button"
+          value="Food"
           onClick={ (e) => {
-            // renderFoodOnly(favoriteRecipes);
             renderByFilterButton(e, favoriteRecipes);
             setReRenderFoodOnly(!reRenderFoodOnly);
           } }
@@ -178,8 +179,8 @@ function FavoriteRecipes() {
         <button
           data-testid="filter-by-drink-btn"
           type="button"
+          value="Drink"
           onClick={ (e) => {
-          // renderFoodOnly(favoriteRecipes);
             renderByFilterButton(e, favoriteRecipes);
             setReRenderFoodOnly(!reRenderFoodOnly);
           } }
@@ -187,7 +188,15 @@ function FavoriteRecipes() {
           Drink
         </button>
 
-        <button data-testid="filter-by-all-btn" type="button">
+        <button
+          data-testid="filter-by-all-btn"
+          type="button"
+          value="All"
+          onClick={ (e) => {
+            renderByFilterButton(e, favoriteRecipes);
+            setReRenderFoodOnly(!reRenderFoodOnly);
+          } }
+        >
           All
         </button>
       </div>
