@@ -15,24 +15,19 @@ function DoneDrinks() {
         doneRecipes.map((drink, index) => (
           <div key={ index }>
             <button
-              src={ drink.image }
               type="button"
-              onClick={ () => history.push('/bebidas/${drink.id') }
-
+              onClick={ () => history.push(`/bebidas/${drink.id}`) }
             >
-              <img
-                src={ drink.image }
-                alt="bebida"
-                data-testid={ `${index}-horizontal-image` }
-              />
+              <div>
+                <img
+                  src={ drink.image }
+                  alt="bebida"
+                  data-testid={ `${index}-horizontal-image` }
+                />
+                <p data-testid={ `${index}-horizontal-name` }>{ drink.name }</p>
+              </div>
             </button>
             <p data-testid={ `${index}-horizontal-top-text` }>{ drink.alcoholicOrNot }</p>
-            <button
-              type="button"
-              onClick={ () => history.push('/bebidas/${drink.id') }
-            >
-              <p data-testid={ `${index}-horizontal-name` }>{ drink.name }</p>
-            </button>
             <button
               src={ shareIcon }
               type="button"

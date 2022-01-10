@@ -10,6 +10,24 @@ export const fetchMealsName = (nome) => {
   return responseAPI;
 };
 
+export const fetchMealsArea = () => {
+  const responseAPI = fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
+    .then((response) => response.json());
+  return responseAPI;
+};
+
+export const fetchMealIngredients = () => {
+  const responseAPI = fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list')
+    .then((response) => response.json());
+  return responseAPI;
+};
+
+export const fetchDrinkIngredients = () => {
+  const responseAPI = fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list')
+    .then((response) => response.json());
+  return responseAPI;
+};
+
 export const fetchMealsFirstLetter = (primeiraLetra) => {
   const responseAPI = fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${primeiraLetra}`)
     .then((response) => response.json());
