@@ -83,7 +83,7 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   let mealOrDrink = 'idMeal';
   if (recipeType === 'bebida') mealOrDrink = 'idDrink';
 
-  if (localStorage.FAVORITE_RECIPES) {
+  if (localStorage[FAVORITE_RECIPES]) {
     favoriteRecipes = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
   }
 

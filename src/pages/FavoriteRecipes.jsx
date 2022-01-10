@@ -8,10 +8,29 @@ import ApplicationContext from '../context/ApplicationContext';
 
 function FavoriteRecipes() {
   const [reRender, setRerender] = useState(false);
+  const [reRenderFoodOnly, setReRenderFoodOnly] = useState(false);
+  const [filteredStorage, setFilteredStorage] = useState([]);
   const history = useHistory();
   const { clipboardState,
     setClipboardState } = useContext(ApplicationContext);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  console.log(filteredStorage);
+
+  const renderByFilterButton = ({ target }, array) => {
+    // console.log(target.innerText);
+    if (target) {
+      if (target.innerText === 'Food') {
+        const newArr = array.filter((e) => e.type === 'comida');
+        setFilteredStorage(newArr);
+      } else if (target.innerText === 'Drink') {
+        const newArr = array.filter((e) => e.type === 'bebida');
+        console.log(newArr);
+        setFilteredStorage(newArr);
+      }
+    } else {
+      return renderFavorited();
+    }
+  };
 
   const renderFavorites = (e, type) => {
     if (type === 'comida') {
@@ -117,9 +136,8 @@ function FavoriteRecipes() {
     <div>
       {
         !arrayOfFavorites ? (
-          <div>
-            oi
-          </div>
+          <>
+          </>
 
         ) : (
           <div>
@@ -131,17 +149,7 @@ function FavoriteRecipes() {
 
               </div>
             ))}
-            <div>
-              <button data-testid="filter-by-food-btn" type="button">
-                Food
-              </button>
-              <button data-testid="filter-by-drink-btn" type="button">
-                Drink
-              </button>
-              <button data-testid="filter-by-all-btn" type="button">
-                All
-              </button>
-            </div>
+
           </div>
 
         )
@@ -153,6 +161,36 @@ function FavoriteRecipes() {
     <div>
       <Header pageName="Receitas Favoritas" />
       {renderFavorited(favoriteRecipes)}
+      {/* {renderByFilterButton(favoriteRecipes)} */}
+      <div>
+        <button
+          data-testid="filter-by-food-btn"
+          type="button"
+          onClick={ (e) => {
+            // renderFoodOnly(favoriteRecipes);
+            renderByFilterButton(e, favoriteRecipes);
+            setReRenderFoodOnly(!reRenderFoodOnly);
+          } }
+        >
+          Food
+        </button>
+
+        <button
+          data-testid="filter-by-drink-btn"
+          type="button"
+          onClick={ (e) => {
+          // renderFoodOnly(favoriteRecipes);
+            renderByFilterButton(e, favoriteRecipes);
+            setReRenderFoodOnly(!reRenderFoodOnly);
+          } }
+        >
+          Drink
+        </button>
+
+        <button data-testid="filter-by-all-btn" type="button">
+          All
+        </button>
+      </div>
     </div>
   );
 }
