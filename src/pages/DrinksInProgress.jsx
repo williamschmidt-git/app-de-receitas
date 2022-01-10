@@ -58,8 +58,6 @@ function DrinksInProgress() {
       const checkedIngredients = parseRecipesInProgress.cocktails[id];
       if (!checkedIngredients || checkedIngredients.length === 0) {
         parseRecipesInProgress.cocktails[id] = [];
-      } else {
-        parseRecipesInProgress.cocktails[id] = [...parseRecipesInProgress.cocktails[id]];
       }
       setStoredProgress(parseRecipesInProgress);
       localStorage.setItem('inProgressRecipes', JSON.stringify(parseRecipesInProgress));

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { fetchMealsArea, fetchByArea } from '../services/helpers';
+import { fetchMealsArea, fetchByArea, fetchMeals } from '../services/helpers';
 
 const MAX_RECIPES = 11;
 
@@ -18,6 +18,12 @@ function ExploreRecipesByArea() {
   };
 
   const requestByArea = async (value) => {
+    if (value === 'All') {
+      const responseAPI = await fetchMeals();
+      const twelveRecipes = responseAPI.meals
+        .filter((mealRecipe, index) => index <= MAX_RECIPES && mealRecipe);
+      return setRecipesByArea(twelveRecipes);
+    }
     const responseAPI = await fetchByArea(value);
     const twelveRecipes = responseAPI.meals
       .filter((recipe, index) => index <= MAX_RECIPES && recipe);
