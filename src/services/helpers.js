@@ -126,6 +126,13 @@ export const fetchMealsByIngredient = (mealName) => {
   return responseAPI;
 };
 
+export const fetchByArea = (areaName) => {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=';
+  const responseAPI = fetch(`${URL}${areaName}`)
+    .then((response) => response.json());
+  return responseAPI;
+};
+
 export const arrayOfIngredientsAndMeasurements = (selectedRecipe) => {
   const ingredientsArray = Object.entries(selectedRecipe)
     .filter((keyName) => keyName[0].includes('strIngredient'))
