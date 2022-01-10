@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { fetchMealIngredients } from '../services/helpers';
+import ApplicationContext from '../context/ApplicationContext';
+import { fetchMealIngredients, fetchMealsByIngredient } from '../services/helpers';
 
 const MAX_INGREDIENTS = 11;
 
-function ExploreRecipiesIngredients() {
+function ExploreMealsIngredients() {
   const [ingredients, setIngredients] = useState([]);
+  const { setIngredientExplored } = useContext(ApplicationContext);
 
   const history = useHistory();
 
@@ -29,9 +31,13 @@ function ExploreRecipiesIngredients() {
       {ingredientsToRender.map((item, index) => (
         <button
           type="button"
-          onClick={ () => history.push('/comidas') }
           key={ index }
-          data-testid={ `${index}-ingredient-card ` }
+          data-testid={ `${index}-ingredient-card` }
+          onClick={ async () => {
+            const responseAPI = await fetchMealsByIngredient(item.strIngredient);
+            setIngredientExplored(responseAPI.meals);
+            history.push('/comidas');
+          } }
         >
           <div>
             <img
@@ -52,4 +58,4 @@ function ExploreRecipiesIngredients() {
   );
 }
 
-export default ExploreRecipiesIngredients;
+export default ExploreMealsIngredients;

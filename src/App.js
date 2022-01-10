@@ -8,7 +8,7 @@ import Profile from './pages/Profile';
 import DrinksMainScreen from './pages/DrinksMainScreen';
 import ExploreRecipies from './pages/ExploreRecipies';
 import ExploreDrinks from './pages/ExploreDrinks';
-import ExploreRecipiesIngredients from './pages/ExploreRecipiesIngredients';
+import ExploreMealsIngredients from './pages/ExploreMealsIngredients';
 import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
 import RecipesDone from './pages/RecipesDone';
 import FavoriteRecipes from './pages/FavoriteRecipes';
@@ -40,7 +40,7 @@ function App() {
             <Route
               exact
               path="/explorar/comidas/ingredientes"
-              component={ ExploreRecipiesIngredients }
+              component={ ExploreMealsIngredients }
             />
             <Route
               exact

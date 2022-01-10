@@ -1,14 +1,15 @@
-/* eslint-disable react/jsx-key */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { fetchDrinkIngredients } from '../services/helpers';
+import { fetchDrinkIngredients, fetchDrinksByIngredient } from '../services/helpers';
+import ApplicationContext from '../context/ApplicationContext';
 
 const MAX_INGREDIENTS = 11;
 
 function ExploreDrinksIngredients() {
   const [ingredients, setIngredients] = useState([]);
+  const { setIngredientExplored } = useContext(ApplicationContext);
 
   const history = useHistory();
 
@@ -30,9 +31,13 @@ function ExploreDrinksIngredients() {
       {ingredientsToRender.map((item, index) => (
         <button
           type="button"
-          onClick={ () => history.push('/bebidas') }
-          data-testid={ `${index}-ingredient-card ` }
+          data-testid={ `${index}-ingredient-card` }
           key={ index }
+          onClick={ async () => {
+            const responseAPI = await fetchDrinksByIngredient(item.strIngredient1);
+            setIngredientExplored(responseAPI.drinks);
+            history.push('/bebidas');
+          } }
         >
           <div>
             <img
