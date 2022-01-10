@@ -133,19 +133,13 @@ export const isButtonFinishDisabled = (
   selectedMeal,
   setButtonToFinish,
 ) => {
-  // setTimeout(() => {
-  if (Object.entries(storedProgress).length !== 0) {
-    const splitedPathname = history.location.pathname.split('/');
-    let recipeType = splitedPathname[1];
-    const id = splitedPathname[2];
-    if (recipeType === 'comidas') recipeType = 'meals';
-    if (recipeType === 'bebidas') recipeType = 'cocktails';
+  const splitedPathname = history.location.pathname.split('/');
+  let recipeType = splitedPathname[1];
+  const id = splitedPathname[2];
+  if (recipeType === 'comidas') recipeType = 'meals';
+  if (recipeType === 'bebidas') recipeType = 'cocktails';
+  if (Object.entries(storedProgress).length !== 0 && storedProgress[recipeType][id]) {
     const numberOfCheckboxes = arrayOfIngredientsAndMeasurements(selectedMeal).length;
-    // console.log(id);
-    // console.log(storedProgress);
-    // console.log(storedProgress[recipeType]);
-    // console.log(storedProgress[recipeType][id]);
-    // console.log(storedProgress[recipeType][id].length);
     const numberOfChecked = storedProgress[recipeType][id].length;
     if (numberOfCheckboxes === numberOfChecked) {
       setButtonToFinish(false);
@@ -153,7 +147,6 @@ export const isButtonFinishDisabled = (
       setButtonToFinish(true);
     }
   }
-  // }, 1000);
 };
 
 export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
