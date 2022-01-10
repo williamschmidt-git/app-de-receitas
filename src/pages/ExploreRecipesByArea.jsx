@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import { fetchMealsArea, fetchByArea, fetchMeals } from '../services/helpers';
 
 const MAX_RECIPES = 11;
-const MIN_RECIPES = 22;
 
 function ExploreRecipesByArea() {
   const [area, setArea] = useState([]);

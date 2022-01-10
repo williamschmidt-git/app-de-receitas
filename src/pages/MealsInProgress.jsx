@@ -39,7 +39,6 @@ function MealsInProgress() {
     } else {
       setSelectedMeal(parseCurrentMeal);
     }
-    console.log(parseCurrentMeal);
   }, []);
 
   useEffect(() => {
@@ -58,8 +57,6 @@ function MealsInProgress() {
       const checkedIngredients = parseRecipesInProgress.meals[id];
       if (!checkedIngredients || checkedIngredients.length === 0) {
         parseRecipesInProgress.meals[id] = [];
-      } else {
-        parseRecipesInProgress.meals[id] = [...parseRecipesInProgress.meals[id]];
       }
       setStoredProgress(parseRecipesInProgress);
       localStorage.setItem('inProgressRecipes', JSON.stringify(parseRecipesInProgress));
