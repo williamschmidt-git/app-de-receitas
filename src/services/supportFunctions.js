@@ -134,7 +134,7 @@ export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
   const DONE_RECIPES = 'doneRecipes';
   let doneRecipes = [];
 
-  if (localStorage.DONE_RECIPES) {
+  if (checkIfThereIsLocalStorage(DONE_RECIPES)) {
     doneRecipes = JSON.parse(localStorage.getItem(DONE_RECIPES));
   }
 
