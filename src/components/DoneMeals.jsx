@@ -19,12 +19,14 @@ function DoneMeals() {
               type="button"
               onClick={ () => history.push(`/comidas/${meal.id}`) }
             >
-              <img
-                src={ meal.image }
-                alt="comida"
-                data-testid={ `${index}-horizontal-image` }
-              />
-              <p data-testid={ `${index}-horizontal-name` }>{ meal.name }</p>
+              <div>
+                <img
+                  src={ meal.image }
+                  alt="comida"
+                  data-testid={ `${index}-horizontal-image` }
+                />
+                <p data-testid={ `${index}-horizontal-name` }>{ meal.name }</p>
+              </div>
             </button>
             <p
               data-testid={ `${index}-horizontal-top-text` }
