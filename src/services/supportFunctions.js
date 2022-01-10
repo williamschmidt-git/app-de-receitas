@@ -42,25 +42,6 @@ export const onClipboardClicked = (setClipboardState, URL) => {
   }, ONDE_SECOND);
 };
 
-// export const onClipboardClicked = (setClipboardState, id, type) => {
-//   if (type === 'comida') {
-//     copy(`http://localhost:3000/comidas/${id}`);
-//     setClipboardState(true);
-//     const ONDE_SECOND = 1000;
-//     setTimeout(() => {
-//       setClipboardState(false);
-//     }, ONDE_SECOND);
-//   }
-//   if (type === 'bebida') {
-//     copy(`http://localhost:3000/bebidas/${id}`);
-//     setClipboardState(true);
-//     const ONDE_SECOND = 1000;
-//     setTimeout(() => {
-//       setClipboardState(false);
-//     }, ONDE_SECOND);
-//   }
-// };
-
 export const checkIfThereIsLocalStorage = (storageKey) => {
   const stored = localStorage.getItem(storageKey);
   const parseStorage = JSON.parse(stored);

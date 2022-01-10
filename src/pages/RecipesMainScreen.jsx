@@ -10,9 +10,14 @@ const MAX_RECIPES = 11;
 
 function RecipesMainScreen() {
   const history = useHistory();
-  const { mealsArray, setMealsArray,
-    recipesByMealsCategory, setArrayToRender,
-    changeArrayToRender } = useContext(ApplicationContext);
+  const {
+    mealsArray,
+    setMealsArray,
+    recipesByMealsCategory,
+    setArrayToRender,
+    changeArrayToRender,
+    exploreByIngredients,
+    setIngredientExplored } = useContext(ApplicationContext);
   const recipesToRender = changeArrayToRender
     ? recipesByMealsCategory.filter((meal, index) => index <= MAX_RECIPES && meal)
     : mealsArray.filter((meal, index) => index <= MAX_RECIPES && meal);
@@ -23,7 +28,11 @@ function RecipesMainScreen() {
   };
 
   useEffect(() => {
-    requestAPI();
+    if (exploreByIngredients.length === 0) {
+      requestAPI();
+    } else {
+      setMealsArray(exploreByIngredients);
+    }
   }, []);
 
   useEffect(() => {
@@ -33,6 +42,8 @@ function RecipesMainScreen() {
       setArrayToRender(true);
     }
   }, [recipesByMealsCategory]);
+
+  useEffect(() => () => setIngredientExplored([]), []);
 
   return (
     <div>
