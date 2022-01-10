@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -8,7 +7,6 @@ import ApplicationContext from '../context/ApplicationContext';
 
 function FavoriteRecipes() {
   const [reRender, setRerender] = useState(false);
-  const history = useHistory();
   const { clipboardState,
     setClipboardState } = useContext(ApplicationContext);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -32,7 +30,8 @@ function FavoriteRecipes() {
             data-testid="0-horizontal-share-btn"
             src={ shareIcon }
             onClick={ () => {
-              const URL = history.location.pathname;
+              const URL = `/comidas/${e.id}`;
+              console.log(e.id);
               onClipboardClicked(setClipboardState, URL);
             } }
           >
@@ -79,7 +78,7 @@ function FavoriteRecipes() {
             data-testid="1-horizontal-share-btn"
             src={ shareIcon }
             onClick={ () => {
-              const URL = history.location.pathname;
+              const URL = `/bebidas/${e.id}`;
               onClipboardClicked(setClipboardState, URL);
             } }
 

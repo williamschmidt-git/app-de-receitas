@@ -83,13 +83,12 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   let mealOrDrink = 'idMeal';
   if (recipeType === 'bebida') mealOrDrink = 'idDrink';
 
-  if (localStorage.FAVORITE_RECIPES) {
+  if (checkIfThereIsLocalStorage(FAVORITE_RECIPES)) {
     favoriteRecipes = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
   }
 
   const addRecipeOnStorage = favoriteRecipes
     .find((recipeOnStorage) => recipeOnStorage.id === recipe[mealOrDrink]);
-
   if (!addRecipeOnStorage) {
     if (recipeType === 'comida') {
       favoriteRecipes.push({
@@ -134,12 +133,12 @@ export const isButtonFinishDisabled = (
   selectedMeal,
   setButtonToFinish,
 ) => {
-  if (Object.entries(storedProgress).length !== 0) {
-    const splitedPathname = history.location.pathname.split('/');
-    let recipeType = splitedPathname[1];
-    const id = splitedPathname[2];
-    if (recipeType === 'comidas') recipeType = 'meals';
-    if (recipeType === 'bebidas') recipeType = 'cocktails';
+  const splitedPathname = history.location.pathname.split('/');
+  let recipeType = splitedPathname[1];
+  const id = splitedPathname[2];
+  if (recipeType === 'comidas') recipeType = 'meals';
+  if (recipeType === 'bebidas') recipeType = 'cocktails';
+  if (Object.entries(storedProgress).length !== 0 && storedProgress[recipeType][id]) {
     const numberOfCheckboxes = arrayOfIngredientsAndMeasurements(selectedMeal).length;
     const numberOfChecked = storedProgress[recipeType][id].length;
     if (numberOfCheckboxes === numberOfChecked) {
