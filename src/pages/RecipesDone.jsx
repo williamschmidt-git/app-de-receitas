@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import DoneMeals from '../components/DoneMeals';
 import DoneDrinks from '../components/DoneDrinks';
 
-const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+// const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
 function RecipesDone() {
   return (
@@ -27,20 +27,8 @@ function RecipesDone() {
       >
         Drinks
       </button>
-      {
-        !doneRecipes ? (
-          <div>
-            teste
-          </div>
-        ) : (
-          doneRecipes.map(({ type }) => (
-            type === 'comida' ? (
-              <DoneMeals />
-            ) : (
-              <DoneDrinks />
-            )
-          )))
-      }
+      <DoneMeals />
+      <DoneDrinks />
     </div>
   );
 }
