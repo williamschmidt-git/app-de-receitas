@@ -60,7 +60,9 @@ function MealsInProgress() {
       } else {
         parseRecipesInProgress.meals[id] = [...parseRecipesInProgress.meals[id]];
       }
+      console.log(parseRecipesInProgress.meals);
       setStoredProgress(parseRecipesInProgress);
+      // console.log('rodou didmount que atualiza storedprogress');
       localStorage.setItem('inProgressRecipes', JSON.stringify(parseRecipesInProgress));
     }
   }, []);

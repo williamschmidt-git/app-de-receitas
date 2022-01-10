@@ -38,7 +38,8 @@ function FavoriteRecipes() {
             data-testid="0-horizontal-share-btn"
             src={ shareIcon }
             onClick={ () => {
-              const URL = history.location.pathname;
+              const URL = `/comidas/${e.id}`;
+              console.log(e.id);
               onClipboardClicked(setClipboardState, URL);
             } }
           >
@@ -82,7 +83,7 @@ function FavoriteRecipes() {
             data-testid="1-horizontal-share-btn"
             src={ shareIcon }
             onClick={ () => {
-              const URL = history.location.pathname;
+              const URL = `/bebidas/${e.id}`;
               onClipboardClicked(setClipboardState, URL);
             } }
 
