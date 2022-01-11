@@ -7,7 +7,11 @@ function RecipesDone() {
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
-    setMeals(checkIfThereIsLocalStorage('doneRecipes'));
+    if (checkIfThereIsLocalStorage('doneRecipes')) {
+      setMeals(checkIfThereIsLocalStorage('doneRecipes'));
+    } else {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
   }, []);
 
   const arrayToRender = ({ name }) => {

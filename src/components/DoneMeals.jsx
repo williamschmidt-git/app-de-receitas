@@ -1,5 +1,5 @@
-import PropTypes from "prop-types"
-import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import { onClipboardClicked } from '../services/supportFunctions';
@@ -8,14 +8,7 @@ import ApplicationContext from '../context/ApplicationContext';
 function DoneMeals({ meals }) {
   const history = useHistory();
   const { clipboardState, setClipboardState } = useContext(ApplicationContext);
-  // const [meals, setMeals] = useState([]);
 
-  // useEffect(() => {
-  //   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-  //   setMeals(doneRecipes);
-  // }, []);
-
-  // const filteredMeals = meals.filter(({ type }) => type === 'comida');
   return (
     <div>
       {
