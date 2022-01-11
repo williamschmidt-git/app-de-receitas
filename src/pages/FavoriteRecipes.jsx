@@ -72,14 +72,14 @@ function FavoriteRecipes() {
 
   const renderDrink = (e, index) => (
     <div key={ e.id }>
-      <h4 data-testid={ `${index}-horizontal-name` }>
-        {e.name}
-      </h4>
-
       <button
         type="button"
-        onClick={ () => history.push(`/comidas/${e.id}`) }
+        onClick={ () => history.push(`/bebidas/${e.id}`) }
       >
+        <h4 data-testid={ `${index}-horizontal-name` }>
+          {e.name}
+        </h4>
+
         <img
           src={ e.image }
           alt={ e.name }
