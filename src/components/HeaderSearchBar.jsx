@@ -89,7 +89,7 @@ function HeaderSearchBar() {
         value={ typedText }
         onChange={ (event) => handleChange(event) }
       />
-      <label htmlFor="ingredient">
+      <label htmlFor="ingredient" style={ { color: 'white' } }>
         Ingrediente:
         <input
           type="radio"
@@ -100,7 +100,7 @@ function HeaderSearchBar() {
           onClick={ (event) => handleChange(event) }
         />
       </label>
-      <label htmlFor="name">
+      <label htmlFor="name" style={ { color: 'white' } }>
         Nome:
         <input
           type="radio"
@@ -111,7 +111,7 @@ function HeaderSearchBar() {
           onClick={ (event) => handleChange(event) }
         />
       </label>
-      <label htmlFor="firstLetter">
+      <label htmlFor="firstLetter" style={ { color: 'white' } }>
         Primeira Letra:
         <input
           type="radio"

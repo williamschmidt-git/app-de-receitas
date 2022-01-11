@@ -22,42 +22,42 @@ function Header({ pageName }) {
   };
 
   return (
-    <header>
-      <div className="border div-header">
-        <div className="btn-profile">
-          <Link
-            className="btn btn-danger"
-            src={ profileIcon }
-            data-testid="profile-top-btn"
-            to="/perfil"
-            style={ { width: 'auto' } }
-          >
-            <img src={ profileIcon } alt="User" />
-          </Link>
-        </div>
-
-        <div data-testid="page-title" className="text-header">{ pageName }</div>
-        <div>
-          {toRenderSearchIcon ? (
-            <button
-              type="button"
-              onClick={ () => toggleSearchBar() }
-              className="btn btn-danger btn-search"
-            >
-              <img
-                src={ searchImage }
-                alt="Search"
-                data-testid="search-top-btn"
-              />
-            </button>
-          ) : (
-            null
-          )}
-          {isHiddenSearchBar ? <HeaderSearchBar /> : null}
-        </div>
+    <nav
+      className="navbar navbar-dark bg-dark"
+      style={ { backgroundColor: '#dc3545' } }
+    >
+      <Link
+        src={ profileIcon }
+        data-testid="profile-top-btn"
+        to="/perfil"
+      >
+        <img src={ profileIcon } alt="User" />
+      </Link>
+      <div
+        data-testid="page-title"
+        style={ { fontSize: '35px', color: 'white' } }
+      >
+        { pageName }
 
       </div>
-    </header>
+
+      {toRenderSearchIcon ? (
+        <button
+          style={ { border: 'none', backgroundColor: '#343a40' } }
+          type="button"
+          onClick={ () => toggleSearchBar() }
+        >
+          <img
+            src={ searchImage }
+            alt="Search"
+            data-testid="search-top-btn"
+          />
+        </button>
+      ) : (
+        null
+      )}
+      {isHiddenSearchBar ? <HeaderSearchBar /> : null}
+    </nav>
   );
 }
 

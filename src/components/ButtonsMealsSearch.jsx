@@ -31,6 +31,7 @@ function ButtonsMealsSearch() {
   return (
     <div>
       <button
+        className="btn btn-danger btn-sm"
         type="button"
         data-testid="All-category-filter"
         onClick={ () => setArrayToRender(false) }
@@ -39,6 +40,7 @@ function ButtonsMealsSearch() {
       </button>
       {categoriesToRender.map(({ strCategory }) => (
         <button
+          className="btn btn-danger btn-sm"
           type="button"
           key={ strCategory }
           name={ strCategory }
