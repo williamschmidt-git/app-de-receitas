@@ -2,42 +2,74 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+}
+
+.login-container {
+  background-color: #f5f5f5;
+  background-image: url('https://morar.com.br/wp-content/uploads/2020/08/Receitas_R%C3%A1pidas_Morar_Construtora-1280x816.jpeg');
+  background-size: cover;
+  margin: 0px;
+}
+
+.sign-in-paragraph {
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 30px;
 }
 
 .form-login-container {
   align-items: center;
-  color: rgb(0, 0, 0);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   height: 100vh;
+  justify-content: center;
+  margin: 0px;
   width: 100vw;
 }
 
 .div-container-all {
   align-items: center;
-  border: 1px solid rgb(240, 214, 214);
+  box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, 0.4), 0 10px 20px 0 rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   height: 50vh;
   justify-content: center;
+  opacity: 0.95;
   width: 50vw;
 }
 
 .input-email {
   color: rgb(214, 197, 197);
   font-weight: 600;
-  margin: 10px;
-  width: 100%;
+  margin-bottom: 1px;
+  padding: 10%;
+  width: 300px;
 }
 
 .input-password {
   color: rgb(214, 197, 197);
   font-weight: 600;
-  margin: 10px;
-  width: 100%;
+  padding: 10%;
+  width: 300px;
 }
 
 .btn {
-  margin-top: 10px;
-  width: 20%;
+  margin-top: 30px;
+  width: 30%;
+}
+
+.date-container {
+  align-items: flex-end;
+  color: rgb(77, 69, 69);
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.date-paragraph {
+  -webkit-text-stroke: 0.1px black;
+  margin: 0px;
 }
