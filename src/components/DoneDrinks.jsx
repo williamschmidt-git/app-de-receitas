@@ -21,24 +21,6 @@ function DoneDrinks() {
         filteredDrinks.map((item, index) => (
           <div key={ index }>
             <button
-<<<<<<< HEAD
-              src={ drink.image }
-              type="button"
-              onClick={ () => history.push('/bebidas/${drink.id') }
-
-            >
-              <img
-                src={ drink.image }
-                alt="bebida"
-                data-testid={ `${index}-horizontal-image` }
-              />
-            </button>
-
-            <p data-testid={ `${index}-horizontal-top-text` }>{ drink.alcoholicOrNot }</p>
-
-            <button
-=======
->>>>>>> f329d149a846ef80d03d81a3819b0c6be18c7e5f
               type="button"
               onClick={ () => history.push(`/bebidas/${item.id}`) }
             >
@@ -51,11 +33,7 @@ function DoneDrinks() {
                 <p data-testid={ `${index}-horizontal-name` }>{ item.name }</p>
               </div>
             </button>
-<<<<<<< HEAD
-
-=======
             <p data-testid={ `${index}-horizontal-top-text` }>{ item.alcoholicOrNot }</p>
->>>>>>> f329d149a846ef80d03d81a3819b0c6be18c7e5f
             <button
               src={ shareIcon }
               type="button"
