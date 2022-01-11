@@ -15,106 +15,125 @@ function FavoriteRecipes() {
     setClipboardState } = useContext(ApplicationContext);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
+  const renderFood = (e, index) => (
+    <div key={ e.id }>
+      <h4 data-testid={ `${index}-horizontal-name` }>
+        {e.name}
+      </h4>
+
+      <button
+        type="button"
+        onClick={ () => history.push(`/comidas/${e.id}`) }
+      >
+        <img
+          src={ e.image }
+          alt={ e.name }
+          style={ { width: '40px', height: '40px' } }
+          data-testid={ `${index}-horizontal-image` }
+        />
+      </button>
+
+      <h5 data-testid={ `${index}-horizontal-top-text` }>
+        {`${e.area} - ${e.category}`}
+      </h5>
+      <button
+        type="button"
+        data-testid={ `${index}-horizontal-share-btn` }
+        src={ shareIcon }
+        onClick={ () => {
+          const URL = `/${e.type}s/${e.id}`;
+
+          onClipboardClicked(setClipboardState, URL);
+        } }
+      >
+        <img alt="share" src={ shareIcon } />
+      </button>
+      <p>
+        {clipboardState ? 'Link copiado!' : ''}
+      </p>
+
+      <button
+        type="button"
+        data-testid={ `${index}-horizontal-favorite-btn` }
+        src={ blackHeartIcon }
+        onClick={ () => {
+          unfavoriteButton(e.id);
+          setRerender(!reRender);
+        } }
+
+      >
+        <img
+          alt="favorite"
+          src={ blackHeartIcon }
+        />
+      </button>
+    </div>
+  );
+
+  const renderDrink = (e, index) => (
+    <div key={ e.id }>
+      <h4 data-testid={ `${index}-horizontal-name` }>
+        {e.name}
+      </h4>
+
+      <button
+        type="button"
+        onClick={ () => history.push(`/comidas/${e.id}`) }
+      >
+        <img
+          src={ e.image }
+          alt={ e.name }
+          style={ { width: '40px', height: '40px' } }
+          data-testid={ `${index}-horizontal-image` }
+        />
+      </button>
+
+      <h5 data-testid={ `${index}-horizontal-top-text` }>{e.alcoholicOrNot}</h5>
+
+      <button
+        type="button"
+        data-testid={ `${index}-horizontal-share-btn` }
+        src={ shareIcon }
+        onClick={ () => {
+          const URL = history.location.pathname;
+          onClipboardClicked(setClipboardState, URL);
+        } }
+
+      >
+        <img
+          alt="share"
+          src={ shareIcon }
+        />
+      </button>
+      <p>
+        {clipboardState ? 'Link copiado!' : ''}
+      </p>
+
+      <button
+        type="button"
+        data-testid={ `${index}-horizontal-favorite-btn` }
+        src={ blackHeartIcon }
+        onClick={ () => {
+          unfavoriteButton(e.id);
+          setRerender(!reRender);
+        } }
+
+      >
+        <img
+          alt="favorite"
+          src={ blackHeartIcon }
+        />
+      </button>
+    </div>
+  );
+
   const renderFavorites = (e, type, index) => {
     if (type === 'comida') {
-      return (
-        <div key={ e.id }>
-          <h4 data-testid={ `${index}-horizontal-name` }>
-            {e.name}
-          </h4>
-          <img
-            src={ e.image }
-            alt={ e.name }
-            style={ { width: '40px', height: '40px' } }
-            data-testid={ `${index}-horizontal-image` }
-          />
-          <h5 data-testid={ `${index}-horizontal-top-text` }>
-            {`${e.area} - ${e.category}`}
-          </h5>
-          <button
-            type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
-            onClick={ () => {
-              const URL = `/${e.type}s/${e.id}`;
-
-              onClipboardClicked(setClipboardState, URL);
-            } }
-          >
-            <img alt="share" src={ shareIcon } />
-          </button>
-          <p>
-            {clipboardState ? 'Link copiado!' : ''}
-          </p>
-
-          <button
-            type="button"
-            data-testid={ `${index}-horizontal-favorite-btn` }
-            src={ blackHeartIcon }
-            onClick={ () => {
-              unfavoriteButton(e.id);
-              setRerender(!reRender);
-            } }
-
-          >
-            <img
-              alt="favorite"
-              src={ blackHeartIcon }
-            />
-          </button>
-        </div>
-      );
+      return renderFood(e, index);
     }
 
     if (type === 'bebida') {
-      return (
-        <div key={ e.id }>
-          <h4 data-testid={ `${index}-horizontal-name` }>
-            {e.name}
-          </h4>
-          <img
-            src={ e.image }
-            alt={ e.name }
-            style={ { width: '40px', height: '40px' } }
-            data-testid={ `${index}-horizontal-image` }
-          />
-          <h5 data-testid={ `${index}-horizontal-top-text` }>{e.alcoholicOrNot}</h5>
-          <button
-            type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
-            onClick={ () => {
-              const URL = history.location.pathname;
-              onClipboardClicked(setClipboardState, URL);
-            } }
-
-          >
-            <img
-              alt="share"
-              src={ shareIcon }
-            />
-          </button>
-          <p>
-            {clipboardState ? 'Link copiado!' : ''}
-          </p>
-
-          <button
-            type="button"
-            data-testid={ `${index}-horizontal-favorite-btn` }
-            src={ blackHeartIcon }
-            onClick={ () => {
-              unfavoriteButton(e.id);
-              setRerender(!reRender);
-            } }
-
-          >
-            <img
-              alt="favorite"
-              src={ blackHeartIcon }
-            />
-          </button>
-        </div>
-      );
+      return renderDrink(e, index);
     }
   };
 
@@ -132,7 +151,6 @@ function FavoriteRecipes() {
                 <div>
                   {renderFavorites(e, e.type, index)}
                 </div>
-
               </div>
             ))}
           </div>

@@ -26,13 +26,16 @@ function DoneDrinks() {
                 data-testid={ `${index}-horizontal-image` }
               />
             </button>
+
             <p data-testid={ `${index}-horizontal-top-text` }>{ drink.alcoholicOrNot }</p>
+
             <button
               type="button"
               onClick={ () => history.push('/bebidas/${drink.id') }
             >
               <p data-testid={ `${index}-horizontal-name` }>{ drink.name }</p>
             </button>
+
             <button
               src={ shareIcon }
               type="button"
