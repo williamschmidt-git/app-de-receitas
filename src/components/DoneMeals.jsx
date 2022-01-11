@@ -1,5 +1,5 @@
-import PropTypes from "prop-types"
-import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import { onClipboardClicked } from '../services/supportFunctions';
