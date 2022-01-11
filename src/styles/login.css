@@ -3,3 +3,41 @@
   margin: 0;
   padding: 0;
 }
+
+.form-login-container {
+  align-items: center;
+  color: rgb(0, 0, 0);
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.div-container-all {
+  align-items: center;
+  border: 1px solid rgb(240, 214, 214);
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  justify-content: center;
+  width: 50vw;
+}
+
+.input-email {
+  color: rgb(214, 197, 197);
+  font-weight: 600;
+  margin: 10px;
+  width: 100%;
+}
+
+.input-password {
+  color: rgb(214, 197, 197);
+  font-weight: 600;
+  margin: 10px;
+  width: 100%;
+}
+
+.btn {
+  margin-top: 10px;
+  width: 20%;
+}

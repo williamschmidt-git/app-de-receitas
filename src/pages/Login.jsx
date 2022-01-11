@@ -30,36 +30,50 @@ function Login() {
   };
 
   return (
-    <form className="login-form">
-      <input
-        type="text"
-        name="email"
-        value={ email }
-        placeholder="Digite o email"
-        data-testid="email-input"
-        onChange={ (event) => handleChange(event) }
-      />
-      <input
-        type="password"
-        name="password"
-        value={ password }
-        placeholder="Digite senha"
-        data-testid="password-input"
-        onChange={ (event) => handleChange(event) }
-      />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ isDisabledButton() }
-        onClick={
-          (() => {
-            saveOnLocalStorage();
-            history.push('/comidas');
-          })
-        }
+    <form className="form-group form-login-container">
+      <div
+        className="div-container-all shadow p-3 mb-5 bg-white rounded"
+        style={ { backgroundColor: 'red' } }
       >
-        Entrar
-      </button>
+        <div className="email-container">
+          <input
+            type="email"
+            name="email"
+            className="form-control form-control-sm input-email"
+            aria-describedby="emailHelp"
+            value={ email }
+            placeholder="Digite o email"
+            data-testid="email-input"
+            onChange={ (event) => handleChange(event) }
+          />
+        </div>
+        <div className="password-container">
+          <input
+            type="password"
+            name="password"
+            className="form-control form-control-sm input-password"
+            value={ password }
+            placeholder="Digite senha"
+            data-testid="password-input"
+            onChange={ (event) => handleChange(event) }
+          />
+        </div>
+        <button
+          className="btn btn-danger"
+          type="button"
+          data-testid="login-submit-btn"
+          variant="success"
+          disabled={ isDisabledButton() }
+          onClick={
+            (() => {
+              saveOnLocalStorage();
+              history.push('/comidas');
+            })
+          }
+        >
+          Entrar
+        </button>
+      </div>
     </form>
   );
 }

@@ -44,7 +44,7 @@ function Header({ pageName }) {
       ) : (
         null
       )}
-      {isHiddenSearchBar && <HeaderSearchBar />}
+      {isHiddenSearchBar ? <HeaderSearchBar /> : null}
     </header>
   );
 }

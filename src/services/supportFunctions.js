@@ -147,7 +147,7 @@ export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
       alcoholicOrNot: '',
       name: recipe.strMeal,
       image: recipe.strMealThumb,
-      doneDate: '',
+      doneDate: new Date().toLocaleDateString('pt-br'),
       tags: [recipe.strTags[0], recipe.strTags[1]],
     });
   } else {
