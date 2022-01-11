@@ -9,6 +9,8 @@ import '../styles/recipesMealsScreen.css';
 
 const MAX_RECIPES = 11;
 
+// COMENTARIO PARA DAR O PUSH - PODE APAGAR
+
 function RecipesMainScreen() {
   const history = useHistory();
   const {
