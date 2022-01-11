@@ -49,29 +49,42 @@ function DrinksMainScreen() {
     <div>
       <Header pageName="Bebidas" />
       <ButtonsDrinksSearch />
-      {recipesToRender.map((recipe, index) => (
-        <button
-          type="button"
-          key={ recipe.idDrink }
-          data-testid={ `${index}-recipe-card` }
-          name={ recipe.idDrink }
-          onClick={ ({ target }) => history.push(`/bebidas/${target.name}`) }
-        >
-          <img
-            style={ { height: '50px', width: '50px' } }
-            src={ recipe.strDrinkThumb }
-            name={ recipe.idDrink }
-            alt="Drink"
-            data-testid={ `${index}-card-img` }
-          />
-          <p
-            data-testid={ `${index}-card-name` }
-            name={ recipe.idDrink }
+      <div
+        className="card-group"
+      >
+        {recipesToRender.map((recipe, index) => (
+
+          <div
+            className="card"
+            key={ recipe.idDrink }
           >
-            {recipe.strDrink}
-          </p>
-        </button>
-      ))}
+            <button
+              className="card text-white bg-danger mb-3"
+              type="button"
+              data-testid={ `${index}-recipe-card` }
+              name={ recipe.idDrink }
+              onClick={ ({ target }) => history.push(`/bebidas/${target.name}`) }
+            >
+              <img
+                className="card-img-top"
+                src={ recipe.strDrinkThumb }
+                name={ recipe.idDrink }
+                alt="Drink"
+                data-testid={ `${index}-card-img` }
+              />
+              <div className="card-body">
+                <p
+                  className="card-text"
+                  data-testid={ `${index}-card-name` }
+                  name={ recipe.idDrink }
+                >
+                  {recipe.strDrink}
+                </p>
+              </div>
+            </button>
+          </div>
+        ))}
+      </div>
       <Footer />
     </div>
   );

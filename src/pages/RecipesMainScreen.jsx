@@ -50,30 +50,41 @@ function RecipesMainScreen() {
     <div className="meals-screen-container">
       <Header pageName="Comidas" />
       <ButtonsMealsSearch />
-      {recipesToRender.map((recipe, index) => (
-        <button
-          className="card"
-          type="button"
-          key={ recipe.idMeal }
-          data-testid={ `${index}-recipe-card` }
-          name={ recipe.idMeal }
-          onClick={ ({ target }) => history.push(`/comidas/${target.name}`) }
-        >
-          <img
-            style={ { height: '50px', width: '50px' } }
-            src={ recipe.strMealThumb }
-            name={ recipe.idMeal }
-            alt="Meal"
-            data-testid={ `${index}-card-img` }
-          />
-          <p
-            data-testid={ `${index}-card-name` }
-            name={ recipe.idMeal }
+      <div
+        className="card-group div-card"
+      >
+        {recipesToRender.map((recipe, index) => (
+          <div
+            key={ recipe.idMeal }
+            className="card"
           >
-            {recipe.strMeal}
-          </p>
-        </button>
-      ))}
+            <button
+              className="card text-white bg-danger mb-3"
+              type="button"
+              data-testid={ `${index}-recipe-card` }
+              name={ recipe.idMeal }
+              onClick={ ({ target }) => history.push(`/comidas/${target.name}`) }
+            >
+              <img
+                className="card-img-top"
+                src={ recipe.strMealThumb }
+                name={ recipe.idMeal }
+                alt="Meal"
+                data-testid={ `${index}-card-img` }
+              />
+              <div className="card-body">
+                <p
+                  className="card-text"
+                  data-testid={ `${index}-card-name` }
+                  name={ recipe.idMeal }
+                >
+                  {recipe.strMeal}
+                </p>
+              </div>
+            </button>
+          </div>
+        ))}
+      </div>
       <Footer />
     </div>
   );
