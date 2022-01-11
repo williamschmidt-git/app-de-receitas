@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ButtonsMealsSearch from '../components/ButtonsMealsSearch';
 import { fetchMeals } from '../services/helpers';
+import '../styles/recipesMealsScreen.css';
 
 const MAX_RECIPES = 11;
 
@@ -46,7 +47,7 @@ function RecipesMainScreen() {
   useEffect(() => () => setIngredientExplored([]), []);
 
   return (
-    <div>
+    <div className="meals-screen-container">
       <Header pageName="Comidas" />
       <ButtonsMealsSearch />
       <div
