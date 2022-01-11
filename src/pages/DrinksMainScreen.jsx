@@ -50,7 +50,7 @@ function DrinksMainScreen() {
       <Header pageName="Bebidas" />
       <ButtonsDrinksSearch />
       <div
-        className="card-group div-card"
+        className="card-group"
       >
         {recipesToRender.map((recipe, index) => (
 

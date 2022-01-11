@@ -21,7 +21,10 @@ function Header({ pageName }) {
   };
 
   return (
-    <header>
+    <nav
+      className="navbar navbar-dark bg-dark"
+      style={ { backgroundColor: '#dc3545' } }
+    >
       <Link
         src={ profileIcon }
         data-testid="profile-top-btn"
@@ -29,9 +32,17 @@ function Header({ pageName }) {
       >
         <img src={ profileIcon } alt="User" />
       </Link>
-      <div data-testid="page-title">{ pageName }</div>
+      <div
+        data-testid="page-title"
+        style={ { fontSize: '35px', color: 'white' } }
+      >
+        { pageName }
+
+      </div>
+
       {toRenderSearchIcon ? (
         <button
+          style={ { border: 'none', backgroundColor: '#343a40' } }
           type="button"
           onClick={ () => toggleSearchBar() }
         >
@@ -45,7 +56,7 @@ function Header({ pageName }) {
         null
       )}
       {isHiddenSearchBar ? <HeaderSearchBar /> : null}
-    </header>
+    </nav>
   );
 }
 
