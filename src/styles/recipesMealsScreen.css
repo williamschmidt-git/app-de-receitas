@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+.meals-screen-container {
+  background-color: #eeeeeead;
+  height: 100vh;
+  width: 100vw;
+}
+
+.btn-category-container {
+  align-items: center;
+  align-content: center;
+  /* background-color: #eeeeeead; */
+  /* border-radius: 5px; */
+  /* box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1), 0 10px 20px 0 rgba(0, 0, 0, 0.1); */
+  /* background-color: white; */
+  display: flex;
+  height: 60px;
+  justify-content: space-around;
+  margin: 40px 0px;
+  /* padding: 0 150px; */
+}
+
+.btn-category-container button {
+  align-items: center;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1), 0 0px 20px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  font-weight: 600;
+  height: 55%;
+  justify-content: center;
+  margin: 0px;
+  width: 10%;
+}

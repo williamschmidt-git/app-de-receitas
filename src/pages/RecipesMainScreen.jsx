@@ -47,11 +47,12 @@ function RecipesMainScreen() {
   useEffect(() => () => setIngredientExplored([]), []);
 
   return (
-    <div>
+    <div className="meals-screen-container">
       <Header pageName="Comidas" />
       <ButtonsMealsSearch />
       {recipesToRender.map((recipe, index) => (
         <button
+          className="card"
           type="button"
           key={ recipe.idMeal }
           data-testid={ `${index}-recipe-card` }
