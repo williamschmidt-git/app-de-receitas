@@ -1,24 +1,24 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { fetchDrinkIngredients, fetchDrinksByIngredient } from '../services/helpers';
+import Header from '../components/Header';
 import ApplicationContext from '../context/ApplicationContext';
+import { fetchMealIngredients, fetchMealsByIngredient } from '../services/helpers';
 
 const MAX_INGREDIENTS = 11;
 
-function ExploreDrinksIngredients() {
+function ExploreMealsIngredients() {
   const [ingredients, setIngredients] = useState([]);
   const { setIngredientExplored } = useContext(ApplicationContext);
 
   const history = useHistory();
 
   const ingredientsToRender = ingredients
-    .filter((drink, index) => index <= MAX_INGREDIENTS && drink);
+    .filter((meal, index) => index <= MAX_INGREDIENTS && meal);
 
   const requestIngredients = async () => {
-    const responseAPI = await fetchDrinkIngredients();
-    setIngredients(responseAPI.drinks);
+    const responseAPI = await fetchMealIngredients();
+    setIngredients(responseAPI.meals);
   };
 
   useEffect(() => {
@@ -31,24 +31,24 @@ function ExploreDrinksIngredients() {
       {ingredientsToRender.map((item, index) => (
         <button
           type="button"
-          data-testid={ `${index}-ingredient-card` }
           key={ index }
+          data-testid={ `${index}-ingredient-card` }
           onClick={ async () => {
-            const responseAPI = await fetchDrinksByIngredient(item.strIngredient1);
-            setIngredientExplored(responseAPI.drinks);
-            history.push('/bebidas');
+            const responseAPI = await fetchMealsByIngredient(item.strIngredient);
+            setIngredientExplored(responseAPI.meals);
+            history.push('/comidas');
           } }
         >
           <div>
             <img
-              src={ `https://www.thecocktaildb.com/images/ingredients/${item.strIngredient1}-Small.png` }
+              src={ `https://www.themealdb.com/images/ingredients/${item.strIngredient}-Small.png` }
               alt="ingredient"
               data-testid={ `${index}-card-img` }
             />
             <p
               data-testid={ `${index}-card-name` }
             >
-              {item.strIngredient1}
+              {item.strIngredient}
             </p>
           </div>
         </button>
@@ -58,4 +58,4 @@ function ExploreDrinksIngredients() {
   );
 }
 
-export default ExploreDrinksIngredients;
+export default ExploreMealsIngredients;

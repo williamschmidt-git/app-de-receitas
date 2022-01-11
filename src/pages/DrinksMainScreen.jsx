@@ -16,7 +16,8 @@ function DrinksMainScreen() {
     setArrayToRender,
     changeArrayToRender,
     recipesByDrinkCategory,
-  } = useContext(ApplicationContext);
+    exploreByIngredients,
+    setIngredientExplored } = useContext(ApplicationContext);
   const recipesToRender = changeArrayToRender
     ? recipesByDrinkCategory.filter((drink, index) => index <= MAX_RECIPES && drink)
     : drinksArray.filter((drink, index) => index <= MAX_RECIPES && drink);
@@ -27,7 +28,11 @@ function DrinksMainScreen() {
   };
 
   useEffect(() => {
-    requestAPI();
+    if (exploreByIngredients.length === 0) {
+      requestAPI();
+    } else {
+      setDrinksArray(exploreByIngredients);
+    }
   }, []);
 
   useEffect(() => {
@@ -37,6 +42,8 @@ function DrinksMainScreen() {
       setArrayToRender(true);
     }
   }, [recipesByDrinkCategory]);
+
+  useEffect(() => () => setIngredientExplored([]), []);
 
   return (
     <div>

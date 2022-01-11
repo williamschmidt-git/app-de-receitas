@@ -1,30 +1,37 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 import { onClipboardClicked } from '../services/supportFunctions';
 import ApplicationContext from '../context/ApplicationContext';
 
-const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-
 function DoneMeals() {
-  const { clipboardState, setClipboardState } = useContext(ApplicationContext);
+  const [meals, setMeals] = useState([]);
+
+  useEffect(() => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    setMeals(doneRecipes);
+  }, []);
+
   const history = useHistory();
+  const { clipboardState, setClipboardState } = useContext(ApplicationContext);
+  const filteredMeals = meals.filter(({ type }) => type === 'comida');
   return (
     <div>
       {
-        doneRecipes.map((meal, index) => (
+        filteredMeals.map((meal, index) => (
           <div key={ index }>
             <button
               type="button"
               onClick={ () => history.push(`/comidas/${meal.id}`) }
             >
-              <img
-                src={ meal.image }
-                alt="comida"
-                data-testid={ `${index}-horizontal-image` }
-              />
-              <p data-testid={ `${index}-horizontal-name` }>{ meal.name }</p>
+              <div>
+                <img
+                  src={ meal.image }
+                  alt="comida"
+                  data-testid={ `${index}-horizontal-image` }
+                />
+                <p data-testid={ `${index}-horizontal-name` }>{ meal.name }</p>
+              </div>
             </button>
             <p
               data-testid={ `${index}-horizontal-top-text` }
@@ -65,11 +72,5 @@ function DoneMeals() {
     </div>
   );
 }
-
-DoneMeals.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};
 
 export default DoneMeals;

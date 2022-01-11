@@ -15,10 +15,10 @@ function ApplicationProvider({ children }) {
   const [selectedDrink, setSelectedDrink] = useState([]);
   const [selectedMeal, setSelectedMeal] = useState([]);
   const [storedProgress, setStoredProgress] = useState({});
-  // const [storedFavorites, setStoredFavorite] = useState({});
   const [clipboardState, setClipboardState] = useState(false);
   const [hasStartButton, setStartButton] = useState(true);
   const [alreadyStarted, setRecipeStarted] = useState(false);
+  const [exploreByIngredients, setIngredientExplored] = useState([]);
 
   const contextValue = {
     mealsArray,
@@ -51,6 +51,8 @@ function ApplicationProvider({ children }) {
     setStartButton,
     alreadyStarted,
     setRecipeStarted,
+    exploreByIngredients,
+    setIngredientExplored,
   };
 
   return (

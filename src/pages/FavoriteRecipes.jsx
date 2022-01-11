@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -129,11 +128,110 @@ function FavoriteRecipes() {
 
   const renderFavorites = (e, type, index) => {
     if (type === 'comida') {
+<<<<<<< HEAD
       return renderFood(e, index);
     }
 
     if (type === 'bebida') {
       return renderDrink(e, index);
+=======
+      return (
+        <div key={ e.id }>
+          <h4 data-testid="0-horizontal-name">
+            {e.name}
+          </h4>
+          <img
+            src={ e.image }
+            alt={ e.name }
+            style={ { width: '40px', height: '40px' } }
+            data-testid="0-horizontal-image"
+          />
+          <h5 data-testid="0-horizontal-top-text">{`${e.area} - ${e.category}`}</h5>
+          <button
+            type="button"
+            data-testid="0-horizontal-share-btn"
+            src={ shareIcon }
+            onClick={ () => {
+              const URL = `/comidas/${e.id}`;
+              console.log(e.id);
+              onClipboardClicked(setClipboardState, URL);
+            } }
+          >
+            <img alt="share" src={ shareIcon } />
+          </button>
+          <p>
+            {clipboardState ? 'Link copiado!' : ''}
+          </p>
+
+          <button
+            type="button"
+            data-testid="0-horizontal-favorite-btn"
+            src={ blackHeartIcon }
+            onClick={ () => {
+              unfavoriteButton(e.id);
+              setRerender(!reRender);
+            } }
+
+          >
+            <img
+              alt="favorite"
+              src={ blackHeartIcon }
+            />
+          </button>
+        </div>
+      );
+    }
+
+    if (type === 'bebida') {
+      return (
+        <div key={ e.id }>
+          <h4 data-testid="1-horizontal-name">
+            {e.name}
+          </h4>
+          <img
+            src={ e.image }
+            alt={ e.name }
+            style={ { width: '40px', height: '40px' } }
+            data-testid="1-horizontal-image"
+          />
+          <h5 data-testid="1-horizontal-top-text">{e.alcoholicOrNot}</h5>
+          <button
+            type="button"
+            data-testid="1-horizontal-share-btn"
+            src={ shareIcon }
+            onClick={ () => {
+              const URL = `/bebidas/${e.id}`;
+              onClipboardClicked(setClipboardState, URL);
+            } }
+
+          >
+            <img
+              alt="share"
+              src={ shareIcon }
+            />
+          </button>
+          <p>
+            {clipboardState ? 'Link copiado!' : ''}
+          </p>
+
+          <button
+            type="button"
+            data-testid="1-horizontal-favorite-btn"
+            src={ blackHeartIcon }
+            onClick={ () => {
+              unfavoriteButton(e.id);
+              setRerender(!reRender);
+            } }
+
+          >
+            <img
+              alt="favorite"
+              src={ blackHeartIcon }
+            />
+          </button>
+        </div>
+      );
+>>>>>>> f329d149a846ef80d03d81a3819b0c6be18c7e5f
     }
   };
 

@@ -42,25 +42,6 @@ export const onClipboardClicked = (setClipboardState, URL) => {
   }, ONDE_SECOND);
 };
 
-// export const onClipboardClicked = (setClipboardState, id, type) => {
-//   if (type === 'comida') {
-//     copy(`http://localhost:3000/comidas/${id}`);
-//     setClipboardState(true);
-//     const ONDE_SECOND = 1000;
-//     setTimeout(() => {
-//       setClipboardState(false);
-//     }, ONDE_SECOND);
-//   }
-//   if (type === 'bebida') {
-//     copy(`http://localhost:3000/bebidas/${id}`);
-//     setClipboardState(true);
-//     const ONDE_SECOND = 1000;
-//     setTimeout(() => {
-//       setClipboardState(false);
-//     }, ONDE_SECOND);
-//   }
-// };
-
 export const checkIfThereIsLocalStorage = (storageKey) => {
   const stored = localStorage.getItem(storageKey);
   const parseStorage = JSON.parse(stored);
@@ -83,13 +64,16 @@ export const saveFavoriteRecipeOnStorage = (recipe, recipeType) => {
   let mealOrDrink = 'idMeal';
   if (recipeType === 'bebida') mealOrDrink = 'idDrink';
 
+<<<<<<< HEAD
   if (localStorage[FAVORITE_RECIPES]) {
+=======
+  if (checkIfThereIsLocalStorage(FAVORITE_RECIPES)) {
+>>>>>>> f329d149a846ef80d03d81a3819b0c6be18c7e5f
     favoriteRecipes = JSON.parse(localStorage.getItem(FAVORITE_RECIPES));
   }
 
   const addRecipeOnStorage = favoriteRecipes
     .find((recipeOnStorage) => recipeOnStorage.id === recipe[mealOrDrink]);
-
   if (!addRecipeOnStorage) {
     if (recipeType === 'comida') {
       favoriteRecipes.push({
@@ -134,12 +118,12 @@ export const isButtonFinishDisabled = (
   selectedMeal,
   setButtonToFinish,
 ) => {
-  if (Object.entries(storedProgress).length !== 0) {
-    const splitedPathname = history.location.pathname.split('/');
-    let recipeType = splitedPathname[1];
-    const id = splitedPathname[2];
-    if (recipeType === 'comidas') recipeType = 'meals';
-    if (recipeType === 'bebidas') recipeType = 'cocktails';
+  const splitedPathname = history.location.pathname.split('/');
+  let recipeType = splitedPathname[1];
+  const id = splitedPathname[2];
+  if (recipeType === 'comidas') recipeType = 'meals';
+  if (recipeType === 'bebidas') recipeType = 'cocktails';
+  if (Object.entries(storedProgress).length !== 0 && storedProgress[recipeType][id]) {
     const numberOfCheckboxes = arrayOfIngredientsAndMeasurements(selectedMeal).length;
     const numberOfChecked = storedProgress[recipeType][id].length;
     if (numberOfCheckboxes === numberOfChecked) {
@@ -154,7 +138,7 @@ export const saveDoneRecipeOnStorage = (recipe, recipeType) => {
   const DONE_RECIPES = 'doneRecipes';
   let doneRecipes = [];
 
-  if (localStorage.DONE_RECIPES) {
+  if (checkIfThereIsLocalStorage(DONE_RECIPES)) {
     doneRecipes = JSON.parse(localStorage.getItem(DONE_RECIPES));
   }
 
