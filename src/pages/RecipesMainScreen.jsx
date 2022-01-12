@@ -50,29 +50,30 @@ function RecipesMainScreen() {
     <div className="meals-screen-container">
       <Header pageName="Comidas" />
       <ButtonsMealsSearch />
-      <div
-        className="card-group div-card"
-      >
-        {recipesToRender.map((recipe, index) => (
-          <div
-            key={ recipe.idMeal }
-            className="card"
-          >
-            <button
-              className="card text-white bg-danger mb-3"
-              type="button"
-              data-testid={ `${index}-recipe-card` }
-              name={ recipe.idMeal }
-              onClick={ ({ target }) => history.push(`/comidas/${target.name}`) }
+      <div className="div-card">
+        <div
+          className="card-group"
+        >
+          {recipesToRender.map((recipe, index) => (
+            <div
+              key={ recipe.idMeal }
+              className="card"
             >
-              <img
-                className="card-img-top"
-                src={ recipe.strMealThumb }
+              <button
+                className="card bg-danger mb-0"
+                type="button"
+                data-testid={ `${index}-recipe-card` }
                 name={ recipe.idMeal }
-                alt="Meal"
-                data-testid={ `${index}-card-img` }
-              />
-              <div className="card-body">
+                onClick={ ({ target }) => history.push(`/comidas/${target.name}`) }
+              >
+                <img
+                  className="card-img-top"
+                  src={ recipe.strMealThumb }
+                  name={ recipe.idMeal }
+                  alt="Meal"
+                  data-testid={ `${index}-card-img` }
+                />
+                {/* <div className="card-body"> */}
                 <p
                   className="card-text"
                   data-testid={ `${index}-card-name` }
@@ -80,11 +81,13 @@ function RecipesMainScreen() {
                 >
                   {recipe.strMeal}
                 </p>
-              </div>
-            </button>
-          </div>
-        ))}
+                {/* </div> */}
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
+
       <Footer />
     </div>
   );

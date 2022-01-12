@@ -23,40 +23,43 @@ function Header({ pageName }) {
 
   return (
     <nav
-      className="navbar navbar-dark bg-dark"
-      style={ { backgroundColor: '#dc3545' } }
+      className="navbar navbar-dark"
+      style={ { backgroundColor: '#F49952' } }
     >
-      <Link
-        src={ profileIcon }
-        data-testid="profile-top-btn"
-        to="/perfil"
-      >
-        <img src={ profileIcon } alt="User" />
-      </Link>
-      <div
-        data-testid="page-title"
-        style={ { fontSize: '35px', color: 'white' } }
-      >
-        { pageName }
+      <div className="container">
+        <Link
+          src={ profileIcon }
+          data-testid="profile-top-btn"
+          to="/perfil"
+        >
+          <img src={ profileIcon } alt="User" />
+        </Link>
+        <div
+          data-testid="page-title"
+          style={ { fontSize: '35px', color: 'white' } }
+        >
+          { pageName }
 
+        </div>
+
+        {toRenderSearchIcon ? (
+          <button
+            style={ { border: 'none', backgroundColor: '#F49952' } }
+            type="button"
+            onClick={ () => toggleSearchBar() }
+          >
+            <img
+              src={ searchImage }
+              alt="Search"
+              data-testid="search-top-btn"
+            />
+          </button>
+        ) : (
+          null
+        )}
+        {isHiddenSearchBar ? <HeaderSearchBar /> : null}
       </div>
 
-      {toRenderSearchIcon ? (
-        <button
-          style={ { border: 'none', backgroundColor: '#343a40' } }
-          type="button"
-          onClick={ () => toggleSearchBar() }
-        >
-          <img
-            src={ searchImage }
-            alt="Search"
-            data-testid="search-top-btn"
-          />
-        </button>
-      ) : (
-        null
-      )}
-      {isHiddenSearchBar ? <HeaderSearchBar /> : null}
     </nav>
   );
 }

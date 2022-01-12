@@ -35,3 +35,19 @@
   margin: 0px;
   width: 10%;
 }
+
+.card {
+  display: flex;
+  background-color: transparent;
+}
+
+.div-card{
+  /* padding: 0px 137px; */
+  display: flex;
+  flex-direction: row;
+}
+
+/* .card-img-top{
+  width: 86.25px;
+  height: 86.25px;
+} */

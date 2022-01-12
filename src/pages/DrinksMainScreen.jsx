@@ -59,7 +59,7 @@ function DrinksMainScreen() {
             key={ recipe.idDrink }
           >
             <button
-              className="card text-white bg-danger mb-3"
+              className="card text-white bg-danger mb-0"
               type="button"
               data-testid={ `${index}-recipe-card` }
               name={ recipe.idDrink }
