@@ -1,0 +1,22 @@
+header{
+    background-color: rgba(248, 241, 232, 0.952);
+}
+.div-header{
+    margin: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0px;
+}
+
+.btn-profile{
+    display: flex;
+    align-items: center;
+    /* justify-self: center; */
+}
+
+.btn-search{
+    display: flex;
+    align-items: center;
+    width: 55px;
+}
