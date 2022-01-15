@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { fetchDrinks } from '../services/helpers';
 import ButtonsDrinksSearch from '../components/ButtonsDrinksSearch';
+import '../styles/recipesMainScreen.css';
 
 const MAX_RECIPES = 11;
 
@@ -46,44 +47,45 @@ function DrinksMainScreen() {
   useEffect(() => () => setIngredientExplored([]), []);
 
   return (
-    <div>
+    <div className="screen-container">
       <Header pageName="Bebidas" />
       <ButtonsDrinksSearch />
-      <div
-        className="card-group"
-      >
-        {recipesToRender.map((recipe, index) => (
-
-          <div
-            className="card"
-            key={ recipe.idDrink }
-          >
-            <button
-              className="card text-white bg-danger mb-0"
-              type="button"
-              data-testid={ `${index}-recipe-card` }
-              name={ recipe.idDrink }
-              onClick={ ({ target }) => history.push(`/bebidas/${target.name}`) }
+      <div className="div-card">
+        <div
+          className="card-group"
+        >
+          {recipesToRender.map((recipe, index) => (
+            <div
+              className="card"
+              key={ recipe.idDrink }
             >
-              <img
-                className="card-img-top"
-                src={ recipe.strDrinkThumb }
+              <button
+                className="card-btn"
+                type="button"
+                data-testid={ `${index}-recipe-card` }
                 name={ recipe.idDrink }
-                alt="Drink"
-                data-testid={ `${index}-card-img` }
-              />
-              <div className="card-body">
-                <p
-                  className="card-text"
-                  data-testid={ `${index}-card-name` }
+                onClick={ ({ target }) => history.push(`/bebidas/${target.name}`) }
+              >
+                <img
+                  className="card-img-top"
+                  src={ recipe.strDrinkThumb }
                   name={ recipe.idDrink }
-                >
-                  {recipe.strDrink}
-                </p>
-              </div>
-            </button>
-          </div>
-        ))}
+                  alt="Drink"
+                  data-testid={ `${index}-card-img` }
+                />
+                <div className="card-body">
+                  <p
+                    className="card-text"
+                    data-testid={ `${index}-card-name` }
+                    name={ recipe.idDrink }
+                  >
+                    {recipe.strDrink}
+                  </p>
+                </div>
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
       <Footer />
     </div>

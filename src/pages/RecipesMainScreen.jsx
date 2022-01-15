@@ -5,9 +5,9 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ButtonsMealsSearch from '../components/ButtonsMealsSearch';
 import { fetchMeals } from '../services/helpers';
-import '../styles/recipesMealsScreen.css';
+import '../styles/recipesMainScreen.css';
 
-const MAX_RECIPES = 11;
+// const MAX_RECIPES = 11;
 
 function RecipesMainScreen() {
   const history = useHistory();
@@ -20,8 +20,11 @@ function RecipesMainScreen() {
     exploreByIngredients,
     setIngredientExplored } = useContext(ApplicationContext);
   const recipesToRender = changeArrayToRender
-    ? recipesByMealsCategory.filter((meal, index) => index <= MAX_RECIPES && meal)
-    : mealsArray.filter((meal, index) => index <= MAX_RECIPES && meal);
+    ? recipesByMealsCategory
+    : mealsArray;
+
+  //     .filter((meal, index) => index <= MAX_RECIPES && meal)
+  // .filter((meal, index) => index <= MAX_RECIPES && meal)
 
   const requestAPI = async () => {
     const responseAPI = await fetchMeals();
@@ -47,20 +50,20 @@ function RecipesMainScreen() {
   useEffect(() => () => setIngredientExplored([]), []);
 
   return (
-    <div className="meals-screen-container">
+    <div className="screen-container">
       <Header pageName="Comidas" />
       <ButtonsMealsSearch />
-      <div className="div-card">
+      <div className="container-cards">
         <div
-          className="card-group"
+          className="card-group-container"
         >
           {recipesToRender.map((recipe, index) => (
             <div
-              key={ recipe.idMeal }
               className="card"
+              key={ recipe.idMeal }
             >
               <button
-                className="card bg-danger mb-0"
+                className="card-btn"
                 type="button"
                 data-testid={ `${index}-recipe-card` }
                 name={ recipe.idMeal }
@@ -73,21 +76,20 @@ function RecipesMainScreen() {
                   alt="Meal"
                   data-testid={ `${index}-card-img` }
                 />
-                {/* <div className="card-body"> */}
-                <p
-                  className="card-text"
-                  data-testid={ `${index}-card-name` }
-                  name={ recipe.idMeal }
-                >
-                  {recipe.strMeal}
-                </p>
-                {/* </div> */}
+                <div className="paragraph-container">
+                  <p
+                    className="p-recipe-title"
+                    data-testid={ `${index}-card-name` }
+                    name={ recipe.idMeal }
+                  >
+                    {recipe.strMeal}
+                  </p>
+                </div>
               </button>
             </div>
           ))}
         </div>
       </div>
-
       <Footer />
     </div>
   );

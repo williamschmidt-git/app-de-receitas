@@ -15,7 +15,7 @@ const NULL_RESPONSE = 'Sinto muito, não encontramos nenhuma receita para esses 
 function HeaderSearchBar() {
   const { setMealsArray, setDrinksArray } = useContext(ApplicationContext);
   const [typedText, setTypedText] = useState('');
-  const [selectedRadio, setSelectedRadio] = useState('');
+  const [selectedRadio, setSelectedRadio] = useState('ingredient');
   const history = useHistory();
 
   const { location: { pathname } } = history;

@@ -9,6 +9,7 @@ function DrinkCarousel() {
 
   const requestAPI = async () => {
     const responseAPI = await fetchDrinks();
+    console.log(responseAPI);
     setDrinks(responseAPI.drinks);
   };
 

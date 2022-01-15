@@ -12,6 +12,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import ApplicationContext from '../context/ApplicationContext';
 import '../App.css';
 import MealCarousel from '../components/MealCarousel';
+import '../styles/recipeDetails.css';
 
 function ScreenDrinkDetails() {
   const history = useHistory();

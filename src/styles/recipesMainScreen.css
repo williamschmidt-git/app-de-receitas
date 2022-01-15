@@ -1,0 +1,112 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+
+.btn-category-container {
+  align-items: center;
+  align-content: center;
+  background-color: white;
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  margin: 20px 0px;
+  padding: 0px 100px;
+}
+
+.btn-meals {
+  align-items: center;
+  display: flex;
+  font-weight: 600;
+  height: 55%;
+  justify-content: center;
+  margin: 0px;
+  width: 10%;
+}
+
+.btn-drinks {
+  align-items: center;
+  display: flex;
+  font-weight: 600;
+  height: 70%;
+  justify-content: center;
+  margin: 10px;
+  width: 15%;
+}
+
+.screen-container {
+  background-color: #eeeeeead;
+  height: 100%;
+  width: 100%;
+}
+
+.container-cards{
+  /* background-color: green; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+  margin: 0px 0px 50px;
+  width: 100%;
+}
+
+.card-group-container {
+  /* background-color: yellow; */
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: space-around;
+  width: 85%;
+}
+
+.card {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  /* height: 30; */
+  margin: 25px 15px 15px;
+  padding: 10px;
+  max-width: 20%;
+  min-width: 20%;
+}
+
+.card-btn {
+  align-items: center;
+  align-content: space-between;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 8px 7px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  height: 100%;
+}
+
+.card-btn:hover {
+  box-shadow: 8px 7px 5px rgba(0, 0, 0, 0.8);
+}
+
+
+.card-img-top{
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+  width: 100%;
+  height: 76%;
+}
+
+.paragraph-container {
+  /* height: 100%; */
+  overflow: hidden;
+  padding: 2px;
+}
+
+.p-recipe-title {
+  color: white;
+  font-weight: bold;
+}
