@@ -20,8 +20,11 @@ function DrinksMainScreen() {
     exploreByIngredients,
     setIngredientExplored } = useContext(ApplicationContext);
   const recipesToRender = changeArrayToRender
-    ? recipesByDrinkCategory.filter((drink, index) => index <= MAX_RECIPES && drink)
-    : drinksArray.filter((drink, index) => index <= MAX_RECIPES && drink);
+    ? recipesByDrinkCategory
+    : drinksArray;
+
+  // .filter((drink, index) => index <= MAX_RECIPES && drink)
+  // .filter((drink, index) => index <= MAX_RECIPES && drink)
 
   const requestAPI = async () => {
     const responseAPI = await fetchDrinks();
@@ -50,9 +53,9 @@ function DrinksMainScreen() {
     <div className="screen-container">
       <Header pageName="Bebidas" />
       <ButtonsDrinksSearch />
-      <div className="div-card">
+      <div className="container-cards">
         <div
-          className="card-group"
+          className="card-group-container"
         >
           {recipesToRender.map((recipe, index) => (
             <div
@@ -73,9 +76,9 @@ function DrinksMainScreen() {
                   alt="Drink"
                   data-testid={ `${index}-card-img` }
                 />
-                <div className="card-body">
+                <div className="paragraph-container">
                   <p
-                    className="card-text"
+                    className="p-recipe-title"
                     data-testid={ `${index}-card-name` }
                     name={ recipe.idDrink }
                   >

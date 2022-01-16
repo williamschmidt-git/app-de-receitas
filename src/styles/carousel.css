@@ -4,7 +4,41 @@
   padding: 0;
 }
 
-.container {
+/* .container {
   display: flex;
-  /* border: 1px solid red; */
+  border: 1px solid red;
+} */
+
+.carousel-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-previous, .btn-next {
+  color: white;
+  font-weight: bold;
+  width: auto;
+}
+
+.carousel-img-container {
+  display: flex;
+  justify-content: center;
+  transition: all 1000ms ease-in-out;
+  width: 30%;
+}
+
+.img-display-view {
+  margin: 10px;
+  min-height: 100px;
+  min-width: 100px;
+}
+
+.img-display-none {
+  display: none;
+}
+
+.btn {
+
 }

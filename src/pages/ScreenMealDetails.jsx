@@ -13,6 +13,7 @@ import {
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import unavailableVideo from '../images/unavailableVideo.png';
 import DrinkCarousel from '../components/DrinkCarousel';
 import Footer from '../components/Footer';
 import '../styles/recipeDetails.css';
@@ -62,9 +63,30 @@ function ScreenMealDetails() {
 
   return (
     <div className="div-details-container">
-      <h3>Recipe Details</h3>
+      <h3 className="page-title">Recipe Details</h3>
       <div className="container-group">
         <div className="img-ingredients-container">
+          <div className="title-ingredients-container">
+            <h1
+              className="recipe-title"
+              data-testid="recipe-title"
+            >
+              { selectedMeal.strMeal }
+            </h1>
+            <h2 id="ingredients">Ingredients:</h2>
+            <ul className="ul">
+              {
+                arrayOfIngredientsAndMeasurements(selectedMeal).map((e, index) => (
+                  <li
+                    key={ index }
+                    data-testid={ `${index}-ingredient-name-and-measure` }
+                  >
+                    {`${e[0]} - ${e[1]}`}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
           <div className="img-container">
             <img
               className="recipe-img"
@@ -73,26 +95,10 @@ function ScreenMealDetails() {
               data-testid="recipe-photo"
             />
           </div>
-          <ul className="li-container">
-            <h1
-              className="recipe-title"
-              data-testid="recipe-title"
-            >
-              { selectedMeal.strMeal }
-            </h1>
-            <h2>Ingredientes:</h2>
-            {
-              arrayOfIngredientsAndMeasurements(selectedMeal).map((e, index) => (
-                <li key={ index }>
-                  {`${e[0]} - ${e[1]}`}
-                </li>
-              ))
-            }
-          </ul>
         </div>
         <div className="btns-container">
           <div
-            type="button"
+            className="icon"
             data-testid="share-btn"
             onClick={ () => {
               const URL = history.location.pathname;
@@ -100,10 +106,13 @@ function ScreenMealDetails() {
             } }
           >
             {clipboardState
-              ? <p>Copied to Clipboard!</p> : <img src={ shareIcon } alt="share" />}
+              ? <p>Link Copied to Clipboard!</p>
+              : (
+                <img className="share-icon" src={ shareIcon } alt="share" />
+              )}
           </div>
           <div
-            type="button"
+            className="icon"
             data-testid="favorite-btn"
             src={ isRecipeFavorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
             onClick={ () => {
@@ -112,9 +121,14 @@ function ScreenMealDetails() {
             } }
           >
             {isRecipeFavorite ? (
-              <img src={ blackHeartIcon } alt="desfavoritar" />
+              <img className="favorite-icon" src={ blackHeartIcon } alt="unfavorite" />
             )
-              : (<img src={ whiteHeartIcon } alt="favoritar" />) }
+              : (
+                <img
+                  className="favorite-icon"
+                  src={ whiteHeartIcon }
+                  alt="favorite"
+                />) }
           </div>
         </div>
         <div className="content-container">
@@ -122,9 +136,9 @@ function ScreenMealDetails() {
             data-testid="recipe-category"
             type="button"
             disabled
-            className="btn btn-success"
+            className="btn btns-recipe-details text-category btn-warning"
           >
-            { `Category: ${selectedMeal.strCategory}` }
+            { `Category ${selectedMeal.strCategory}` }
           </button>
           <div className="instructions-container">
             <h3>Instructions: </h3>
@@ -134,8 +148,9 @@ function ScreenMealDetails() {
             {!selectedMeal.strYoutube
               ? (
                 <img
-                  src="https://t.ctcdn.com.br/18ygZuyQRBu5zLOsg7xGrShbtrs=/512x288/smart/i525197.png"
-                  alt="vídeo não disponível"
+                  className="video-img"
+                  src={ unavailableVideo }
+                  alt="Video unavailable"
                 />
               )
               : (
@@ -145,18 +160,18 @@ function ScreenMealDetails() {
                 />)}
           </div>
           <DrinkCarousel />
-          <footer>
+          <div className="btn-make-recipe-container">
             { hasStartButton ? (
               <button
                 data-testid="start-recipe-btn"
-                className="btn btn-danger"
+                className="btn btns-recipe-details btn-make-recipe btn-danger"
                 type="button"
                 onClick={ () => history.push(`/comidas/${id}/in-progress`) }
               >
-                {alreadyStarted ? 'Continuar Receita' : 'Iniciar Receita'}
+                {alreadyStarted ? 'Continue Recipe' : 'Start Recipe'}
               </button>
             ) : null }
-          </footer>
+          </div>
         </div>
       </div>
       <Footer />

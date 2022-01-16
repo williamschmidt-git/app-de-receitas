@@ -47,7 +47,7 @@ function Login() {
               className="form-control form-control-sm input-email"
               aria-describedby="emailHelp"
               value={ email }
-              placeholder="Digite o email"
+              placeholder="Enter an email"
               data-testid="email-input"
               onChange={ (event) => handleChange(event) }
             />
@@ -58,7 +58,7 @@ function Login() {
               name="password"
               className="form-control form-control-sm input-password"
               value={ password }
-              placeholder="Digite senha"
+              placeholder="Choose a password min. 7 char"
               data-testid="password-input"
               onChange={ (event) => handleChange(event) }
             />
