@@ -63,7 +63,7 @@ function ScreenMealDetails() {
 
   return (
     <div className="div-details-container">
-      <h3 className="page-title">Recipe Details</h3>
+      {/* <h3 className="page-title">Recipe Details</h3> */}
       <div className="container-group">
         <div className="img-ingredients-container">
           <div className="title-ingredients-container">

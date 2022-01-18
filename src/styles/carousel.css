@@ -13,6 +13,7 @@
   align-items: center;
   display: flex;
   justify-content: center;
+  overflow: hidden;
   width: 100%;
 }
 
@@ -25,8 +26,6 @@
 .carousel-img-container {
   display: flex;
   justify-content: center;
-  transition: all 1000ms ease-in-out;
-  width: 30%;
 }
 
 .img-display-view {
@@ -36,9 +35,5 @@
 }
 
 .img-display-none {
-  display: none;
-}
-
-.btn {
-
+  /* display: none; */
 }

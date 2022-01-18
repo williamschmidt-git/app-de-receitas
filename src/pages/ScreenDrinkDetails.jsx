@@ -65,7 +65,7 @@ function ScreenDrinkDetails() {
 
   return (
     <div className="div-details-container">
-      <h3 className="page-title">Recipe Details</h3>
+      {/* <h3 className="page-title">Recipe Details</h3> */}
       <div className="container-group">
         <div className="img-ingredients-container">
           <div className="title-ingredients-container">
@@ -138,7 +138,8 @@ function ScreenDrinkDetails() {
             data-testid="recipe-category"
             type="button"
             disabled
-            className="btn btn-primary"
+            // className="btn btn-primary"
+            className="btn btns-recipe-details text-category btn-warning"
           >
             { `Category ${selectedDrink.strCategory} - ${selectedDrink.strAlcoholic}` }
           </button>
