@@ -159,6 +159,13 @@ function ScreenMealDetails() {
                   url={ selectedMeal.strYoutube }
                 />)}
           </div>
+          <div className="recomended-drinks-title">
+            <h2
+              className="recommended-drinks"
+            >
+              Recommended Drinks
+            </h2>
+          </div>
           <DrinkCarousel />
           <div className="btn-make-recipe-container">
             { hasStartButton ? (
