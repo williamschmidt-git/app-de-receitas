@@ -4,7 +4,66 @@
   padding: 0;
 }
 
-.container {
+/* .carousel-container-all {
+  align-items: center;
+  background-color: yellow;
   display: flex;
-  /* border: 1px solid red; */
+  justify-content: center;
+  width: 100%;
+} */
+
+/* .carousel {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.904);
+  background-color: blue;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  margin-right: 200px;
+  width: 460px;
+} */
+
+/* .btn-primary {
+  text-align: center;
+  font-weight: bold;
+  margin: 0 5px;
+  width: auto;
+} */
+
+/* .btn-dark-left {
+  left: 345px;
+  position: absolute;
+  z-index: 2;
+}
+
+.btn-dark-right {
+  position: absolute;
+  right: 345px;
+  z-index: 2;
+} */
+
+/* .carousel-container {
+  border: 3px solid green;
+  display: flex;
+  justify-content: center;
+  margin-right: 180px;
+  transition: transform 2s ease-in-out;
+  transform: translateX(0);
+  width: 100%;
+} */
+
+/* .img-carousel {
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px;
+  min-height: 150px;
+  min-width: 150px;
+  object-fit: cover;
+} */
+
+.carousel-inner {
+  border-radius: 10px;
+  height: 300px;
+  width: 300px;
 }

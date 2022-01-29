@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
@@ -14,6 +14,12 @@ function FavoriteRecipes() {
   const { clipboardState,
     setClipboardState } = useContext(ApplicationContext);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  useEffect(() => {
+    if (!favoriteRecipes) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+  });
 
   const renderFood = (e, index) => (
     <div key={ e.id }>
@@ -193,7 +199,6 @@ function FavoriteRecipes() {
         >
           Food
         </button>
-
         <button
           data-testid="filter-by-drink-btn"
           type="button"
@@ -205,7 +210,6 @@ function FavoriteRecipes() {
         >
           Drink
         </button>
-
         <button
           data-testid="filter-by-all-btn"
           type="button"

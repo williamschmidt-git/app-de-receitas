@@ -12,7 +12,7 @@ function Footer() {
       className="footer"
       style={ { backgroundColor: 'white' } }
     >
-      <div className="drink-footer">
+      <div className="footer-container">
         <Link
           src={ drinkIcon }
           data-testid="drinks-bottom-btn"
@@ -20,7 +20,6 @@ function Footer() {
         >
           <img src={ drinkIcon } alt="Drinks" />
         </Link>
-
         <Link
           src={ exploreIcon }
           data-testid="explore-bottom-btn"
@@ -28,7 +27,6 @@ function Footer() {
         >
           <img src={ exploreIcon } alt="explore" />
         </Link>
-
         <Link
           src={ mealIcon }
           data-testid="food-bottom-btn"
@@ -36,7 +34,6 @@ function Footer() {
         >
           <img src={ mealIcon } alt="Meal" />
         </Link>
-
       </div>
     </footer>
   );

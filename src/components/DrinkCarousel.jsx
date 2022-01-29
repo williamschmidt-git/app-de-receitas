@@ -1,69 +1,122 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+// eslint-disable-next-line jsx-a11y/click-events-have-key-events
 import React, { useState, useEffect } from 'react';
+import { Carousel, CarouselItem } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { fetchDrinks } from '../services/helpers';
 import '../styles/carousel.css';
 
-const MAX_DRINKS = 5;
+const MAX_DRINKS = 23;
 
 function DrinkCarousel() {
   const [drinks, setDrinks] = useState([]);
+  const [indexCarousel, setIndexCarousel] = useState(1);
+  const [transformValue, setTransformValue] = useState('translateX(0px)');
+  const history = useHistory();
 
   const requestAPI = async () => {
     const responseAPI = await fetchDrinks();
-    setDrinks(responseAPI.drinks);
+    const filteredDrinks = responseAPI.drinks
+      .filter((drink, index) => index <= MAX_DRINKS && drink);
+    setDrinks(filteredDrinks);
   };
 
   useEffect(() => {
     requestAPI();
   }, []);
 
-  const renderDrinks = drinks.filter((drink, index) => index <= MAX_DRINKS && drink);
+  // const carouselLogic = (name) => {
+  //   const TWO = 2;
+  //   const onClickButtonPrevious = (img1 - TWO);
+  //   const onClickButtonNext = (img1 + TWO);
+  //   const maxLength = drinks.length;
+  //   if (name === 'next') {
+  //     if (onClickButtonNext === maxLength) {
+  //       return setImg1(0);
+  //     }
+  //     return setImg1(onClickButtonNext);
+  //   }
+  //   if (name === 'previous') {
+  //     const MINUS_TWO = -2;
+  //     const LAST_POSITION = 22;
+  //     if (img1 + MINUS_TWO === MINUS_TWO) {
+  //       return setImg1(LAST_POSITION);
+  //     }
+  //     return setImg1(onClickButtonPrevious);
+  //   }
+  // };
+
+  // const teste = () => {
+  //   const maxTransformNumber = 190;
+  //   if (indexCarousel + 1 > drinks.length - 1) {
+  //     return setIndexCarousel(1);
+  //   }
+  //   setIndexCarousel(indexCarousel + 1);
+  //   setTransformValue(`translateX(${indexCarousel * (-maxTransformNumber)}px)`);
+  //   console.log(indexCarousel, transformValue);
+  // };
+
   return (
-    <div
-      id="carouselExampleControls"
-      className="carousel slide container"
-      data-ride="carousel"
-    >
-      { renderDrinks.map((drink, index) => (
-        <div
-          className="carousel-inner"
-          key={ drink.idDrink }
-        >
-          <div className="carousel-item-active">
-            <div
-              className="image d-block w-100"
-            >
-              <img
-                style={ { height: '50px', width: '50px' } }
-                src={ drink.strDrinkThumb }
-                name={ drink.idDrink }
-                alt="Drink"
-                data-testid={ `${index}-recomendation-card` }
-              />
-            </div>
-
-            <div className="info">
-              <p className="category">
-                { drink.strAlcoholic }
-              </p>
-              <h4 className="name">
-                { drink.strDrink }
-              </h4>
-            </div>
-
-          </div>
-
-        </div>
-      ))}
-      <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-        <span className="carousel-control-prev-icon" aria-hidden="true" />
-        <span className="sr-only">Anterior</span>
-      </a>
-      <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-        <span className="carousel-control-next-icon" aria-hidden="true" />
-        <span className="sr-only">Próximo</span>
-      </a>
+    <div className="carousel-container-all">
+      <Carousel className="carousel-container">
+        {drinks.map((drink, index) => (
+          <Carousel.Item key={ index }>
+            <img
+              key={ index }
+              className="d-block w-100 img-carousel"
+              src={ drink.strDrinkThumb }
+              alt="Drink"
+              data-testid={ `${index}-recomendation-card` }
+            />
+          </Carousel.Item>
+        ))}
+      </Carousel>
+      {/* <button
+        className="btn btn-primary btn-dark-left"
+        type="button"
+        name="previous"
+        onClick={ ({ target }) => teste() }
+      >
+        {'<'}
+      </button> */}
+      {/* <div className="carousel"> */}
+      {/* <div className="carousel-container"> */}
+      {/* {drinks.map((drink, index) => (
+        <img
+          key={ index }
+          className="img-carousel"
+          style={ { height: '50px', width: '50px' } }
+          src={ drink.strDrinkThumb }
+          name={ drink.idDrink }
+          alt="Drink"
+          data-testid={ `${index}-recomendation-card` }
+          onClick={ () => history.push(`/bebidas/${drink.idDrink}`) }
+        />
+      ))} */}
+      {/* {drinks.map((drink, index) => (
+        <img
+          key={ index }
+          className="img-carousel"
+          style={ { height: '50px', width: '50px', transform: transformValue } }
+          src={ drink.strDrinkThumb }
+          name={ drink.idDrink }
+          alt="Drink"
+          data-testid={ `${index}-recomendation-card` }
+          onClick={ () => history.push(`/bebidas/${drink.idDrink}`) }
+        />
+      ))} */}
+      {/* </div> */}
+      {/* </div> */}
+      {/* <button
+        className="btn btn-primary btn-dark-right"
+        type="button"
+        name="next"
+        onClick={ ({ target }) => teste(target) }
+      >
+        {'>'}
+      </button> */}
     </div>
-
   );
 }
 

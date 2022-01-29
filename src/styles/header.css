@@ -1,22 +1,25 @@
-header{
-    background-color: rgba(248, 241, 232, 0.952);
-}
-.div-header{
-    margin: 1px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 0px;
+.navbar-header-container{
+  background-color: #e77f2f;
 }
 
-.btn-profile{
-    display: flex;
-    align-items: center;
-    /* justify-self: center; */
+.btn-header-container {
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.btn-search{
-    display: flex;
-    align-items: center;
-    width: 55px;
+.link-profile-header {
+  align-self: center;
+  margin-left: 20px;
+}
+
+.page-title {
+  color: white;
+  font-size: 35px;
+}
+
+.search-btn-header {
+  background-color: #e77f2f;
+  border: none;
 }

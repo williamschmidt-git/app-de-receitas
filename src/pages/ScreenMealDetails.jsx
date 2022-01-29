@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
@@ -11,7 +13,10 @@ import {
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import unavailableVideo from '../images/unavailableVideo.png';
 import DrinkCarousel from '../components/DrinkCarousel';
+import Footer from '../components/Footer';
+import '../styles/recipeDetails.css';
 
 function ScreenMealDetails() {
   const { id } = useParams();
@@ -57,78 +62,126 @@ function ScreenMealDetails() {
   }, []);
 
   return (
-    <div>
-      <img
-        src={ selectedMeal.strMealThumb }
-        alt={ selectedMeal.strMealThumb }
-        data-testid="recipe-photo"
-        style={ { width: '80px', height: '80px' } }
-      />
-
-      <h1 data-testid="recipe-title">{ selectedMeal.strMeal }</h1>
-
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ () => {
-          const URL = history.location.pathname;
-          onClipboardClicked(setClipboardState, URL);
-        } }
-      >
-        <img src={ shareIcon } alt="share" />
-
-      </button>
-      <p>
-        {clipboardState ? 'Link copiado!' : ''}
-      </p>
-      <button
-        type="button"
-        data-testid="favorite-btn"
-        src={ isRecipeFavorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
-        onClick={ () => {
-          saveFavoriteRecipeOnStorage(selectedMeal, 'comida');
-          setRecipeToFavorite(!isRecipeFavorite);
-        } }
-      >
-        {isRecipeFavorite ? (
-          <img src={ blackHeartIcon } alt="desfavoritar" />
-        )
-          : (<img src={ whiteHeartIcon } alt="favoritar" />) }
-      </button>
-      <h3>Recipe:</h3>
-      <div>
-        {
-          arrayOfIngredientsAndMeasurements(selectedMeal).map((e, index) => (
-            <div key={ index }>
-              <p
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${e[0]} - ${e[1]}`}
-
-              </p>
-            </div>
-          ))
-        }
-      </div>
-      <h4 data-testid="recipe-category">{ `${selectedMeal.strCategory}` }</h4>
-      <div>
-        <h3>Instructions: </h3>
-        <p data-testid="instructions">{selectedMeal.strInstructions}</p>
-      </div>
-      <ReactPlayer data-testid="video" url={ selectedMeal.strYoutube } />
-      <DrinkCarousel />
-      <footer>
-        { hasStartButton ? (
-          <button
-            data-testid="start-recipe-btn"
-            type="button"
-            onClick={ () => history.push(`/comidas/${id}/in-progress`) }
-            className="button-start-recipe"
+    <div className="div-details-container">
+      {/* <h3 className="page-title">Recipe Details</h3> */}
+      <div className="container-group">
+        <div className="img-ingredients-container">
+          <div className="title-ingredients-container">
+            <h1
+              className="recipe-title"
+              data-testid="recipe-title"
+            >
+              { selectedMeal.strMeal }
+            </h1>
+            <h2 id="ingredients">Ingredients:</h2>
+            <ul className="ul">
+              {
+                arrayOfIngredientsAndMeasurements(selectedMeal).map((e, index) => (
+                  <li
+                    key={ index }
+                    data-testid={ `${index}-ingredient-name-and-measure` }
+                  >
+                    {`${e[0]} - ${e[1]}`}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div className="img-container">
+            <img
+              className="recipe-img"
+              src={ selectedMeal.strMealThumb }
+              alt={ selectedMeal.strMealThumb }
+              data-testid="recipe-photo"
+            />
+          </div>
+        </div>
+        <div className="btns-container">
+          <div
+            className="icon"
+            data-testid="share-btn"
+            onClick={ () => {
+              const URL = history.location.pathname;
+              onClipboardClicked(setClipboardState, URL);
+            } }
           >
-            {alreadyStarted ? 'Continuar Receita' : 'Iniciar Receita'}
+            {clipboardState
+              ? <p>Link Copied to Clipboard!</p>
+              : (
+                <img className="share-icon" src={ shareIcon } alt="share" />
+              )}
+          </div>
+          <div
+            className="icon"
+            data-testid="favorite-btn"
+            src={ isRecipeFavorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
+            onClick={ () => {
+              saveFavoriteRecipeOnStorage(selectedMeal, 'comida');
+              setRecipeToFavorite(!isRecipeFavorite);
+            } }
+          >
+            {isRecipeFavorite ? (
+              <img className="favorite-icon" src={ blackHeartIcon } alt="unfavorite" />
+            )
+              : (
+                <img
+                  className="favorite-icon"
+                  src={ whiteHeartIcon }
+                  alt="favorite"
+                />) }
+          </div>
+        </div>
+        <div className="content-container">
+          <button
+            data-testid="recipe-category"
+            type="button"
+            disabled
+            className="btn btns-recipe-details text-category btn-warning"
+          >
+            { `Category ${selectedMeal.strCategory}` }
           </button>
-        ) : null }
-      </footer>
+          <div className="instructions-container">
+            <h3>Instructions: </h3>
+            <p data-testid="instructions">{selectedMeal.strInstructions}</p>
+          </div>
+          <div className="video-container">
+            {!selectedMeal.strYoutube
+              ? (
+                <img
+                  className="video-img"
+                  src={ unavailableVideo }
+                  alt="Video unavailable"
+                />
+              )
+              : (
+                <ReactPlayer
+                  data-testid="video"
+                  url={ selectedMeal.strYoutube }
+                />)}
+          </div>
+          <div className="recomended-drinks-title">
+            <h2
+              className="recommended-drinks"
+            >
+              Recommended Drinks
+            </h2>
+          </div>
+          <DrinkCarousel />
+          <div className="btn-make-recipe-container">
+            { hasStartButton ? (
+              <button
+                data-testid="start-recipe-btn"
+                className="btn btns-recipe-details btn-make-recipe btn-danger"
+                type="button"
+                onClick={ () => history.push(`/comidas/${id}/in-progress`) }
+              >
+                {alreadyStarted ? 'Continue Recipe' : 'Start Recipe'}
+              </button>
+            ) : null }
+          </div>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }
