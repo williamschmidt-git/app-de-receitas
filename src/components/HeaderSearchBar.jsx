@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import ApplicationContext from '../context/ApplicationContext';
@@ -9,6 +10,7 @@ import {
   fetchDrinksName,
   fetchDrinksFirstLetter,
 } from '../services/helpers';
+import '../styles/headerSearch.css';
 
 const NULL_RESPONSE = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
 
@@ -34,9 +36,9 @@ function HeaderSearchBar() {
 
   const mealsRequest = async () => {
     const isFirstLetter = selectedRadio === 'firstLetter';
-    const invalidLength = typedText.length > 1;
+    const invalidLength = typedText.length > 1 || typedText.length === 0;
     if (isFirstLetter && invalidLength) {
-      return global.alert('Sua busca deve conter somente 1 (um) caracter');
+      return global.alert('Sua busca deve conter 1 (um) caracter');
     }
     const responseAPI = await meals[selectedRadio](typedText);
     if (responseAPI.meals === null) {
@@ -82,7 +84,7 @@ function HeaderSearchBar() {
   };
 
   return (
-    <div>
+    <div className="header-search">
       <input
         type="text"
         data-testid="search-input"
@@ -90,7 +92,6 @@ function HeaderSearchBar() {
         onChange={ (event) => handleChange(event) }
       />
       <label htmlFor="ingredient" style={ { color: 'white' } }>
-        Ingrediente:
         <input
           type="radio"
           id="ingredient"
@@ -99,9 +100,9 @@ function HeaderSearchBar() {
           value={ selectedRadio }
           onClick={ (event) => handleChange(event) }
         />
+        Ingrediente
       </label>
       <label htmlFor="name" style={ { color: 'white' } }>
-        Nome:
         <input
           type="radio"
           id="name"
@@ -110,9 +111,9 @@ function HeaderSearchBar() {
           value={ selectedRadio }
           onClick={ (event) => handleChange(event) }
         />
+        Nome
       </label>
       <label htmlFor="firstLetter" style={ { color: 'white' } }>
-        Primeira Letra:
         <input
           type="radio"
           id="firstLetter"
@@ -121,6 +122,7 @@ function HeaderSearchBar() {
           value={ selectedRadio }
           onClick={ (event) => handleChange(event) }
         />
+        Primeira Letra
       </label>
       <button
         type="button"

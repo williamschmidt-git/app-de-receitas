@@ -11,6 +11,7 @@
   align-content: center;
   background-color: white;
   display: flex;
+  overflow-y: hidden;
   height: 60px;
   justify-content: space-between;
   margin: 20px 0px;
@@ -44,7 +45,6 @@
 }
 
 .container-cards{
-  /* background-color: green; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -55,7 +55,6 @@
 }
 
 .card-group-container {
-  /* background-color: yellow; */
   display: flex;
   flex-wrap: wrap;
   height: 100%;
@@ -67,7 +66,6 @@
   background-color: transparent;
   border: none;
   display: flex;
-  /* height: 30; */
   margin: 25px 15px 15px;
   padding: 10px;
   max-width: 20%;
@@ -101,7 +99,6 @@
 }
 
 .paragraph-container {
-  /* height: 100%; */
   overflow: hidden;
   padding: 2px;
 }

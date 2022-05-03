@@ -140,7 +140,7 @@ function ScreenMealDetails() {
           >
             { `Category ${selectedMeal.strCategory}` }
           </button>
-          <div className="instructions-container">
+          <div>
             <h3>Instructions: </h3>
             <p data-testid="instructions">{selectedMeal.strInstructions}</p>
           </div>

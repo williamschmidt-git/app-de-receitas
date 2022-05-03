@@ -1,50 +1,45 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+// eslint-disable-next-line jsx-a11y/click-events-have-key-events
 import React, { useState, useEffect } from 'react';
+import { Carousel } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { fetchMeals } from '../services/helpers';
 import '../styles/carousel.css';
 
-const MAX_MEALS = 5;
+const MAX_MEALS = 23;
 
 function MealCarousel() {
   const [meals, setMeals] = useState([]);
+  const history = useHistory();
 
   const requestAPI = async () => {
     const responseAPI = await fetchMeals();
-    setMeals(responseAPI.meals);
+    const filteredDrinks = responseAPI.meals
+      .filter((meal, index) => index <= MAX_MEALS && meal);
+    setMeals(filteredDrinks);
   };
 
   useEffect(() => {
     requestAPI();
   }, []);
 
-  const renderMeals = meals.filter((meal, index) => index <= MAX_MEALS && meal);
   return (
-    <div className="container">
-      { renderMeals.map((meal, index) => (
-        <div
-          key={ meal.idMeal }
-          className="carousel"
-        >
-          <div className="image">
+    <div className="carousel-container-all">
+      <Carousel>
+        {meals.map((meal, index) => (
+          <Carousel.Item key={ index }>
             <img
-              style={ { height: '50px', width: '50px' } }
+              className="d-block w-100 img-carousel"
               src={ meal.strMealThumb }
-              name={ meal.idMeal }
               alt="Meal"
-              data-testid={ `${index}-recomendation-card` }
+              datat-testid={ `${index}-recomendation-card` }
+              onClick={ () => history.push(`/comidas/${meal.idMeal}`) }
             />
-          </div>
-          <div className="info">
-            <p className="category">
-              { meal.strCategory }
-            </p>
-            <h4 className="name">
-              { meal.strMeal }
-            </h4>
-          </div>
-        </div>
-      ))}
+          </Carousel.Item>
+        ))}
+      </Carousel>
     </div>
-
   );
 }
 
