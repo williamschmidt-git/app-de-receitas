@@ -143,7 +143,7 @@ function ScreenDrinkDetails() {
           >
             { `Category ${selectedDrink.strCategory} - ${selectedDrink.strAlcoholic}` }
           </button>
-          <div className="instructions-container">
+          <div>
             <h3>Instructions: </h3>
             <p data-testid="instructions">{selectedDrink.strInstructions}</p>
           </div>
@@ -162,19 +162,26 @@ function ScreenDrinkDetails() {
                   url={ selectedDrink.strYoutube }
                 />)}
           </div>
+          <div className="recomended-drinks-title">
+            <h2
+              className="recomended-drinks"
+            >
+              Recommended Meals
+            </h2>
+          </div>
           <MealCarousel />
-          <footer>
+          <div className="btn-make-recipe-container">
             { hasStartButton ? (
               <button
                 data-testid="start-recipe-btn"
-                className="btn btn-danger"
+                className="btn btns-recipe-details btn-make-recipe btn-danger"
                 type="button"
                 onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
               >
                 {alreadyStarted ? 'Continue Recipe' : 'Start Recipe'}
               </button>
             ) : null }
-          </footer>
+          </div>
         </div>
       </div>
       <Footer />

@@ -1,8 +1,12 @@
 .navbar-header-container{
   background-color: #e77f2f;
+  display: flex;
+  align-items: center !important;
+  max-height: 200px;
 }
 
 .btn-header-container {
+  align-items: center !important;
   display: flex;
   height: 100%;
   justify-content: space-between;
@@ -17,6 +21,7 @@
 .page-title {
   color: white;
   font-size: 35px;
+  align-self: center;
 }
 
 .search-btn-header {
