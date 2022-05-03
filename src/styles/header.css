@@ -1,5 +1,5 @@
 .navbar-header-container{
-  background-color: #e77f2f;
+  background-color: #dc3545;
   display: flex;
   align-items: center !important;
   max-height: 200px;
@@ -7,9 +7,12 @@
 
 .btn-header-container {
   align-items: center !important;
+  /* background-color: green; */
   display: flex;
   height: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
+  overflow-y: hidden;
+  padding: 0px 60px;
   width: 100%;
 }
 
@@ -25,6 +28,18 @@
 }
 
 .search-btn-header {
-  background-color: #e77f2f;
+  background-color: #dc3545;
   border: none;
+}
+
+.header {
+  /* background-color: yellow; */
+  overflow-y: hidden;
+  height: 80px;
+  align-items: center;
+}
+
+.page-title {
+  /* background-color: black; */
+  margin-top: 40px;
 }

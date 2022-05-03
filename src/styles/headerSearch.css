@@ -1,0 +1,7 @@
+.header-search {
+  /* background-color: green; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 200px;
+}

@@ -23,7 +23,7 @@ function Header({ pageName }) {
 
   return (
     <nav
-      className="navbar navbar-header-container"
+      className="navbar navbar-header-container header"
     >
       <div className="btn-header-container">
         <Link
